@@ -1,0 +1,76 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+env/
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Environment variables
+.env
+.env.local
+
+# Logs
+logs/
+*.log
+
+# Models and datasets - week02
+week02/massive-main/
+week02/minimal_lora_results/
+week02/chinese_data/
+week02/amazon-massive-dataset-1.0.tar.gz
+week02/amazon_massive_intent_zh-CN/
+week02/2101.08091v3.pdf-a5eac2f1-82e6-4846-a68e-e9997a76f03a/
+week02/2204.08582v2.pdf-92b8616b-df30-4514-b981-8f8802d839ab/
+week02/docs/
+week02/massive-main.zip
+
+# Model files (general)
+*.safetensors
+*.bin
+*.ckpt
+*.pth
+*.pt
+models/
+checkpoints/
+
+# Large data files
+*.tar.gz
+*.zip
+*.rar
+*.7z
