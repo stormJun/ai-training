@@ -1,0 +1,782 @@
+# Week02 微调流程完整总结
+
+## 📚 目录
+
+1. [技术架构概览](#技术架构概览)
+2. [微调平台功能](#微调平台功能)
+3. [MASSIVE数据集处理](#massive数据集处理)
+4. [快速开始指南](#快速开始指南)
+5. [完整工作流程](#完整工作流程)
+6. [文件清单](#文件清单)
+
+---
+
+## 🏗️ 技术架构概览
+
+### 核心组件
+
+```
+Week02 微调系统
+├── 框架层
+│   ├── ms-swift          # ModelScope Swift 微调框架
+│   ├── PyTorch          # 深度学习后端
+│   └── Transformers     # HuggingFace 模型库
+│
+├── 界面层
+│   ├── FastAPI          # Web 服务框架
+│   ├── Gradio           # 交互式界面组件
+│   └── Uvicorn          # ASGI 服务器
+│
+├── 核心功能模块
+│   ├── 数据管理 (DataManager)
+│   │   ├── 数据上传
+│   │   ├── 格式验证
+│   │   └── 数据预览
+│   │
+│   ├── 微调管理 (FineTuneManager)
+│   │   ├── 训练启动
+│   │   ├── 进度监控
+│   │   └── 日志管理
+│   │
+│   ├── 权重合并
+│   │   └── LoRA Adapter 合并
+│   │
+│   └── 模型量化
+│       ├── INT8/INT4 量化
+│       └── GPTQ/AWQ/BNB 支持
+│
+└── 数据层
+    ├── MASSIVE 中文数据集
+    │   ├── 11,514 训练样本
+    │   ├── 2,033 验证样本
+    │   └── 2,974 测试样本
+    │
+    └── 自定义数据集支持
+```
+
+### 微调方法：LoRA (Low-Rank Adaptation)
+
+```
+传统微调 vs LoRA:
+
+传统 Full Fine-tuning:
+┌──────────────────┐
+│  原始模型参数     │ → 全部参数都更新
+│  (1.5B 参数)     │    需要大量显存
+└──────────────────┘    训练慢
+
+LoRA 微调:
+┌──────────────────┐
+│  原始模型参数     │ → 冻结不变
+│  (1.5B 参数)     │
+└──────────────────┘
+         +
+┌──────────────────┐
+│  LoRA Adapter    │ → 只训练这部分
+│  (1M 参数)       │    显存需求小
+└──────────────────┘    训练快
+
+优势:
+✅ 参数量: 仅 0.1% 的参数需要训练
+✅ 显存: 6GB (vs 16GB full fine-tune)
+✅ 速度: 快 3-5 倍
+✅ 效果: 接近 full fine-tune
+```
+
+---
+
+## 🎛️ 微调平台功能
+
+### 1. 数据上传模块
+
+**功能**:
+- ✅ 支持多种格式: JSONL, JSON, CSV, TXT
+- ✅ 在线创建数据集
+- ✅ 数据预览和验证
+- ✅ 批量上传
+
+**支持的数据格式**:
+
+```json
+// 指令格式 (推荐用于任务型微调)
+{
+  "instruction": "任务指令",
+  "input": "输入内容",
+  "output": "期望输出"
+}
+
+// 对话格式 (推荐用于聊天模型)
+{
+  "messages": [
+    {"role": "system", "content": "系统提示"},
+    {"role": "user", "content": "用户问题"},
+    {"role": "assistant", "content": "助手回答"}
+  ]
+}
+```
+
+**代码位置**: `local_ft/core/data_manager.py`
+
+---
+
+### 2. 模型微调模块
+
+**功能**:
+- ✅ 可视化参数配置
+- ✅ 实时训练监控
+- ✅ Loss 曲线可视化
+- ✅ 日志实时输出
+- ✅ 训练过程控制（暂停/停止）
+
+**关键参数配置**:
+
+| 参数类别 | 参数名 | 推荐值 | 说明 |
+|---------|--------|--------|------|
+| **基础模型** | model | Qwen2.5-1.5B-Instruct | 中文支持好的模型 |
+| **训练类型** | train_type | lora | 参数高效微调 |
+| **训练轮数** | num_train_epochs | 2-3 | 防止过拟合 |
+| **学习率** | learning_rate | 1e-4 | 稳定的学习率 |
+| **批次大小** | batch_size | 8-16 | 根据显存调整 |
+| **LoRA Rank** | lora_rank | 8-16 | 平衡效果和速度 |
+| **LoRA Alpha** | lora_alpha | 16-32 | 通常为 rank×2 |
+| **目标模块** | target_modules | q_proj, k_proj, v_proj, o_proj | Attention 层 |
+
+**生成的 swift 命令示例**:
+
+```bash
+swift sft \
+  --model Qwen/Qwen2.5-1.5B-Instruct \
+  --train_type lora \
+  --dataset custom:my_dataset \
+  --num_train_epochs 3 \
+  --per_device_train_batch_size 8 \
+  --learning_rate 1e-4 \
+  --lora_rank 8 \
+  --lora_alpha 16 \
+  --target_modules q_proj k_proj v_proj o_proj \
+  --gradient_accumulation_steps 4 \
+  --eval_steps 100 \
+  --save_steps 500 \
+  --output_dir output/v0-20241216-120000
+```
+
+**代码位置**: `local_ft/core/fine_tune_manager.py`
+
+---
+
+### 3. 权重合并模块
+
+**功能**:
+- ✅ LoRA Adapter 合并到基础模型
+- ✅ 生成完整可部署模型
+- ✅ 支持多种精度 (FP16/FP32)
+
+**合并过程**:
+
+```
+训练输出:
+output/v0-xxx/
+├── checkpoint-500/
+│   ├── adapter_config.json    # LoRA 配置
+│   ├── adapter_model.bin      # LoRA 权重
+│   └── ...
+└── checkpoint-1000/
+
+合并后:
+merged_model/
+├── config.json               # 完整模型配置
+├── pytorch_model.bin         # 完整模型权重
+├── tokenizer_config.json     # 分词器配置
+└── ...
+
+优势:
+✅ 推理速度快（无需加载 adapter）
+✅ 便于部署和分享
+✅ 支持量化
+```
+
+**命令行合并**:
+
+```bash
+swift export \
+  --ckpt_dir output/v0-xxx/checkpoint-1000 \
+  --merge_lora true \
+  --output_dir merged_model
+```
+
+---
+
+### 4. 模型量化模块
+
+**功能**:
+- ✅ INT8/INT4 量化
+- ✅ 多种量化方法 (BNB, GPTQ, AWQ)
+- ✅ 灵活的校准数据集
+
+**量化方法对比**:
+
+| 方法 | 压缩比 | 精度损失 | 推理速度 | 兼容性 | 推荐场景 |
+|------|--------|----------|----------|--------|----------|
+| **INT8** | 4x | 极小 | 快 | 好 | 通用场景 |
+| **INT4** | 8x | 小 | 很快 | 好 | 资源受限 |
+| **BNB** | 4-8x | 小 | 快 | 好 | 通用兼容 |
+| **GPTQ** | 4-8x | 极小 | 很快 | 中 | 高精度需求 |
+| **AWQ** | 4x | 极小 | 很快 | 中 | 高质量推理 |
+
+**量化示例**:
+
+```bash
+# INT8 量化
+swift export \
+  --ckpt_dir merged_model \
+  --to_int8 true \
+  --output_dir quantized_model_int8
+
+# INT4 量化 (更激进)
+swift export \
+  --ckpt_dir merged_model \
+  --to_int4 true \
+  --output_dir quantized_model_int4
+```
+
+---
+
+## 📊 MASSIVE 数据集处理
+
+### 数据集简介
+
+**MASSIVE (Multilingual Amazon SLU resource package)** 是 Amazon 发布的大规模多语言意图分类数据集。
+
+**规模统计**:
+
+```
+中文版本 (zh-CN):
+├── 总样本数: 16,521 条
+│   ├── 训练集: 11,514 条 (70%)
+│   ├── 验证集: 2,033 条 (12%)
+│   └── 测试集: 2,974 条 (18%)
+│
+├── 意图类别: 60 种
+│   ├── alarm_set (闹钟设置)
+│   ├── audio_volume_up (音量调高)
+│   ├── calendar_query (日历查询)
+│   ├── datetime_query (日期时间查询)
+│   ├── email_send (发送邮件)
+│   ├── music_play (播放音乐)
+│   └── ... (共60种)
+│
+└── 应用场景
+    ├── 智能助手
+    ├── 语音交互系统
+    ├── 对话机器人
+    └── IoT 设备控制
+```
+
+### 原始格式
+
+```json
+{
+  "id": "1",
+  "label": 48,
+  "text": "星期五早上九点叫醒我",
+  "label_text": "alarm_set",
+  "label_text_ch": "报警器"
+}
+```
+
+### 转换后格式
+
+**指令格式** (适用于任务型微调):
+
+```json
+{
+  "instruction": "请识别以下用户语句的意图分类",
+  "input": "星期五早上九点叫醒我",
+  "output": "报警器(alarm_set)"
+}
+```
+
+**对话格式** (适用于聊天模型):
+
+```json
+{
+  "messages": [
+    {
+      "role": "system",
+      "content": "你是一个意图识别助手，能够准确识别用户语句的意图。"
+    },
+    {
+      "role": "user",
+      "content": "请识别意图: 星期五早上九点叫醒我"
+    },
+    {
+      "role": "assistant",
+      "content": "意图分类: 报警器(alarm_set)"
+    }
+  ]
+}
+```
+
+### 数据转换工具
+
+**使用方法**:
+
+```bash
+# 转换训练集（指令格式）
+python3 convert_massive_to_training_format.py \
+  --input amazon_massive_intent_zh-CN/train.jsonl \
+  --output amazon_massive_intent_zh-CN/train_converted.jsonl \
+  --format instruction \
+  --preview
+
+# 转换为对话格式
+python3 convert_massive_to_training_format.py \
+  --input amazon_massive_intent_zh-CN/train.jsonl \
+  --output amazon_massive_intent_zh-CN/train_chat.jsonl \
+  --format chat \
+  --preview
+```
+
+**工具特性**:
+- ✅ 支持两种输出格式
+- ✅ 批量转换
+- ✅ 数据预览
+- ✅ 格式验证
+
+---
+
+## 🚀 快速开始指南
+
+### 方式 1: 一键启动脚本
+
+```bash
+cd week02
+./quick_start_massive.sh
+```
+
+脚本会自动完成：
+1. 数据格式转换
+2. 询问微调方式（Web 或命令行）
+3. 配置参数
+4. 启动训练
+
+### 方式 2: 手动步骤
+
+#### Step 1: 转换数据
+
+```bash
+python3 convert_massive_to_training_format.py \
+  --input amazon_massive_intent_zh-CN/train.jsonl \
+  --output amazon_massive_intent_zh-CN/train_converted.jsonl \
+  --format instruction
+```
+
+#### Step 2: 启动 Web 界面
+
+```bash
+python3 -m local_ft.server
+```
+
+访问: http://localhost:7866
+
+#### Step 3: 上传数据
+
+1. 进入 **数据上传** 页面
+2. 上传 `train_converted.jsonl`
+3. 输入数据集名称: `massive_zh_intent`
+
+#### Step 4: 配置微调
+
+进入 **模型微调** 页面，配置参数：
+
+```
+基础模型: Qwen/Qwen2.5-1.5B-Instruct
+训练类型: lora
+数据集: custom:massive_zh_intent
+训练轮数: 3
+批次大小: 8
+学习率: 1e-4
+LoRA Rank: 8
+```
+
+#### Step 5: 开始训练
+
+点击 **开始训练**，等待完成（约 1 小时）
+
+#### Step 6: 合并权重
+
+进入 **权重合并** 页面，选择 checkpoint 并合并
+
+#### Step 7: 评估模型
+
+```bash
+python3 evaluate_massive_model.py \
+  --model output/massive_zh_v1_merged \
+  --test_file amazon_massive_intent_zh-CN/test_converted.jsonl
+```
+
+---
+
+## 🔄 完整工作流程
+
+### 流程图
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                     1. 数据准备阶段                          │
+├─────────────────────────────────────────────────────────────┤
+│                                                              │
+│  MASSIVE 原始数据                                            │
+│  └─ train.jsonl (11,514 条)                                 │
+│                                                              │
+│           ↓ convert_massive_to_training_format.py           │
+│                                                              │
+│  微调格式数据                                                │
+│  └─ train_converted.jsonl                                   │
+│                                                              │
+└─────────────────────────────────────────────────────────────┘
+                            ↓
+┌─────────────────────────────────────────────────────────────┐
+│                     2. 模型微调阶段                          │
+├─────────────────────────────────────────────────────────────┤
+│                                                              │
+│  基础模型: Qwen2.5-1.5B-Instruct                             │
+│  └─ 1.5B 参数                                                │
+│                                                              │
+│           ↓ swift sft (LoRA 微调)                           │
+│                                                              │
+│  训练过程:                                                    │
+│  ├─ Epoch 1: Loss 2.5 → 1.8                                 │
+│  ├─ Epoch 2: Loss 1.8 → 1.2                                 │
+│  └─ Epoch 3: Loss 1.2 → 0.9                                 │
+│                                                              │
+│  输出:                                                       │
+│  └─ output/v0-xxx/                                          │
+│     ├─ checkpoint-500/  (LoRA Adapter 1M 参数)              │
+│     └─ checkpoint-1000/ (LoRA Adapter 1M 参数)              │
+│                                                              │
+└─────────────────────────────────────────────────────────────┘
+                            ↓
+┌─────────────────────────────────────────────────────────────┐
+│                     3. 权重合并阶段                          │
+├─────────────────────────────────────────────────────────────┤
+│                                                              │
+│  基础模型 (1.5B)  +  LoRA Adapter (1M)                       │
+│                                                              │
+│           ↓ swift export --merge_lora                       │
+│                                                              │
+│  完整模型                                                    │
+│  └─ merged_model/ (1.5B 参数)                                │
+│                                                              │
+└─────────────────────────────────────────────────────────────┘
+                            ↓
+┌─────────────────────────────────────────────────────────────┐
+│                     4. 模型量化阶段 (可选)                    │
+├─────────────────────────────────────────────────────────────┤
+│                                                              │
+│  完整模型 (FP16: 3GB)                                         │
+│                                                              │
+│           ↓ swift export --to_int8                          │
+│                                                              │
+│  量化模型 (INT8: 750MB)                                       │
+│  └─ quantized_model/                                        │
+│                                                              │
+└─────────────────────────────────────────────────────────────┘
+                            ↓
+┌─────────────────────────────────────────────────────────────┐
+│                     5. 模型评估阶段                          │
+├─────────────────────────────────────────────────────────────┤
+│                                                              │
+│  测试集: test_converted.jsonl (2,974 条)                     │
+│                                                              │
+│           ↓ evaluate_massive_model.py                       │
+│                                                              │
+│  评估指标:                                                   │
+│  ├─ 总体准确率: 88.5%                                         │
+│  ├─ 各意图准确率                                             │
+│  │  ├─ alarm_set: 92.3%                                     │
+│  │  ├─ music_play: 89.7%                                    │
+│  │  └─ ...                                                  │
+│  └─ 错误样本分析                                             │
+│                                                              │
+└─────────────────────────────────────────────────────────────┘
+                            ↓
+┌─────────────────────────────────────────────────────────────┐
+│                     6. 模型部署使用                          │
+├─────────────────────────────────────────────────────────────┤
+│                                                              │
+│  部署方式:                                                   │
+│  ├─ Python API                                              │
+│  ├─ FastAPI 服务                                             │
+│  ├─ Gradio 演示                                              │
+│  └─ 集成到应用                                               │
+│                                                              │
+└─────────────────────────────────────────────────────────────┘
+```
+
+### 时间估算
+
+基于 RTX 3090 (24GB) 显卡：
+
+| 阶段 | 时间 | 显存占用 |
+|------|------|----------|
+| **数据转换** | < 1 分钟 | N/A |
+| **模型微调** | ~1 小时 | 6-8GB |
+| **权重合并** | ~5 分钟 | 10GB |
+| **模型量化** | ~10 分钟 | 12GB |
+| **模型评估** | ~15 分钟 | 4GB |
+| **总计** | ~1.5 小时 | |
+
+---
+
+## 📁 文件清单
+
+### 核心代码文件
+
+```
+week02/
+├── 微调平台核心
+│   ├── local_ft/
+│   │   ├── __init__.py
+│   │   ├── main_simple.py              # 主程序入口
+│   │   ├── server.py                   # 服务器启动
+│   │   ├── core/
+│   │   │   ├── data_manager.py         # 数据管理
+│   │   │   └── fine_tune_manager.py    # 微调管理
+│   │   └── ui/
+│   │       ├── data_upload.py          # 数据上传界面
+│   │       ├── fine_tune.py            # 微调界面
+│   │       ├── model_merge.py          # 权重合并界面
+│   │       └── quantization.py         # 量化界面
+│   │
+│   ├── requirements_simple.txt         # 依赖列表
+│   └── README_SIMPLE.md                # 平台说明
+│
+├── MASSIVE 数据集
+│   ├── amazon_massive_intent_zh-CN/
+│   │   ├── train.jsonl                 # 原始训练集
+│   │   ├── validation.jsonl            # 原始验证集
+│   │   ├── test.jsonl                  # 原始测试集
+│   │   ├── train_converted.jsonl       # 转换后训练集
+│   │   ├── validation_converted.jsonl  # 转换后验证集
+│   │   └── test_converted.jsonl        # 转换后测试集
+│   │
+│   └── massive-main/                   # 原始工具包
+│
+├── 工具脚本
+│   ├── convert_massive_to_training_format.py  # 数据转换工具
+│   ├── quick_start_massive.sh                 # 快速启动脚本
+│   └── evaluate_massive_model.py              # 模型评估工具
+│
+├── 文档
+│   ├── Week02_微调流程总结.md          # 本文档
+│   ├── MASSIVE_微调指南.md            # 详细指南
+│   ├── README.md                      # 入门指南
+│   └── 2204.08582v2.pdf              # MASSIVE 论文
+│
+└── 配置文件
+    ├── pyproject.toml                 # 项目配置
+    └── uv.toml                        # UV 配置
+```
+
+### 生成的文件
+
+```
+训练过程中生成:
+├── training_data/                     # 数据存储
+│   ├── uploaded/                      # 上传的数据
+│   └── processed/                     # 处理后的数据
+│
+├── output/                            # 训练输出
+│   └── v0-20241216-120000/
+│       ├── checkpoint-500/
+│       │   ├── adapter_config.json
+│       │   └── adapter_model.bin
+│       └── checkpoint-1000/
+│
+├── logs/                              # 训练日志
+│   └── training_20241216_120000.log
+│
+└── merged_model/                      # 合并后的模型
+    ├── config.json
+    ├── pytorch_model.bin
+    └── tokenizer_config.json
+```
+
+---
+
+## 💡 最佳实践
+
+### 1. 数据准备
+
+- ✅ **数据质量** > 数据数量
+- ✅ 确保标注准确性
+- ✅ 数据分布均衡（各意图样本数接近）
+- ✅ 及时清理错误样本
+
+### 2. 参数调优
+
+**显存有限**:
+```bash
+--per_device_train_batch_size 4
+--gradient_accumulation_steps 8
+--lora_rank 8
+```
+
+**追求效果**:
+```bash
+--per_device_train_batch_size 16
+--gradient_accumulation_steps 2
+--lora_rank 16
+--num_train_epochs 5
+```
+
+**平衡配置** (推荐):
+```bash
+--per_device_train_batch_size 8
+--gradient_accumulation_steps 4
+--lora_rank 8
+--num_train_epochs 3
+```
+
+### 3. 训练监控
+
+关注指标：
+- **Loss 下降趋势**: 应平稳下降
+- **验证集准确率**: 不应持续下降（过拟合信号）
+- **GPU 利用率**: 应接近 100%
+- **训练速度**: samples/s
+
+### 4. 模型评估
+
+多维度评估：
+- ✅ 总体准确率
+- ✅ 各意图准确率（找出弱项）
+- ✅ 混淆矩阵分析
+- ✅ 错误样本分析
+- ✅ 边界样本测试
+
+---
+
+## 🐛 常见问题
+
+### Q1: 训练过程 Loss 不下降
+
+**原因分析**:
+- 学习率太大或太小
+- 数据格式错误
+- 数据量不足
+- 模型已收敛
+
+**解决方案**:
+```bash
+# 调整学习率
+--learning_rate 5e-5  # 从 1e-4 降低
+
+# 增加训练轮数
+--num_train_epochs 5
+
+# 检查数据格式
+python3 convert_massive_to_training_format.py --preview
+```
+
+### Q2: 显存不足 (CUDA OOM)
+
+**解决方案**:
+```bash
+# 方案 1: 减小批次大小
+--per_device_train_batch_size 4
+--gradient_accumulation_steps 8
+
+# 方案 2: 使用更小的模型
+--model Qwen/Qwen2.5-0.5B-Instruct
+
+# 方案 3: 降低 LoRA rank
+--lora_rank 4
+
+# 方案 4: 使用 CPU（慢）
+export CUDA_VISIBLE_DEVICES=""
+```
+
+### Q3: 模型推理效果不理想
+
+**优化方向**:
+1. **增加训练数据**: 扩充到 20k+ 样本
+2. **调整 Prompt**: 优化指令模板
+3. **使用更大模型**: Qwen2.5-7B
+4. **增加 LoRA Rank**: 提升到 16 或 32
+5. **数据增强**: 同义改写、回译
+
+### Q4: 训练速度慢
+
+**加速方法**:
+```bash
+# 1. 增大批次大小（如果显存够）
+--per_device_train_batch_size 16
+
+# 2. 使用混合精度训练
+--fp16 true
+
+# 3. 增加数据加载线程
+--dataloader_num_workers 4
+
+# 4. 使用更快的优化器
+--optim adamw_torch_fused
+```
+
+---
+
+## 📚 相关资源
+
+### 官方文档
+
+- [ms-swift GitHub](https://github.com/modelscope/swift)
+- [ms-swift 文档](https://swift.readthedocs.io/)
+- [Qwen 模型](https://huggingface.co/Qwen)
+- [MASSIVE 数据集](https://github.com/alexa/massive)
+
+### 论文
+
+- **LoRA**: [LoRA: Low-Rank Adaptation of Large Language Models](https://arxiv.org/abs/2106.09685)
+- **MASSIVE**: [MASSIVE: A 1M-Example Multilingual Natural Language Understanding Dataset](https://arxiv.org/abs/2204.08582)
+
+### 教程
+
+- [Swift 快速开始](https://swift.readthedocs.io/en/latest/GetStarted/quick-start.html)
+- [LoRA 微调教程](https://swift.readthedocs.io/en/latest/LLM/LoRA.html)
+
+---
+
+## 🎓 总结
+
+### Week02 核心要点
+
+1. **技术架构**
+   - ms-swift 框架
+   - LoRA 参数高效微调
+   - Web 可视化界面
+
+2. **完整流程**
+   - 数据准备 → 模型微调 → 权重合并 → 模型量化 → 评估部署
+
+3. **MASSIVE 数据集**
+   - 16,521 条中文意图分类样本
+   - 60 种意图类别
+   - 已提供转换工具
+
+4. **实用工具**
+   - `convert_massive_to_training_format.py`: 数据转换
+   - `quick_start_massive.sh`: 一键启动
+   - `evaluate_massive_model.py`: 模型评估
+
+5. **最佳实践**
+   - 数据质量优先
+   - 合理参数配置
+   - 多维度评估
+   - 持续优化迭代
+
+---
+
+**最后更新**: 2024-12-16
+**维护者**: AI Engineering Training Team
+**版本**: v1.0
