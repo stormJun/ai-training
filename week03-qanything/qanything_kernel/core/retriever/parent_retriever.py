@@ -212,140 +212,36 @@ class ParentRetriever:
 
     async def get_retrieved_documents(self, query: str, partition_keys: List[str], time_record: dict,
                                       hybrid_search: bool, top_k: int):
-        """
-        混合检索的核心实现：结合向量检索和全文检索
-        
-        【设计原理】
-        1. 向量检索：理解语义相似性，擅长处理同义词、概念匹配
-        2. 全文检索：精确关键词匹配，擅长处理专有名词、数字、代码
-        3. 混合检索：两者结合，既有语义理解又有精确匹配
-        
-        【为什么这样设计】
-        - 单一检索方式都有局限性
-        - 向量检索可能错过精确匹配的重要文档
-        - 全文检索可能错过语义相关但用词不同的文档
-        - 混合检索提供更全面的召回率
-        """
-        
-        # ========== 第一阶段：向量检索 (Milvus) ==========
-        """
-        使用向量数据库进行语义检索
-        - 将查询转换为向量表示
-        - 在高维空间中寻找最相似的文档向量
-        - 擅长理解语义和概念层面的相似性
-        """
         milvus_start_time = time.perf_counter()
-        
-        # 构建过滤表达式：只在指定的知识库中搜索
         expr = f'kb_id in {partition_keys}'
-        
-        # 设置搜索参数
-        # 注释掉的MMR(Maximal Marginal Relevance)算法可以增加结果多样性，但这里使用简单的相似度搜索
         # self.retriever.set_search_kwargs("mmr", k=VECTOR_SEARCH_TOP_K, expr=expr)
         self.retriever.set_search_kwargs("similarity", k=top_k, expr=expr)
-        
-        # 执行向量检索
         query_docs = await self.retriever.aget_relevant_documents(query)
-        
-        # 标记检索来源，便于后续分析和调试
         for doc in query_docs:
             doc.metadata['retrieval_source'] = 'milvus'
-            
         milvus_end_time = time.perf_counter()
         time_record['retriever_search_by_milvus'] = round(milvus_end_time - milvus_start_time, 2)
 
-        # ========== 混合检索开关判断 ==========
-        """
-        如果不启用混合检索，直接返回向量检索结果
-        这样设计的好处：
-        1. 灵活性：可以根据场景选择检索策略
-        2. 性能：某些场景下只需要向量检索，节省计算资源
-        3. 调试：便于对比不同检索策略的效果
-        """
         if not hybrid_search:
             return query_docs
 
-        # ========== 第二阶段：全文检索 (Elasticsearch) ==========
-        """
-        使用Elasticsearch进行关键词检索
-        - 基于倒排索引进行精确匹配
-        - 擅长处理专有名词、数字、代码片段等
-        - 补充向量检索可能遗漏的精确匹配文档
-        """
         try:
-            # 构建ES查询过滤器：同样只在指定知识库中搜索
-            # 注释掉的代码显示了另一种构建过滤器的方式
             # filter = []
             # for partition_key in partition_keys:
             filter = [{"terms": {"metadata.kb_id.keyword": partition_keys}}]
-            
-            # 执行ES检索，获取子文档（chunk级别的文档片段）
             es_sub_docs = await self.es_store.asimilarity_search(query, k=top_k, filter=filter)
-            
-            # ========== 去重处理：避免重复文档 ==========
-            """
-            为什么需要去重？
-            1. 向量检索和全文检索可能返回相同的文档
-            2. 重复文档会浪费token，降低信息密度
-            3. 影响后续的重排序和过滤效果
-            
-            去重策略：
-            1. 收集已有的Milvus文档ID
-            2. 只添加ES独有的文档
-            3. 确保每个文档只出现一次
-            """
             es_ids = []
             milvus_doc_ids = [d.metadata[self.retriever.id_key] for d in query_docs]
-            
-            # 遍历ES检索结果，筛选出不重复的文档ID
             for d in es_sub_docs:
-                doc_id = d.metadata.get(self.retriever.id_key)
-                if (doc_id and 
-                    doc_id not in es_ids and           # 避免ES内部重复
-                    doc_id not in milvus_doc_ids):     # 避免与Milvus结果重复
-                    es_ids.append(doc_id)
-            
-            # ========== 获取完整文档内容 ==========
-            """
-            为什么需要这一步？
-            1. ES检索返回的是子文档(chunk)，需要获取完整的父文档
-            2. 保持与Milvus检索结果的格式一致性
-            3. 确保后续处理流程的统一性
-            """
+                if self.retriever.id_key in d.metadata and d.metadata[self.retriever.id_key] not in es_ids and d.metadata[self.retriever.id_key] not in milvus_doc_ids:
+                    es_ids.append(d.metadata[self.retriever.id_key])
             es_docs = await self.retriever.docstore.amget(es_ids)
-            es_docs = [d for d in es_docs if d is not None]  # 过滤掉可能的None值
-            
-            # 标记ES检索来源
+            es_docs = [d for d in es_docs if d is not None]
             for doc in es_docs:
                 doc.metadata['retrieval_source'] = 'es'
-                
-            # 记录ES检索耗时
             time_record['retriever_search_by_es'] = round(time.perf_counter() - milvus_end_time, 2)
-            
-            # 记录检索统计信息，便于监控和调优
             debug_logger.info(f"Got {len(query_docs)} documents from vectorstore and {len(es_sub_docs)} documents from es, total {len(query_docs) + len(es_docs)} merged documents.")
-            
-            # ========== 结果合并 ==========
-            """
-            简单的列表合并策略：
-            1. 先放置向量检索结果（通常质量更稳定）
-            2. 再添加ES独有的结果（作为补充）
-            3. 后续会通过重排序模型重新排序
-            
-            为什么不在这里做复杂的分数融合？
-            1. 向量相似度分数和ES分数的量纲不同，直接融合意义不大
-            2. 重排序模型会重新计算所有文档的相关性分数
-            3. 保持代码简洁，职责分离
-            """
             query_docs.extend(es_docs)
-            
         except Exception as e:
-            """
-            容错处理：ES检索失败不应该影响整个检索流程
-            1. 记录错误日志，便于问题排查
-            2. 继续返回向量检索结果，保证基本功能
-            3. 避免因为ES问题导致整个系统不可用
-            """
             debug_logger.error(f"Error in get_retrieved_documents on es_search: {e}")
-            
         return query_docs

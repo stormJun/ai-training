@@ -38,4 +38,4 @@ dependencies = [
 vllm = ["vllm"]
 
 [tool.setuptools]
-packages = ["p11", "p12"]
+packages = ["p11", "vllm_wrapper_demo"]

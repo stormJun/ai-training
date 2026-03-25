@@ -1,0 +1,21 @@
+# VTJ Token 缓存文件（敏感信息）
+.vtj_token_cache.json
+.vtj_token_history.jsonl
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# 输出文件
+outputs/
+*.mp4
+*.m3u8
+*.ts
+
+# 临时文件
+*.part
+*.tmp
+
+# macOS
+.DS_Store

@@ -33,71 +33,33 @@ import re
 
 
 class LocalDocQA:
-    """
-    本地文档问答系统核心类 - 实现完整的RAG(Retrieval-Augmented Generation)能力
-    
-    核心RAG流程：
-    1. 文档检索(Retrieval): 通过向量相似度和混合搜索从知识库中检索相关文档
-    2. 重排序(Rerank): 使用专门的重排序模型对检索结果进行精确排序
-    3. 上下文构建: 智能处理token限制，构建最优的prompt上下文
-    4. 生成回答(Generation): 基于检索到的文档生成准确回答
-    
-    为什么要这样设计：
-    - 多模态检索: 结合向量检索(语义相似)和关键词检索(精确匹配)提高召回率
-    - 智能重排序: 解决向量检索可能的语义偏差，提高检索精度
-    - Token优化: 在有限的上下文窗口内最大化有用信息的利用
-    - 流式生成: 提供更好的用户体验，支持实时响应
-    """
-    
     def __init__(self, port):
-        """
-        初始化LocalDocQA实例
-        
-        Args:
-            port: 服务端口号
-        """
         self.port = port
-        self.milvus_cache = None  # Milvus向量数据库缓存
-        self.embeddings: YouDaoEmbeddings = None  # 文本嵌入模型，用于将文本转换为向量
-        self.rerank: YouDaoRerank = None  # 重排序模型，用于对检索结果进行精确排序
-        self.chunk_conent: bool = True  # 是否启用文档分块
-        self.score_threshold: int = VECTOR_SEARCH_SCORE_THRESHOLD  # 向量检索分数阈值
-        self.milvus_kb: VectorStoreMilvusClient = None  # Milvus向量数据库客户端
-        self.retriever: ParentRetriever = None  # 父级检索器，整合多种检索策略
-        self.milvus_summary: KnowledgeBaseManager = None  # 知识库管理器
-        self.es_client: StoreElasticSearchClient = None  # ElasticSearch客户端，用于关键词检索
-        self.session = self.create_retry_session(retries=3, backoff_factor=1)  # HTTP会话，支持重试机制
-        # 文档分割器，用于将长文档分割成适合嵌入的小块
+        self.milvus_cache = None
+        self.embeddings: YouDaoEmbeddings = None
+        self.rerank: YouDaoRerank = None
+        self.chunk_conent: bool = True
+        self.score_threshold: int = VECTOR_SEARCH_SCORE_THRESHOLD
+        self.milvus_kb: VectorStoreMilvusClient = None
+        self.retriever: ParentRetriever = None
+        self.milvus_summary: KnowledgeBaseManager = None
+        self.es_client: StoreElasticSearchClient = None
+        self.session = self.create_retry_session(retries=3, backoff_factor=1)
         self.doc_splitter = CharacterTextSplitter(
-            chunk_size=LOCAL_EMBED_MAX_LENGTH / 2,  # 分块大小为最大嵌入长度的一半
-            chunk_overlap=0,  # 分块间无重叠
-            length_function=len  # 使用字符长度计算
+            chunk_size=LOCAL_EMBED_MAX_LENGTH / 2,
+            chunk_overlap=0,
+            length_function=len
         )
 
     @staticmethod
     def create_retry_session(retries, backoff_factor):
-        """
-        创建带重试机制的HTTP会话
-        
-        为什么需要重试机制：
-        - 网络不稳定时保证服务可用性
-        - 处理临时的服务器错误(5xx错误)
-        - 提高系统的鲁棒性和用户体验
-        
-        Args:
-            retries: 重试次数
-            backoff_factor: 退避因子，控制重试间隔
-            
-        Returns:
-            配置了重试策略的requests.Session对象
-        """
         session = requests.Session()
         retry = Retry(
-            total=retries,  # 总重试次数
-            read=retries,   # 读取重试次数
-            connect=retries,  # 连接重试次数
-            backoff_factor=backoff_factor,  # 重试间隔的退避因子
-            status_forcelist=[500, 502, 503, 504],  # 需要重试的HTTP状态码
+            total=retries,
+            read=retries,
+            connect=retries,
+            backoff_factor=backoff_factor,
+            status_forcelist=[500, 502, 503, 504],
         )
         adapter = HTTPAdapter(max_retries=retry)
         session.mount('http://', adapter)
@@ -105,26 +67,11 @@ class LocalDocQA:
         return session
 
     def init_cfg(self, args=None):
-        """
-        初始化配置 - 构建完整的RAG技术栈
-        
-        为什么需要这些组件：
-        1. YouDaoEmbeddings: 将文本转换为高维向量，支持语义相似度计算
-        2. YouDaoRerank: 对初步检索结果进行精确重排序，提高相关性
-        3. KnowledgeBaseManager: 管理知识库元数据和文档索引
-        4. VectorStoreMilvusClient: 高性能向量数据库，支持大规模向量检索
-        5. StoreElasticSearchClient: 全文检索引擎，支持关键词精确匹配
-        6. ParentRetriever: 整合多种检索策略的统一检索器
-        
-        Args:
-            args: 可选的配置参数
-        """
-        self.embeddings = YouDaoEmbeddings()  # 初始化嵌入模型
-        self.rerank = YouDaoRerank()  # 初始化重排序模型
-        self.milvus_summary = KnowledgeBaseManager()  # 初始化知识库管理器
-        self.milvus_kb = VectorStoreMilvusClient()  # 初始化向量数据库客户端
-        self.es_client = StoreElasticSearchClient()  # 初始化ElasticSearch客户端
-        # 初始化父级检索器，整合向量检索和关键词检索
+        self.embeddings = YouDaoEmbeddings()
+        self.rerank = YouDaoRerank()
+        self.milvus_summary = KnowledgeBaseManager()
+        self.milvus_kb = VectorStoreMilvusClient()
+        self.es_client = StoreElasticSearchClient()
         self.retriever = ParentRetriever(self.milvus_kb, self.milvus_summary, self.es_client)
 
     @get_time
@@ -162,102 +109,46 @@ class LocalDocQA:
 
     @get_time_async
     async def get_source_documents(self, query, retriever: ParentRetriever, kb_ids, time_record, hybrid_search, top_k):
-        """
-        从知识库检索相关文档 - RAG的核心检索阶段
-        
-        为什么这样设计检索流程：
-        1. 混合检索策略: 结合向量检索(语义相似)和关键词检索(精确匹配)
-        2. 容错机制: 当Milvus连接失败时自动重启客户端，保证服务可用性
-        3. 文档过滤: 过滤已删除的文档，确保检索结果的有效性
-        4. 分数标准化: 为后续重排序提供统一的分数基准
-        
-        Args:
-            query: 用户查询
-            retriever: 检索器实例
-            kb_ids: 知识库ID列表
-            time_record: 时间记录字典
-            hybrid_search: 是否启用混合搜索
-            top_k: 返回的文档数量
-            
-        Returns:
-            检索到的相关文档列表
-        """
         source_documents = []
         start_time = time.perf_counter()
-        
-        # 执行文档检索，支持向量检索和混合检索
         query_docs = await retriever.get_retrieved_documents(query, partition_keys=kb_ids, time_record=time_record,
                                                              hybrid_search=hybrid_search, top_k=top_k)
-        
-        # 容错处理：如果检索失败，重启Milvus客户端并重试
         if len(query_docs) == 0:
             debug_logger.warning("MILVUS SEARCH ERROR, RESTARTING MILVUS CLIENT!")
             retriever.vectorstore_client = VectorStoreMilvusClient()
             debug_logger.warning("MILVUS CLIENT RESTARTED!")
             query_docs = await retriever.get_retrieved_documents(query, partition_keys=kb_ids, time_record=time_record,
                                                                     hybrid_search=hybrid_search, top_k=top_k)
-        
         end_time = time.perf_counter()
         time_record['retriever_search'] = round(end_time - start_time, 2)
         debug_logger.info(f"retriever_search time: {time_record['retriever_search']}s")
-        
-        # 处理检索结果，添加元数据和分数标准化
+        # debug_logger.info(f"query_docs num: {len(query_docs)}, query_docs: {query_docs}")
         for idx, doc in enumerate(query_docs):
-            # 过滤已删除的文档
             if retriever.mysql_client.is_deleted_file(doc.metadata['file_id']):
                 debug_logger.warning(f"file_id: {doc.metadata['file_id']} is deleted")
                 continue
-            
-            doc.metadata['retrieval_query'] = query  # 记录检索查询，用于后续分析
-            doc.metadata['embed_version'] = self.embeddings.embed_version  # 记录嵌入模型版本
-            
-            # 如果没有分数，使用位置倒序作为默认分数
+            doc.metadata['retrieval_query'] = query  # 添加查询到文档的元数据中
+            doc.metadata['embed_version'] = self.embeddings.embed_version
             if 'score' not in doc.metadata:
-                doc.metadata['score'] = 1 - (idx / len(query_docs))
-            
+                doc.metadata['score'] = 1 - (idx / len(query_docs))  # TODO 这个score怎么获取呢
             source_documents.append(doc)
-        
         debug_logger.info(f"embed scores: {[doc.metadata['score'] for doc in source_documents]}")
+        # if cosine_thresh:
+        #     source_documents = [item for item in source_documents if float(item.metadata['score']) > cosine_thresh]
+
         return source_documents
 
     def reprocess_source_documents(self, custom_llm: OpenAILLM, query: str,
                                    source_docs: List[Document],
                                    history: List[str],
                                    prompt_template: str) -> Tuple[List[Document], int, str]:
-        """
-        智能处理源文档以适应Token限制 - RAG系统的关键优化环节
-        
-        为什么需要这个函数：
-        1. Token限制: LLM有固定的上下文窗口，需要在有限空间内最大化信息利用
-        2. 成本控制: 减少不必要的token消耗，降低API调用成本
-        3. 质量保证: 确保最相关的文档内容能够被包含在prompt中
-        4. 性能优化: 避免超长prompt导致的响应延迟
-        
-        处理策略：
-        - 精确计算各部分token消耗
-        - 优先保留高质量文档
-        - 智能截断而非简单丢弃
-        
-        Args:
-            custom_llm: LLM实例
-            query: 用户查询
-            source_docs: 源文档列表
-            history: 对话历史
-            prompt_template: prompt模板
-            
-        Returns:
-            (处理后的文档列表, 可用token数量, token使用说明)
-        """
-        # 精确计算各部分的token消耗
-        query_token_num = int(custom_llm.num_tokens_from_messages([query]) * 4)  # 查询token数(预留4倍空间)
-        history_token_num = int(custom_llm.num_tokens_from_messages([x for sublist in history for x in sublist]))  # 历史对话token数
-        template_token_num = int(custom_llm.num_tokens_from_messages([prompt_template]))  # 模板token数
+        # 组装prompt,根据max_token
+        query_token_num = int(custom_llm.num_tokens_from_messages([query]) * 4)
+        history_token_num = int(custom_llm.num_tokens_from_messages([x for sublist in history for x in sublist]))
+        template_token_num = int(custom_llm.num_tokens_from_messages([prompt_template]))
 
-        # 计算引用标签的token消耗
         reference_field_token_num = int(custom_llm.num_tokens_from_messages(
             [f"<reference>[{idx + 1}]</reference>" for idx in range(len(source_docs))]))
-        
-        # 计算文档可用的token数量 = 总窗口 - 输出预留 - 安全边界 - 各固定部分
         limited_token_nums = custom_llm.token_window - custom_llm.max_token - custom_llm.offcut_token - query_token_num - history_token_num - template_token_num - reference_field_token_num
 
         debug_logger.info(f"=============================================")
