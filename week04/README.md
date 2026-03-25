@@ -2,6 +2,13 @@
 
 本项目包含一系列用于学习 LangChain 的 Jupyter notebook 文件。
 
+## 资料导航（建议）
+
+- LangGraph 工程化笔记：`docs/langgraph.md`
+- LangGraph 工程模板：
+  - `app/`：LangGraph Server + Studio（适合演示/可视化调试）
+  - `app2/`：工作流工程化示例（分层 + pytest）
+
 ## 开始使用
 
 以下说明将帮助您在本地机器上设置和运行此项目，以便进行开发和学习。

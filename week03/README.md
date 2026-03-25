@@ -82,7 +82,7 @@ cp ./code/.env.example ./code/.env
     这将启动 Jupyter 服务，并在您的默认网络浏览器中打开一个新标签页。
 
 2.  **打开 Notebook 文件:**
-    在浏览器标签页中，导航到 `code/` 目录，然后单击任何 `.ipynb` 文件以打开并运行它。
+    在浏览器标签页中，导航到 `code/llamaindex/` 目录（LlamaIndex 相关 notebook 已集中在这里），然后单击 `.ipynb` 文件以打开并运行它。
 
 3.  **选择内核:**
     可以在 **Kernel > Change kernel** 菜单中看到并选择 **"AI工程化(week03)"**。这可以确保您的 notebook 在正确的项目环境中运行。

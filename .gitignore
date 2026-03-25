@@ -74,3 +74,6 @@ checkpoints/
 *.zip
 *.rar
 *.7z
+
+# Neo4j data (generated locally)
+homework_examples/week03-homework-2/neo4j_data/

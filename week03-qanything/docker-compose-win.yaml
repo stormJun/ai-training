@@ -105,7 +105,6 @@ services:
   qanything_local:
     container_name: qanything-container-local
     image: xixihahaliu01/qanything-win:v1.5.1
-    ### 入口
     command: /bin/bash -c "cd /workspace/QAnything && bash scripts/entrypoint.sh"
     privileged: true
     shm_size: '8gb'

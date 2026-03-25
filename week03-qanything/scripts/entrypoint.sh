@@ -55,7 +55,7 @@ if [ ! -L "/workspace/QAnything/nltk_data" ]; then  # 如果不存在软连接
 fi
 
 cd /workspace/QAnything || exit
-### 找到启动的服务
+
 echo "embedding和rerank服务将在CPU上运行"
 nohup python3 -u qanything_kernel/dependent_server/rerank_server/rerank_server.py > /workspace/QAnything/logs/debug_logs/rerank_server.log 2>&1 &
 PID1=$!
