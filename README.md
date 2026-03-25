@@ -1,30 +1,60 @@
-# 项目总 README
+# AI 工程化训练营知识点总览
 
-本仓库为 “AI 工程化训练营” 的统一入口，汇总每周的课程资料、代码样例与练习项目。  
-本文件仅为总览；每周的详细说明、运行步骤与依赖请务必进入对应周目录查看其 README。
+本仓库按知识点而不是按周次组织，方便回顾、复习和按主题查找资料。大部分目录都是相对独立的 Python、Notebook 或项目工作区，进入对应目录后再查看各自的 `README.md`、依赖和运行方式。
 
-# 重要说明
+## 目录导航
 
-请进入每周目录查看更详细的 README
+- `01_llm_api_and_tool_calling/`
+  - 模型 API 调用、HTTP 请求、Tool Calling、LangChain/LangGraph/LlamaIndex 入门
+  - 入口：[`01_llm_api_and_tool_calling/foundations/README.md`](01_llm_api_and_tool_calling/foundations/README.md)
+- `02_finetuning_and_peft/`
+  - LoRA / QLoRA / PEFT、本地微调平台、量化和数据处理
+  - 入口：[`02_finetuning_and_peft/foundations/README.md`](02_finetuning_and_peft/foundations/README.md)
+- `03_rag_and_retrieval/`
+  - LlamaIndex、RAG、Ragas、Local RAG、QAnything 案例
+  - 入口：
+    - [`03_rag_and_retrieval/llamaindex_and_ragas/README.md`](03_rag_and_retrieval/llamaindex_and_ragas/README.md)
+    - [`03_rag_and_retrieval/local_rag_project/README.md`](03_rag_and_retrieval/local_rag_project/README.md)
+    - [`03_rag_and_retrieval/qanything_case_study/README_zh.md`](03_rag_and_retrieval/qanything_case_study/README_zh.md)
+- `04_workflow_orchestration/`
+  - LangChain、LangGraph、工作流编排、Agent 工程化和示例项目
+  - 入口：
+    - [`04_workflow_orchestration/langchain_langgraph_foundations/README.md`](04_workflow_orchestration/langchain_langgraph_foundations/README.md)
+    - [`04_workflow_orchestration/langgraph_demo_project/README.md`](04_workflow_orchestration/langgraph_demo_project/README.md)
+- `05_multi_agent_and_protocols/`
+  - 多 Agent 协作、MCP、A2A、LangGraph MAS
+  - 入口：[`05_multi_agent_and_protocols/foundations/README.md`](05_multi_agent_and_protocols/foundations/README.md)
+- `06_dsl_and_rule_engines/`
+  - DSL 设计、Lark/ANTLR、规则引擎、Text-to-SQL 中间表示
+  - 入口：[`06_dsl_and_rule_engines/foundations/README.md`](06_dsl_and_rule_engines/foundations/README.md)
+- `07_agent_memory_and_advanced_capabilities/`
+  - Agent Memory、知识图谱记忆、RPA、小模型优化
+  - 入口：[`07_agent_memory_and_advanced_capabilities/foundations/README.md`](07_agent_memory_and_advanced_capabilities/foundations/README.md)
+- `08_serving_deployment_and_observability/`
+  - FastAPI 服务化、Docker、Kubernetes、ELK、Prometheus、Ray
+  - 入口：[`08_serving_deployment_and_observability/foundations/README.md`](08_serving_deployment_and_observability/foundations/README.md)
+- `09_python_async_and_performance/`
+  - `asyncio`、并发性能、异步 Web API、性能压测与分析
+  - 入口：[`09_python_async_and_performance/foundations/README.md`](09_python_async_and_performance/foundations/README.md)
+- `10_capstone_customer_service/`
+  - 智能客服综合项目、RAG + LangGraph + Tool + 多租户 + 前后端
+  - 入口：[`10_capstone_customer_service/customer_service_platform/README.md`](10_capstone_customer_service/customer_service_platform/README.md)
 
+## 其他目录
 
-# 学习周目录
-- 第 1 周：[`week01/README.md`](week01/README.md)
-- 第 2 周：[`week02/README.md`](week02/README.md)
-- 第 3 周：
-    - LlamaIndex Notebook实验: [`week03/README.md`](week03/README.md)
-    - Local Rag项目: [`week03-local-rag/README.md`](week03-local-rag/README.md)
-    - QAnything项目解析: [`week03-qanything/README_zh.md`](week03-qanything/README_zh.md)
-- 第 4 周：[`week04/README.md`](week04/README.md)
-- 第 5 周：[`week05/README.md`](week05/README.md)
-- 第 6 周：[`week06/README.md`](week06/README.md)
-- 第 7 周：[`week07/README.md`](week07/README.md)
-- 第 8 周：[`week08/README.md`](week08/README.md)
-- 第 9 周：[`week09/README.md`](week09/README.md)
-- 第 10 周：[`week10/README.md`](week10/README.md)
+- `assignments/`
+  - 课程作业与作业参考答案
+- `reference_projects/`
+  - 独立参考项目和扩展项目
+- `archive/`
+  - 历史实验和暂不纳入主线结构的内容
+- `scripts/`
+  - 仓库级辅助脚本
+- `docs/plans/`
+  - 仓库级重构或实现计划
 
-# 优秀作业示例
-- [`homework_examples/`](homework_examples/README.md)
+## 重要说明
 
-
-祝学习顺利！
+- 不同知识点目录通常有各自独立的依赖和运行方式，不要默认共用同一个虚拟环境。
+- 运行命令、环境变量和测试方式请以对应子目录的 `README.md` 或 `pyproject.toml` 为准。
+- 如需快速理解仓库结构，优先从本文件和目标知识点目录下的 `README.md` 开始。
