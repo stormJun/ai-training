@@ -29,7 +29,7 @@
 2.  **克隆仓库 (可选):**
     ```bash
     git clone <repository_url>
-    cd 03_rag_and_retrieval/local_rag_project
+    cd 16_local_rag_project/local_rag_project
     ```
 
 3.  **创建虚拟环境:**

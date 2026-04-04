@@ -657,7 +657,7 @@ Python:
 ### 步骤 1: 安装 Python 依赖
 
 ```bash
-cd 11_extension_topics/multimodal_clip_search/p25-CLIP
+cd 54_multimodal_clip_search/multimodal_clip_search/p25-CLIP
 
 # 安装核心依赖
 pip install -r requirements.txt
@@ -1993,7 +1993,7 @@ with CLIPImageSearchSystem(log_level="INFO") as search_system:
 ### 运行示例
 
 ```bash
-cd 11_extension_topics/multimodal_clip_search/p25-CLIP
+cd 54_multimodal_clip_search/multimodal_clip_search/p25-CLIP
 
 # 首次运行: 完整流程
 python main.py
@@ -3149,4 +3149,4 @@ stats.print_stats(20)  # 打印 Top 20 最耗时函数
 **文档版本**: v1.0
 **最后更新**: 2025-12-16
 **维护者**: AI Engineering Training Team
-**基于项目**: 11_extension_topics/multimodal_clip_search/p25-CLIP
+**基于项目**: 54_multimodal_clip_search/multimodal_clip_search/p25-CLIP

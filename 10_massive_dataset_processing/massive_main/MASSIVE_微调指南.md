@@ -57,7 +57,7 @@ amazon_massive_intent_zh-CN/
 
 ### 步骤 1: 数据格式转换
 
-02_finetuning_and_peft/foundations 微调平台需要以下格式：
+09_finetuning_overview 微调平台需要以下格式：
 
 **方案 A: 指令格式** (推荐用于指令微调)
 ```json
@@ -84,7 +84,7 @@ amazon_massive_intent_zh-CN/
 我们提供了自动转换脚本：
 
 ```bash
-cd 02_finetuning_and_peft/foundations
+cd 09_finetuning_overview
 
 # 转换训练集（指令格式）
 python convert_massive_to_training_format.py \
@@ -122,7 +122,7 @@ head -n 3 amazon_massive_intent_zh-CN/train_converted.jsonl | python -m json.too
 #### 1️⃣ 启动微调平台
 
 ```bash
-cd 02_finetuning_and_peft/foundations
+cd 09_finetuning_overview
 python -m local_ft.server
 ```
 

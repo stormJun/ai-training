@@ -1,6 +1,6 @@
 # MASSIVE 中文意图数据加工说明
 
-该目录内的所有文件都来源于 `02_finetuning_and_peft/foundations/chinese_data/zh-CN.jsonl`（MASSIVE 1.1 的 zh-CN 切分），只是根据不同训练场景做了预处理，方便直接喂给分类、指令或对话模型。原始数据的 `partition` 字段被拆分为多个文件，槽位等冗余字段被剥离或改写；若需要完整标注，请回到 `02_finetuning_and_peft/foundations/chinese_data/README.md` 与 `zh-CN.jsonl`。
+该目录内的所有文件都来源于 `10_massive_dataset_processing/chinese_data/zh-CN.jsonl`（MASSIVE 1.1 的 zh-CN 切分），只是根据不同训练场景做了预处理，方便直接喂给分类、指令或对话模型。原始数据的 `partition` 字段被拆分为多个文件，槽位等冗余字段被剥离或改写；若需要完整标注，请回到 `10_massive_dataset_processing/chinese_data/README.md` 与 `zh-CN.jsonl`。
 
 ## 文件与用途概览
 
@@ -85,7 +85,7 @@
 
 ## 使用建议
 
-1. **需要槽位/场景？** 返回 `02_finetuning_and_peft/foundations/chinese_data/zh-CN.jsonl`，自行处理所需字段。
+1. **需要槽位/场景？** 返回 `10_massive_dataset_processing/chinese_data/zh-CN.jsonl`，自行处理所需字段。
 2. **只做意图分类？** 直接使用 `train/validation/test`.jsonl`，配合 `label_text` 构建标签映射。
 3. **指令/聊天模型？** 根据模型输入格式选取 `*_converted.jsonl` 或 `train_chat.jsonl/Mytrain.jsonl`，无需再写转换脚本。
 4. **Few-shot prompt**：可引用 `Template_Trainingdata.jsonl` 或从 `train_chat.jsonl` 采样数条作为示例。

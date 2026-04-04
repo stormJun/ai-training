@@ -16,7 +16,7 @@
 1.  **安装依赖:**
     在项目根目录中打开终端，然后运行：
     ```bash
-	cd 03_rag_and_retrieval/llamaindex_and_ragas
+	cd 13_llamaindex_retrieval_basics
 	pip install uv
     uv sync --locked
     ```

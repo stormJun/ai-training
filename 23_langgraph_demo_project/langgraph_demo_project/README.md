@@ -1,4 +1,4 @@
-# 04_workflow_orchestration/langgraph_demo_project
+# 23_langgraph_demo_project/langgraph_demo_project
 
 一个可运行的 `LangGraph Master / Subagent` 演示项目，参考
 `AIAgent/第7章/7.7/LangGraph-a2a`，但去掉了外部模型、A2A 协议依赖和绝对路径数据，改成离线可运行的本地版本。
@@ -6,7 +6,7 @@
 ## 项目结构
 
 ```text
-04_workflow_orchestration/langgraph_demo_project
+23_langgraph_demo_project/langgraph_demo_project
 ├── src/langgraph_demo
 │   ├── apps/
 │   │   ├── stock_service.py
@@ -37,7 +37,7 @@
 ## 快速开始
 
 ```bash
-cd /Users/songxijun/workspace/otherProject/ai-training/04_workflow_orchestration/langgraph_demo_project
+cd /Users/songxijun/workspace/otherProject/ai-training/23_langgraph_demo_project/langgraph_demo_project
 python3 -m venv .venv
 source .venv/bin/activate
 pip install '.[dev]'

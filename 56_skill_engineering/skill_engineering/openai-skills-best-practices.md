@@ -2,7 +2,7 @@
 
 更新时间：2026-03-26
 
-这份文档用于补充 `05_multi_agent_and_protocols/foundations` 目录下关于多 Agent 工作流复用能力的学习材料，重点整理 OpenAI 官方文档里关于 `skills` 的定义、使用方式和最佳实践。
+这份文档用于补充 `27_autogen_two_agent_chat` 目录下关于多 Agent 工作流复用能力的学习材料，重点整理 OpenAI 官方文档里关于 `skills` 的定义、使用方式和最佳实践。
 
 ## 1. 先给结论
 

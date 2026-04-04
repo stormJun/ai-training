@@ -90,7 +90,7 @@ The mainline becomes a flat ordered set of single-topic directories:
 - `17_qanything_case_study`
 - `18_prompt_templates`
 - `19_output_parsing_and_chains`
-- `20_routing_and_react`
+- `20_routing_react_and_tools`
 - `21_langgraph_workflows`
 - `22_langgraph_service_apps`
 - `23_langgraph_demo_project`
@@ -112,14 +112,14 @@ The mainline becomes a flat ordered set of single-topic directories:
 - `39_redis_memory_and_reliability`
 - `40_fastapi_llm_serving`
 - `41_multimodal_fastapi_serving`
-- `42_dockerized_workflow_app`
+- `42_dockerized_service_apps`
 - `43_kubernetes_deployment`
 - `44_elk_observability`
 - `45_prometheus_ollama_exporter`
 - `46_ray_serve_streaming`
 - `47_asyncio_basics`
-- `48_asyncio_primitives_and_executors`
-- `49_io_concurrency_patterns`
+- `48_asyncio_primitives_and_gil`
+- `49_async_web_patterns`
 - `50_performance_benchmarking`
 - `51_async_multiprocess_hybrid`
 - `52_customer_service_platform`

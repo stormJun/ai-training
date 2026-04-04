@@ -1,21 +1,27 @@
 # Repository Guidelines
 
-This repository collects topic-based materials, assignments, and reference projects for the “AI 工程化训练营”. Each topic area is a mostly self-contained Python or notebook workspace.
+This repository collects single-topic learning workspaces, assignments, and reference projects for the “AI 工程化训练营”. Each numbered topic directory represents one knowledge theme or one self-contained project.
 
 ## Project Structure & Module Organization
 
-- `01_llm_api_and_tool_calling/` through `10_capstone_customer_service/`: primary learning tracks organized by knowledge topic rather than week number.
+- `01_environment_setup/` through `58_learning_methodology/`: the primary numbered learning path, flattened so each directory maps to exactly one topic.
+- Some numbered directories are lightweight script or notebook workspaces.
+- Some numbered directories remain full runnable projects, for example `16_local_rag_project/`, `17_qanything_case_study/`, `23_langgraph_demo_project/`, and `52_customer_service_platform/`.
 - `assignments/`: homework directories and curated example answers; avoid changing example solutions unless fixing a clear bug.
 - `reference_projects/`: larger end-to-end applications and extension projects, typically organized into `core/`, `agents/`, `config/`, `tools/`, `scripts/`, or `app/`.
 - `archive/`: historical experiments and non-primary materials kept for reference only.
-- Work inside the relevant topic or project subdirectory; do not assume shared virtual environments across topics or projects.
+- `shared_assets/`: shared notes, migrated overview docs, and auxiliary non-topic-specific assets.
+- `runtime_artifacts/`: local runtime outputs, moved virtual environments, indexes, caches, or other generated assets that should not define the learning structure.
 
 ## Build, Test, and Development Commands
 
-- Typical setup pattern (per subproject):
-  - `cd 04_workflow_orchestration/langchain_langgraph_foundations && uv sync --locked`
-  - `cd 03_rag_and_retrieval/local_rag_project && python -m venv .venv && source .venv/bin/activate && pip install -r requirements.txt`
-- Run apps from their own root, e.g. `python main.py` or `uvicorn main:app --reload` as documented in the local README.
+- Work from the relevant topic or project root instead of assuming a single shared environment.
+- Typical setup patterns:
+  - `cd 40_fastapi_llm_serving && uv sync --locked`
+  - `cd 16_local_rag_project/local_rag_project && python -m venv .venv && source .venv/bin/activate && pip install -r requirements.txt`
+  - `cd 23_langgraph_demo_project/langgraph_demo_project && uv sync --locked`
+- Script-only topics may rely on dependency anchors kept in nearby overview directories such as `01_environment_setup/`, `09_finetuning_overview/`, `13_llamaindex_retrieval_basics/`, `18_prompt_templates/`, `27_autogen_two_agent_chat/`, `33_dsl_design_basics/`, `36_memory_patterns_basics/`, `40_fastapi_llm_serving/`, and `47_asyncio_basics/`.
+- Run apps from their own root, for example `python main.py` or `uvicorn main:app --reload`, as documented in the local README or project files.
 
 ## Coding Style & Naming Conventions
 
@@ -26,14 +32,14 @@ This repository collects topic-based materials, assignments, and reference proje
 ## Testing Guidelines
 
 - Tests live under `tests/` within each subproject and commonly use `pytest` or `pytest-asyncio`.
-- From a subproject root, run `pytest` or project-specific targets described in its README or `Makefile` such as `04_workflow_orchestration/langchain_langgraph_foundations/app/Makefile`.
+- From a subproject root, run `pytest` or project-specific targets described in its README or `Makefile`.
 - For new features, add tests that mirror existing patterns and keep them fast and deterministic; aim for meaningful coverage rather than a specific percentage.
 
 ## Commit & Pull Request Guidelines
 
-- This copy has no shared Git history; follow a Conventional Commits-style prefix where possible, for example `feat: add RAG retry policy` or `fix: handle missing DASHSCOPE_API_KEY`.
+- Follow a Conventional Commits-style prefix where possible, for example `feat: add RAG retry policy` or `fix: handle missing DASHSCOPE_API_KEY`.
 - Keep commits focused and reversible; avoid mixing formatting with behavioral changes.
-- Pull requests should include: motivation and scope, affected directory such as `06_dsl_and_rule_engines/` or `reference_projects/project2_2/`, setup or migration notes, and how to run tests; attach logs or screenshots for UI or API changes.
+- Pull requests should include: motivation and scope, affected directory such as `35_dsl_agent_and_db_gateway/` or `reference_projects/project2_2/`, setup or migration notes, and how to run tests; attach logs or screenshots for UI or API changes.
 
 ## Security & Configuration
 

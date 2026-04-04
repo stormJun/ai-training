@@ -2,7 +2,7 @@
 
 ## 进入代码目录
 ```
-cd 01_llm_api_and_tool_calling/foundations
+cd 01_environment_setup
 ```
 
 ## 如何安装依赖

@@ -34,7 +34,7 @@ C:\minikube\minikube.exe start  --registry-mirror=https://qra1mkpv.mirror.aliyun
 C:\minikube\minikube.exe docker-env | Invoke-Expression
 
 # 切换到项目目录
-cd D:\AI工程化训练营\workspace\08_serving_deployment_and_observability/foundations\p18_k8s\
+cd D:\AI工程化训练营\workspace\40_fastapi_llm_serving\p18_k8s\
 
 # 构建 Docker 镜像
 docker build -t langchain-service:v1 .
@@ -42,13 +42,13 @@ docker build -t langchain-service:v1 .
 ## 4. 部署 Kubernetes 资源
 
 # 应用密钥配置
-C:\minikube\minikube.exe kubectl -- apply -f D:\AI工程化训练营\workspace\08_serving_deployment_and_observability/foundations\p18_k8s\secret.yaml
+C:\minikube\minikube.exe kubectl -- apply -f D:\AI工程化训练营\workspace\40_fastapi_llm_serving\p18_k8s\secret.yaml
 
 # 部署应用
-C:\minikube\minikube.exe kubectl -- apply -f D:\AI工程化训练营\workspace\08_serving_deployment_and_observability/foundations\p18_k8s\deployment.yaml
+C:\minikube\minikube.exe kubectl -- apply -f D:\AI工程化训练营\workspace\40_fastapi_llm_serving\p18_k8s\deployment.yaml
 
 # 创建服务
-C:\minikube\minikube.exe kubectl -- apply -f D:\AI工程化训练营\workspace\08_serving_deployment_and_observability/foundations\p18_k8s\service.yaml 
+C:\minikube\minikube.exe kubectl -- apply -f D:\AI工程化训练营\workspace\40_fastapi_llm_serving\p18_k8s\service.yaml 
 
 ## 5. 检查部署状态
 

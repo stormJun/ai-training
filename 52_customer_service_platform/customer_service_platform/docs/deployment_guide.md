@@ -21,7 +21,7 @@
   - 如遇 `faiss-cpu` 安装失败，可使用系统包或跳过（仅影响向量检索）。
 
 ### 方式二：Docker Compose（推荐一体化）
-- 切换到目录：`d:\AI工程化训练营\workspace\10_capstone_customer_service/customer_service_platform\customer_service_multitenant`
+- 切换到目录：`d:\AI工程化训练营\workspace\52_customer_service_platform/customer_service_platform\customer_service_multitenant`
 - 检查/准备依赖清单：在项目根创建 `requirements.txt`（如无），内容示例：
   ```
   fastapi

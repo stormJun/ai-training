@@ -8,7 +8,7 @@ resolution-markers = [
 ]
 
 [[package]]
-name = "ai-engineering-01_llm_api_and_tool_calling/foundations"
+name = "ai-engineering-01_environment_setup"
 version = "0.1.0"
 source = { virtual = "." }
 dependencies = [

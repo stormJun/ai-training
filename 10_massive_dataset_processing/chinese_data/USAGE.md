@@ -43,7 +43,7 @@ pip install transformers datasets peft accelerate torch scikit-learn tqdm
 #### 生成标准指令格式（推荐）
 
 ```bash
-cd 02_finetuning_and_peft/foundations/chinese_data
+cd 10_massive_dataset_processing/chinese_data
 
 python process_massive.py \
   --input zh-CN.jsonl \

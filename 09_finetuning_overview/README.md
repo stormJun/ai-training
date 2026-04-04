@@ -2,7 +2,7 @@
 
 ## 进入代码目录
 ```
-cd 02_finetuning_and_peft/foundations
+cd 09_finetuning_overview
 ```
 
 ## 如何安装依赖
@@ -37,7 +37,7 @@ hint: You're on macOS (`macosx_14_0_x86_64`), but `torch` (v2.7.1) only has whee
 
 ## 运行项目
 ```
-cd 02_finetuning_and_peft/foundations
+cd 09_finetuning_overview
 python -m local_ft.server
 ```
 
