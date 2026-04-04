@@ -15,7 +15,7 @@
 ## 1. 数据源分析
 
 ### 1.1 输入数据
-- **文件**: `02_finetuning_and_peft/foundations/chinese_data/zh-CN.jsonl`
+- **文件**: `10_massive_dataset_processing/chinese_data/zh-CN.jsonl`
 - **总量**: 16,520 条（train: 11,514 / dev: 2,033 / test: 2,974）
 - **关键字段**:
   - `utt`: 原始用户语句
@@ -367,15 +367,15 @@ def process_massive_data(
 # 使用示例
 if __name__ == "__main__":
     process_massive_data(
-        input_file="02_finetuning_and_peft/foundations/chinese_data/zh-CN.jsonl",
-        output_dir="02_finetuning_and_peft/foundations/chinese_data/processed_instruction",
+        input_file="10_massive_dataset_processing/chinese_data/zh-CN.jsonl",
+        output_dir="10_massive_dataset_processing/chinese_data/processed_instruction",
         format_type="instruction",
         enable_filter=True
     )
 
     process_massive_data(
-        input_file="02_finetuning_and_peft/foundations/chinese_data/zh-CN.jsonl",
-        output_dir="02_finetuning_and_peft/foundations/chinese_data/processed_chat",
+        input_file="10_massive_dataset_processing/chinese_data/zh-CN.jsonl",
+        output_dir="10_massive_dataset_processing/chinese_data/processed_chat",
         format_type="chat",
         enable_filter=True
     )
@@ -388,7 +388,7 @@ if __name__ == "__main__":
 ### 5.1 目录结构
 
 ```
-02_finetuning_and_peft/foundations/chinese_data/
+10_massive_dataset_processing/chinese_data/
 ├── zh-CN.jsonl                           # 原始数据
 ├── processed_instruction/                # 标准指令格式
 │   ├── train.jsonl                      # 训练集 (~9,200条)
@@ -751,7 +751,7 @@ def augment_by_slot_replacement(sample, slot_value_pool):
 ## 10. 完整代码仓库结构
 
 ```
-02_finetuning_and_peft/foundations/chinese_data/
+10_massive_dataset_processing/chinese_data/
 ├── zh-CN.jsonl                          # 原始数据
 ├── README.md                            # 数据集说明
 ├── DATA_PROCESSING.md                   # 本文档

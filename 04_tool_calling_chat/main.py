@@ -1,5 +1,5 @@
 def main():
-    print("Hello from 01_llm_api_and_tool_calling/foundations!")
+    print("Hello from 01_environment_setup!")
 
 
 if __name__ == "__main__":

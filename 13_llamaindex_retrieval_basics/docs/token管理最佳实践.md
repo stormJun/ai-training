@@ -953,9 +953,9 @@ else:
 
 ### 9.1 相关代码实现
 
-- **QAnything Token 管理**: `03_rag_and_retrieval/qanything_case_study/qanything_kernel/core/local_doc_qa.py`
-- **Token 计算工具**: `03_rag_and_retrieval/qanything_case_study/qanything_kernel/utils/general_utils.py`
-- **LLM Token 计算**: `03_rag_and_retrieval/qanything_case_study/qanything_kernel/connector/llm/llm_for_openai_api.py`
+- **QAnything Token 管理**: `17_qanything_case_study/qanything_case_study/qanything_kernel/core/local_doc_qa.py`
+- **Token 计算工具**: `17_qanything_case_study/qanything_case_study/qanything_kernel/utils/general_utils.py`
+- **LLM Token 计算**: `17_qanything_case_study/qanything_case_study/qanything_kernel/connector/llm/llm_for_openai_api.py`
 
 ### 9.2 推荐阅读
 

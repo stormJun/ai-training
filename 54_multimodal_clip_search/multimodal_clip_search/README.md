@@ -12,6 +12,6 @@
 ## 运行入口
 
 ```bash
-cd 11_extension_topics/multimodal_clip_search/p25-CLIP
+cd 54_multimodal_clip_search/multimodal_clip_search/p25-CLIP
 pip install -r requirements.txt
 ```

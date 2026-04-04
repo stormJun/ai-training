@@ -1,4 +1,4 @@
-# Shared venv constraints (01_llm_api_and_tool_calling/foundations–09_python_async_and_performance/foundations; exclude 10_capstone_customer_service/customer_service_platform)
+# Shared venv constraints (01_environment_setup–47_asyncio_basics; exclude 52_customer_service_platform/customer_service_platform)
 #
 # Use this file whenever you install new packages into `/ai-training/.venv`,
 # to prevent the LangChain stack from being upgraded to `langchain-core>=1.0.0`.

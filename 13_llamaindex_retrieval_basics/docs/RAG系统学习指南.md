@@ -3917,7 +3917,7 @@ QAnything 的混合检索可概括为：`ES(BM25) + Milvus(向量)` 先召回，
 - 直观例子：若最高分是 `0.80`，当前候选是 `0.36`，则  
   `(0.80 - 0.36) / 0.80 = 0.55`，大于 `0.5`，在此处截断。  
 - 触发前提：该逻辑在 `rerank` 开启且候选数 `>1` 时执行，且在第一层 `0.28` 阈值过滤之后执行。  
-- 源码参考：`03_rag_and_retrieval/qanything_case_study/qanything_kernel/core/local_doc_qa.py` 中约 `523-546` 行（`saved_docs` 与 `relative_difference` 逻辑）。
+- 源码参考：`17_qanything_case_study/qanything_case_study/qanything_kernel/core/local_doc_qa.py` 中约 `523-546` 行（`saved_docs` 与 `relative_difference` 逻辑）。
 
 ### 2.5 后处理与优化（框架无关）
 
@@ -4124,7 +4124,7 @@ RAGAS 评估分为两个阶段：
 
 ### 5.1 混合检索原理
 
-根据 `03_rag_and_retrieval/qanything_case_study/docs/混合检索实现原理详解.md`,混合检索结合了向量检索和全文检索的优势:
+根据 `17_qanything_case_study/qanything_case_study/docs/混合检索实现原理详解.md`,混合检索结合了向量检索和全文检索的优势:
 
 ```
 向量检索 (Dense)          全文检索 (Sparse)
@@ -4817,7 +4817,7 @@ def batch_process(queries, batch_size=10):
 ### 7.2 本仓库资源索引
 
 ```
-03_rag_and_retrieval/llamaindex_and_ragas/
+13_llamaindex_retrieval_basics/
 ├── docs/                              # 文档目录
 │   ├── RAG系统学习指南.md             # 本文档 (总览)
 │   ├── llamaindex学习文档.md          # LlamaIndex 详细指南
@@ -4843,7 +4843,7 @@ def batch_process(queries, batch_size=10):
 │       ├── ragas_chinese_prompt_tuning.py
 │       └── ragas_chinese_prompts.py
 │
-└── 03_rag_and_retrieval/qanything_case_study/                  # QAnything 实战项目
+└── 17_qanything_case_study/qanything_case_study/                  # QAnything 实战项目
     └── docs/
         ├── 混合检索实现原理详解.md
         └── 重排序两层过滤策略详解.md
@@ -6171,9 +6171,9 @@ A:
    - Toolformer: https://arxiv.org/abs/2302.04761
    - Self-RAG: https://arxiv.org/abs/2310.11511
 4. 本仓库文档:
-   - `03_rag_and_retrieval/llamaindex_and_ragas/docs/llamaindex学习文档.md`
-   - `03_rag_and_retrieval/llamaindex_and_ragas/docs/ragas工程实践指南.md`
-   - `03_rag_and_retrieval/qanything_case_study/docs/混合检索实现原理详解.md`
+   - `13_llamaindex_retrieval_basics/docs/llamaindex学习文档.md`
+   - `13_llamaindex_retrieval_basics/docs/ragas工程实践指南.md`
+   - `17_qanything_case_study/qanything_case_study/docs/混合检索实现原理详解.md`
 
 ---
 

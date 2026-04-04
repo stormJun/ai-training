@@ -1,6 +1,6 @@
 # RAG LlamaIndex 学习文档
 
-本文对应目录：`03_rag_and_retrieval/llamaindex_and_ragas/code/llamaindex`，用于帮助你快速理解每个示例文件“在做什么、能学到什么”。
+本文对应目录：`13_llamaindex_retrieval_basics/code/llamaindex`，用于帮助你快速理解每个示例文件“在做什么、能学到什么”。
 
 ## 1. 目录定位
 
@@ -95,7 +95,7 @@
 
 ## 6. 运行提示
 
-1. 先在 `03_rag_and_retrieval/llamaindex_and_ragas/code/.env` 配置 `DASHSCOPE_API_KEY`
+1. 先在 `13_llamaindex_retrieval_basics/code/.env` 配置 `DASHSCOPE_API_KEY`
 2. 运行脚本时建议从 `03_rag_and_retrieval/llamaindex_and_ragas` 根目录启动：
    - `python code/llamaindex/llamaindex_06_similarity_postprocessor.py`
 3. notebook 建议在 JupyterLab 中打开 `code/llamaindex/` 目录后按顺序学习

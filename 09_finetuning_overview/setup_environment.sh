@@ -215,7 +215,7 @@ esac
 echo ""
 echo "请在新终端运行以下命令激活环境并验证:"
 echo ""
-echo "  cd 02_finetuning_and_peft/foundations"
+echo "  cd 09_finetuning_overview"
 echo "  $ACTIVATE_CMD"
 echo ""
 echo "  # 验证 PyTorch"
