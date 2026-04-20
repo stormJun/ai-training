@@ -132,7 +132,7 @@
 - `52_customer_service_platform/`
   - 智能客服综合项目
 
-### 53-58 扩展专题
+### 53-59 扩展专题
 
 - `53_slm_optimization/`
   - 小模型优化
@@ -146,6 +146,8 @@
   - Harness Engineering 与上下文工程
 - `58_learning_methodology/`
   - 学习方法论
+- `59_ttft_and_llm_serving_latency/`
+  - TTFT、首 token 延迟与 LLM 推理时延资料整理
 
 ## 其他目录
 
