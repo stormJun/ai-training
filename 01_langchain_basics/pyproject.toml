@@ -19,4 +19,12 @@ dependencies = [
     "faiss-cpu>=1.7.4",
     "regex<2025.7.34",
     "autogen-agentchat",
+    "pydantic>=2.11.7",
+    "requests>=2.32.4",
+    "dashscope>=1.24.1",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=9.0.3",
 ]

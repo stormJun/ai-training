@@ -4,7 +4,7 @@ import importlib.util
 from pathlib import Path
 
 
-SCRIPT_PATH = Path(__file__).with_name("langchain_qwen_basic.py")
+SCRIPT_PATH = Path(__file__).with_name("04_langchain_qwen_basic.py")
 
 
 def load_main_module():
