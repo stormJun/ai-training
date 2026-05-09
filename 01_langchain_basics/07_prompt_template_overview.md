@@ -15,28 +15,28 @@
 
 ## 目录说明
 
-核心代码和示例已经在 `examples/` 目录里：
+核心代码和示例已经平铺在当前目录里：
 
-- `examples/custom_prompt_template_engineering.py`
+- `10_prompt_template_engineering.py`
   - 核心自定义模板类
-- `examples/test_template.py`
+- `11_prompt_template_usage_demo.py`
   - 使用示例和测试
-- `examples/ext_template.py`
+- `12_prompt_template_advanced.py`
   - 工程化扩展功能
-- `examples/person_template_config.json`
+- `13_prompt_template_config.json`
   - 示例配置文件
 
 ## 学习顺序
 
 建议按下面顺序看：
 
-1. 先看 `examples/simple_demo.py`
-2. 再看 `examples/custom_prompt_template_engineering.py`
-3. 然后看 `examples/test_template.py`
-4. 最后看 `examples/ext_template.py`
+1. 先看 `09_prompt_template_simple_demo.py`
+2. 再看 `10_prompt_template_engineering.py`
+3. 然后看 `11_prompt_template_usage_demo.py`
+4. 最后看 `12_prompt_template_advanced.py`
 
 ## 配套文件
 
-- `prompt.txt`：基础模板文本示例
+- `08_prompt_template_text.txt`：基础模板文本示例
 
 这一节更适合和 `langchain_core.prompts.StringPromptTemplate` 一起理解。

@@ -5,7 +5,7 @@ from pathlib import Path
 
 
 PROJECT_DIR = Path(__file__).resolve().parent
-SCRIPT_PATH = PROJECT_DIR / "langchain_qwen_basic.py"
+SCRIPT_PATH = PROJECT_DIR / "04_langchain_qwen_basic.py"
 
 
 def load_module(module_name: str):

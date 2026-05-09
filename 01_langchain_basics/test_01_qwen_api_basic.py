@@ -4,7 +4,7 @@ import sys
 from pathlib import Path
 
 
-SCRIPT_PATH = Path(__file__).resolve().parent / "qwen_api_basic.py"
+SCRIPT_PATH = Path(__file__).resolve().parent / "01_qwen_api_basic.py"
 
 
 def test_script_reports_missing_dashscope_api_key():

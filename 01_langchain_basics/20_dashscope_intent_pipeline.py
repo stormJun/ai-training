@@ -5,11 +5,15 @@
 
 import json
 import requests
+from pathlib import Path
 from typing import Dict, List, Optional, Any
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.runnables import RunnableParallel
 from langchain_community.llms import Tongyi
+
+
+CONFIG_PATH = Path(__file__).with_name("21_dashscope_intent_config.json")
 
 
 class RuleEngine:
@@ -293,11 +297,11 @@ def load_config(config_path: str) -> Dict[str, Any]:
 def main():
     """演示基于DashScope的多策略融合意图识别"""
     # 加载配置
-    config = load_config("config.json")
+    config = load_config(str(CONFIG_PATH))
     
     # 检查API密钥配置
     if not config.get("ml_model", {}).get("api_key") or config["ml_model"]["api_key"] == "your_dashscope_api_key_here":
-        print("警告: 请在config.json中配置DashScope API密钥")
+        print(f"警告: 请在{CONFIG_PATH.name}中配置DashScope API密钥")
         print("当前将只使用规则引擎进行演示")
         config["enable_ml_model"] = False
         config["enable_llm_router"] = False

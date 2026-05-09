@@ -1,6 +1,24 @@
+import importlib.util
+import tempfile
+from pathlib import Path
+
 from langchain_community.llms import Tongyi
 from langchain_core.output_parsers import StrOutputParser
-from ext_template import PersonInfoPromptTemplate, PersonInfo
+
+
+EXT_TEMPLATE_PATH = Path(__file__).with_name("12_prompt_template_advanced.py")
+
+
+def load_ext_template_module():
+    spec = importlib.util.spec_from_file_location("ext_template", EXT_TEMPLATE_PATH)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+ext_template = load_ext_template_module()
+PersonInfoPromptTemplate = ext_template.PersonInfoPromptTemplate
+PersonInfo = ext_template.PersonInfo
 
 def demo_custom_template():
     """演示自定义模板的使用"""
@@ -85,14 +103,16 @@ def demo_template_management():
         output_language="chinese"
     )
     
-    # 保存配置
-    template.save_template_config("person_template_config.json")
-    print("模板配置已保存")
-    
-    # 加载配置
-    loaded_template = PersonInfoPromptTemplate.load_template_config(
-        "person_template_config.json"
-    )
+    with tempfile.TemporaryDirectory() as temp_dir:
+        config_path = Path(temp_dir) / "person_template_config.json"
+
+        # 保存配置
+        template.save_template_config(str(config_path))
+        print("模板配置已保存")
+
+        # 加载配置
+        loaded_template = PersonInfoPromptTemplate.load_template_config(str(config_path))
+
     print("模板配置已加载")
     
     # 验证配置
