@@ -1,0 +1,235 @@
+{
+  "main": {
+    "id": "b45f575047d0a5d8",
+    "type": "split",
+    "children": [
+      {
+        "id": "487082b74ce6ded1",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "05415f142925b7d3",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "llm_wiki/wiki/curriculum-map.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "curriculum-map"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "6d62557682424526",
+    "type": "split",
+    "children": [
+      {
+        "id": "187abfaaeb588b89",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "e26bd9d119f2472a",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "文件列表"
+            }
+          },
+          {
+            "id": "957adc726e16127a",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "搜索"
+            }
+          },
+          {
+            "id": "7f71d6a2cfd6b868",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "书签"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "9a29b2e5b1bf128e",
+    "type": "split",
+    "children": [
+      {
+        "id": "7663898612fe645d",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "5965b81dfdcc71d7",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "llm_wiki/wiki/curriculum-map.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "curriculum-map 的反向链接列表"
+            }
+          },
+          {
+            "id": "31c1d3acc3dcb427",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "llm_wiki/wiki/curriculum-map.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "curriculum-map 的出链列表"
+            }
+          },
+          {
+            "id": "a1d8ee6ed9999719",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "标签"
+            }
+          },
+          {
+            "id": "345b93fadae9afd3",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "添加笔记属性"
+            }
+          },
+          {
+            "id": "eeaa6d5804854495",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "llm_wiki/wiki/curriculum-map.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "curriculum-map 的大纲"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:打开快速切换": false,
+      "graph:查看关系图谱": false,
+      "canvas:新建白板": false,
+      "daily-notes:打开/创建今天的日记": false,
+      "templates:插入模板": false,
+      "command-palette:打开命令面板": false,
+      "bases:新建数据库": false
+    }
+  },
+  "active": "e26bd9d119f2472a",
+  "lastOpenFiles": [
+    "13_rag_and_retrieval/12_llamaindex_basics/llamaindex 的索引过程.txt",
+    "13_rag_and_retrieval/12_llamaindex_basics/README.md",
+    "13_rag_and_retrieval/12_llamaindex_basics/06-llamaindex.py",
+    "13_rag_and_retrieval/12_llamaindex_basics",
+    "13_rag_and_retrieval/07_llamaindex_basics/llamaindex 的索引过程.txt",
+    "13_rag_and_retrieval/07_llamaindex_basics/README.md",
+    "13_rag_and_retrieval/07_llamaindex_basics/06-llamaindex.py",
+    "13_rag_and_retrieval/07_llamaindex_basics",
+    "docs/superpowers/specs/2026-05-10-lecturer-transcripts-markdown-design.md",
+    "06_langgraph_basics/21_langgraph_workflows/01_基础对话链意图识别_设计.md",
+    "06_langgraph_basics/21_langgraph_workflows/14_深度思考总结.md",
+    "06_langgraph_basics/21_langgraph_workflows/13_智能客服系统架构设计.pdf",
+    "06_langgraph_basics/21_langgraph_workflows/12_参考论文_2510.11967v1.pdf",
+    "06_langgraph_basics/21_langgraph_workflows/11_LangGraph_Studio.py",
+    "06_langgraph_basics/21_langgraph_workflows/11_LangGraph_Studio.md",
+    "06_langgraph_basics/21_langgraph_workflows/10_快照机制_Snapshot.py",
+    "06_langgraph_basics/21_langgraph_workflows/10_快照机制_Snapshot.md",
+    "06_langgraph_basics/21_langgraph_workflows/09_RAG工作流_基础_assets/p42-langgraph-0RAG_cell015_out01.png",
+    "06_langgraph_basics/21_langgraph_workflows/09_RAG工作流_基础_assets",
+    "06_langgraph_basics/21_langgraph_workflows/09_RAG工作流_基础.md",
+    "06_langgraph_basics/21_langgraph_workflows/08_LangGraph_核心概念_状态与节点.md",
+    "06_langgraph_basics/21_langgraph_workflows/07_LangGraph_入门示例.md",
+    "06_langgraph_basics/21_langgraph_workflows/06_记忆机制_Mem0.md",
+    "06_langgraph_basics/21_langgraph_workflows/05_记忆机制_基础.md",
+    "06_langgraph_basics/21_langgraph_workflows/04_人机协同_HITL.md",
+    "06_langgraph_basics/21_langgraph_workflows/p45-langgraph-studio.md",
+    "06_langgraph_basics/21_langgraph_workflows/p44-snapshot.md",
+    "06_langgraph_basics/21_langgraph_workflows/p43-langgraph-2.md",
+    "06_langgraph_basics/21_langgraph_workflows/p42-langgraph-1.md",
+    "06_langgraph_basics/21_langgraph_workflows/p42-langgraph-1_assets/p42-langgraph-1_cell014_out01.png",
+    "06_langgraph_basics/21_langgraph_workflows/p42-langgraph-0RAG.md",
+    "06_langgraph_basics/21_langgraph_workflows/p42-langgraph-0RAG_assets/p42-langgraph-0RAG_cell015_out01.png",
+    "06_langgraph_basics/21_langgraph_workflows/mem.md",
+    "06_langgraph_basics/21_langgraph_workflows/HITL.md",
+    "06_langgraph_basics/21_langgraph_workflows/p30-mem0.md",
+    "06_langgraph_basics/29_langgraph_multi_agent/README.md",
+    "06_langgraph_basics/23_langgraph_demo_project/langgraph_demo_project/README.md",
+    "06_langgraph_basics/23_langgraph_demo_project/README.md",
+    "06_langgraph_basics/22_langgraph_service_apps/app2/static/studio_ui.png",
+    "06_langgraph_basics/22_langgraph_service_apps/app/static/studio_ui.png",
+    "06_langgraph_basics/22_langgraph_service_apps/plugin_hot_reload_demo/README.md",
+    "06_langgraph_basics/21_langgraph_workflows/docs/assets/oppo-agentic-rag-memory/image-18.jpg",
+    "06_langgraph_basics/21_langgraph_workflows/docs/assets/oppo-agentic-rag-memory/image-17.png",
+    "06_langgraph_basics/21_langgraph_workflows/docs/assets/oppo-agentic-rag-memory/image-16.png",
+    "06_langgraph_basics/21_langgraph_workflows/docs/assets/oppo-agentic-rag-memory/image-15.png",
+    "06_langgraph_basics/21_langgraph_workflows/docs/assets/oppo-agentic-rag-memory/image-14.png"
+  ]
+}

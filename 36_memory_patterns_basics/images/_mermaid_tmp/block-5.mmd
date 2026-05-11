@@ -1,0 +1,17 @@
+sequenceDiagram
+    participant U as 用户
+    participant S as stopHooks
+    participant E as extractMemories
+    participant FS as memory files
+    participant N as 新会话
+    participant R as relevant memory recall
+
+    U->>S: 当前回合结束
+    S->>E: 触发后台提取
+    E->>FS: 写入 topic files + 更新 MEMORY.md
+
+    U->>N: 下次新会话开始
+    N->>FS: 读取 MEMORY.md 索引
+    U->>R: 发起新问题
+    R->>FS: 扫 frontmatter -> 选相关 memory -> 读正文
+    R-->>N: relevant_memories 注入上下文

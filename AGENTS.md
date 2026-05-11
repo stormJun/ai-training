@@ -1,12 +1,12 @@
 # Repository Guidelines
 
-This repository collects single-topic learning workspaces, assignments, and reference projects for the “AI 工程化训练营”. Each numbered topic directory represents one knowledge theme or one self-contained project.
+This repository collects numbered learning workspaces, grouped topic parents, assignments, and reference projects for the “AI 工程化训练营”. Most numbered topic directories represent one knowledge theme or one self-contained project, while a small number of closely related themes are grouped under a numbered parent directory.
 
 ## Project Structure & Module Organization
 
-- `01_environment_setup/` through `58_learning_methodology/`: the primary numbered learning path, flattened so each directory maps to exactly one topic.
+- The primary learning path is still organized with numbered directories, but some adjacent topics may now be grouped under a numbered parent such as `09_finetuning_and_data_processing/`, `13_rag_and_retrieval/`, `27_multi_agent_frameworks/`, or `30_agent_protocols_and_mcp/`.
 - Some numbered directories are lightweight script or notebook workspaces.
-- Some numbered directories remain full runnable projects, for example `16_local_rag_project/`, `17_qanything_case_study/`, `23_langgraph_demo_project/`, and `52_customer_service_platform/`.
+- Some numbered directories remain full runnable projects, for example `13_rag_and_retrieval/16_local_rag_project/`, `13_rag_and_retrieval/17_qanything_case_study/`, `23_langgraph_demo_project/`, and `52_customer_service_platform/`.
 - `assignments/`: homework directories and curated example answers; avoid changing example solutions unless fixing a clear bug.
 - `reference_projects/`: larger end-to-end applications and extension projects, typically organized into `core/`, `agents/`, `config/`, `tools/`, `scripts/`, or `app/`.
 - `archive/`: historical experiments and non-primary materials kept for reference only.
@@ -18,9 +18,9 @@ This repository collects single-topic learning workspaces, assignments, and refe
 - Work from the relevant topic or project root instead of assuming a single shared environment.
 - Typical setup patterns:
   - `cd 40_fastapi_llm_serving && uv sync --locked`
-  - `cd 16_local_rag_project/local_rag_project && python -m venv .venv && source .venv/bin/activate && pip install -r requirements.txt`
+  - `cd 13_rag_and_retrieval/16_local_rag_project/local_rag_project && python -m venv .venv && source .venv/bin/activate && pip install -r requirements.txt`
   - `cd 23_langgraph_demo_project/langgraph_demo_project && uv sync --locked`
-- Script-only topics may rely on dependency anchors kept in nearby overview directories such as `01_environment_setup/`, `09_finetuning_overview/`, `13_llamaindex_retrieval_basics/`, `18_prompt_templates/`, `27_autogen_two_agent_chat/`, `33_dsl_design_basics/`, `36_memory_patterns_basics/`, `40_fastapi_llm_serving/`, and `47_asyncio_basics/`.
+- Script-only topics may rely on dependency anchors kept in nearby overview directories such as `01_environment_setup/`, `09_finetuning_and_data_processing/09_finetuning_overview/`, `13_rag_and_retrieval/13_llamaindex_retrieval_basics/`, `18_prompt_templates/`, `27_multi_agent_frameworks/27_autogen_two_agent_chat/`, `33_dsl_design_basics/`, `36_memory_patterns_basics/`, `40_fastapi_llm_serving/`, and `47_asyncio_basics/`.
 - Run apps from their own root, for example `python main.py` or `uvicorn main:app --reload`, as documented in the local README or project files.
 
 ## Coding Style & Naming Conventions

@@ -1,0 +1,16 @@
+sequenceDiagram
+    participant U as 用户
+    participant Q as Query Loop
+    participant C as 当前会话消息
+    participant CP as Compact
+
+    U->>Q: 提问
+    Q->>C: 读取 messages
+    C-->>Q: 当前会话上下文
+    Q->>Q: 发模型请求
+    Q->>C: 追加 assistant / tool results
+
+    alt 上下文过长
+        Q->>CP: 触发 compact
+        CP-->>C: compact_boundary + summary + recent messages
+    end

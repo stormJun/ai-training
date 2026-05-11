@@ -1,0 +1,22 @@
+flowchart TD
+    A["进入主压缩路径"] --> B{"触发来源"}
+    B -- "Auto Compact" --> C["优先尝试会话记忆压缩"]
+    B -- "手动 /compact" --> D{"是否带自定义总结指令"}
+    B -- "局部压缩" --> E["局部压缩"]
+    B -- "失败恢复" --> F["恢复式压缩"]
+
+    D -- "否" --> C
+    D -- "是" --> G["直接进入传统整会话压缩"]
+
+    C --> H{"Session Memory 是否可用"}
+    H -- "是" --> I["会话记忆压缩<br/>基于 summary.md 模板压缩"]
+    H -- "否" --> G
+
+    G --> J["传统整会话压缩（compactConversation）<br/>生成 9 段式结构化摘要"]
+    E --> K["围绕 pivot message 压缩局部消息段"]
+    F --> L["在错误恢复流程中生成新的 post-compact context"]
+
+    I --> M["输出 compact summary + compact_boundary + attachments"]
+    J --> M
+    K --> M
+    L --> M

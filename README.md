@@ -1,6 +1,6 @@
-# AI 工程化训练营单主题目录总览
+# AI 工程化训练营目录总览
 
-本仓库现在按“单主题、带编号”的方式组织。每个编号目录只承载一个知识主题或一个独立项目，方便回顾、复习和按主题检索。每个编号主题目录现在也统一提供根级 `README.md` 作为入口说明。
+本仓库现在按“编号主线 + 少量合并父目录”的方式组织。大多数编号目录承载一个知识主题或一个独立项目；对强相关的连续主题，会放进同一个编号父目录下，减少顶层目录数量。各主题目录仍尽量提供根级 `README.md` 作为入口说明。
 
 ## 主线目录
 
@@ -17,35 +17,21 @@
 - `05_langchain_basics/`
   - LangChain 入门脚本
 - `06_langgraph_basics/`
-  - LangGraph 入门脚本
-- `07_llamaindex_basics/`
-  - LlamaIndex 基础示例
+  - LangGraph 学习主线，包含基础示例、`21_langgraph_workflows/`、`22_langgraph_service_apps/`、`23_langgraph_demo_project/`、`29_langgraph_multi_agent/`、`31_mcp_langgraph_integration/`、`32_a2a_langgraph/`
 - `08_intent_recognition_agent/`
   - 意图识别与多智能体示例
 
 ### 09-12 微调与数据处理
 
-- `09_finetuning_overview/`
-  - 微调概览、资料、环境锚点
-- `10_massive_dataset_processing/`
-  - MASSIVE 数据集处理与转换
-- `11_lora_qlora_training/`
-  - LoRA / QLoRA 训练与产物
-- `12_local_finetuning_platform/`
-  - 本地微调平台
+- `09_finetuning_and_data_processing/`
+  - 合并后的父目录，收纳 09-12 四个相近主题
+  - 子目录：`09_finetuning_overview/`、`10_massive_dataset_processing/`、`11_lora_qlora_training/`、`12_local_finetuning_platform/`
 
 ### 13-17 RAG 与检索
 
-- `13_llamaindex_retrieval_basics/`
-  - LlamaIndex 检索基础
-- `14_ragas_retrieval_evaluation/`
-  - Ragas 评测与检索评估
-- `15_graphrag_basics/`
-  - GraphRAG 基础示例
-- `16_local_rag_project/`
-  - 本地 RAG 项目
-- `17_qanything_case_study/`
-  - QAnything 案例
+- `13_rag_and_retrieval/`
+  - 合并后的父目录，收纳 RAG 与检索相关主题，并补充纳入 `12_llamaindex_basics/`
+  - 子目录：`12_llamaindex_basics/`、`13_llamaindex_retrieval_basics/`、`14_ragas_retrieval_evaluation/`、`15_graphrag_basics/`、`16_local_rag_project/`、`17_qanything_case_study/`
 
 ### 18-26 工作流与 Agent 工程
 
@@ -55,35 +41,20 @@
   - 输出解析、链路、基础 pipeline
 - `20_routing_react_and_tools/`
   - Router、ReAct、工具调用
-- `21_langgraph_workflows/`
-  - LangGraph 工作流主线
-- `22_langgraph_service_apps/`
-  - LangGraph 服务化 app 示例
-- `23_langgraph_demo_project/`
-  - LangGraph demo 项目
-- `24_code_assistant_workflow/`
-  - 代码助手工作流
-- `25_vllm_wrapper_demo/`
-  - vLLM wrapper 示例
-- `26_rpa_and_ai_workflow/`
-  - RPA 与 AI 工作流集成
+- `24_tooling_and_automation_workflows/`
+  - 合并后的父目录，收纳 24-26 三个相近主题
+  - 子目录：`24_code_assistant_workflow/`、`25_vllm_wrapper_demo/`、`26_rpa_and_ai_workflow/`
 
 ### 27-32 多 Agent 与协议
 
-- `27_autogen_two_agent_chat/`
-  - AutoGen 与双 Agent 对话
-- `28_crewai_basics/`
-  - CrewAI 基础
-- `29_langgraph_multi_agent/`
-  - LangGraph 多智能体
-- `30_mcp_basics/`
-  - MCP 基础
-- `31_mcp_langgraph_integration/`
-  - MCP 与 LangGraph 集成
-- `32_a2a_langgraph/`
-  - A2A 与 LangGraph
+- `27_multi_agent_frameworks/`
+  - 多 Agent 框架父目录
+  - 子目录：`27_autogen_two_agent_chat/`、`28_crewai_basics/`
+- `30_agent_protocols_and_mcp/`
+  - 协议与 MCP 基础主题父目录
+  - 子目录：`30_mcp_basics/`
 
-### 33-39 DSL 与记忆能力
+### 33-36 DSL 与记忆能力
 
 - `33_dsl_design_basics/`
   - DSL 设计基础
@@ -92,13 +63,7 @@
 - `35_dsl_agent_and_db_gateway/`
   - DSL Agent 与数据库网关
 - `36_memory_patterns_basics/`
-  - 记忆模式基础
-- `37_vector_and_faiss_memory/`
-  - 向量记忆与 FAISS
-- `38_knowledge_graph_memory/`
-  - 知识图谱记忆
-- `39_redis_memory_and_reliability/`
-  - Redis 记忆与可靠性
+  - 合并后的 Agent Memory 专题，包含记忆模式、向量记忆、知识图谱记忆、Redis 记忆与可靠性
 
 ### 40-46 服务化、部署与观测
 
@@ -110,12 +75,9 @@
   - Docker 化服务应用
 - `43_kubernetes_deployment/`
   - Kubernetes 部署
-- `44_elk_observability/`
-  - ELK 观测与日志
-- `45_prometheus_ollama_exporter/`
-  - Prometheus 与 Ollama Exporter
-- `46_ray_serve_streaming/`
-  - Ray Serve 与流式服务
+- `44_observability_and_serving_runtime/`
+  - 合并后的父目录，收纳 44-46 与 59 这组可观测性和 serving runtime 主题
+  - 子目录：`44_elk_observability/`、`45_prometheus_ollama_exporter/`、`46_ray_serve_streaming/`、`59_ttft_and_llm_serving_latency/`
 
 ### 47-52 并发性能与综合项目
 
@@ -134,20 +96,15 @@
 
 ### 53-59 扩展专题
 
-- `53_slm_optimization/`
-  - 小模型优化
-- `54_multimodal_clip_search/`
-  - CLIP 图像搜索
-- `55_reinforcement_learning/`
-  - 强化学习
+- `53_model_extensions/`
+  - 合并后的父目录，收纳 53-55 三个模型扩展主题
+  - 子目录：`53_slm_optimization/`、`54_multimodal_clip_search/`、`55_reinforcement_learning/`
 - `56_skill_engineering/`
   - Skill / Prompt 工程扩展资料
 - `57_harness_engineering/`
   - Harness Engineering 与上下文工程
 - `58_learning_methodology/`
   - 学习方法论
-- `59_ttft_and_llm_serving_latency/`
-  - TTFT、首 token 延迟与 LLM 推理时延资料整理
 
 ## 其他目录
 
@@ -171,12 +128,12 @@
 - 并不是每个单主题目录都自带完整依赖文件。
 - 以下目录保留了原来大模块里的依赖锚点，脚本型主题通常可以参考它们的环境配置：
   - `01_environment_setup/`
-  - `09_finetuning_overview/`
-  - `13_llamaindex_retrieval_basics/`
+  - `09_finetuning_and_data_processing/09_finetuning_overview/`
+  - `13_rag_and_retrieval/13_llamaindex_retrieval_basics/`
   - `18_prompt_templates/`
-  - `27_autogen_two_agent_chat/`
+  - `27_multi_agent_frameworks/27_autogen_two_agent_chat/`
   - `33_dsl_design_basics/`
   - `36_memory_patterns_basics/`
   - `40_fastapi_llm_serving/`
   - `47_asyncio_basics/`
-- 完整项目目录例如 `16_local_rag_project/`、`17_qanything_case_study/`、`23_langgraph_demo_project/`、`52_customer_service_platform/` 仍然保留各自的项目结构和运行方式。
+- 完整项目目录例如 `13_rag_and_retrieval/16_local_rag_project/`、`13_rag_and_retrieval/17_qanything_case_study/`、`06_langgraph_basics/23_langgraph_demo_project/`、`52_customer_service_platform/` 仍然保留各自的项目结构和运行方式。
