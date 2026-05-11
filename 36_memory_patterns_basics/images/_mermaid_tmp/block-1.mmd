@@ -1,0 +1,41 @@
+flowchart TD
+    U["用户问题"] --> ST["短期记忆<br/>当前会话 messages"]
+    U --> UC["用户上下文<br/>CLAUDE.md / MEMORY.md 索引"]
+
+    subgraph LT["长期记忆（跨会话）"]
+        MD["memory/MEMORY.md<br/>索引入口"]
+        TF["topic memory files<br/>user / feedback / project / reference"]
+        TM["memory/team/MEMORY.md<br/>可选"]
+        AG["agent-memory/*/MEMORY.md<br/>可选"]
+    end
+
+    subgraph RT["查询时召回"]
+        SCAN["scanMemoryFiles()<br/>扫描 frontmatter"]
+        SEL["findRelevantMemories()<br/>LLM 选择最多 5 条"]
+        ATT["relevant_memories attachment"]
+    end
+
+    subgraph WT["回合结束写回"]
+        DIR["主模型直接写 memory 文件"]
+        EXT["extractMemories<br/>后台 forked agent"]
+        DREAM["AutoDream / KAIROS<br/>后台整理与蒸馏"]
+    end
+
+    MD --> UC
+    TM --> UC
+    AG --> UC
+
+    TF --> SCAN
+    TM --> SCAN
+    AG --> SCAN
+    U --> SCAN
+    SCAN --> SEL
+    SEL --> ATT
+    ATT --> ST
+
+    ST --> DIR
+    ST --> EXT
+    EXT --> TF
+    EXT --> MD
+    DREAM --> TF
+    DREAM --> MD

@@ -1,6 +1,6 @@
 # Agent Memory 学习材料
 
-本目录现在只保留 Agent Memory 主线内容，聚焦对话记忆、向量记忆、知识图谱记忆、Redis 时序记忆，以及工具调用可靠性。
+本目录是合并后的 Agent Memory 专题目录，整合了原 `36_memory_patterns_basics/`、`37_vector_and_faiss_memory/`、`38_knowledge_graph_memory/` 和 `39_redis_memory_and_reliability/`，聚焦对话记忆、向量记忆、知识图谱记忆、Redis 时序记忆，以及工具调用可靠性。
 
 ## 开始使用
 

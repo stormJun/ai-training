@@ -107,9 +107,6 @@ The mainline becomes a flat ordered set of single-topic directories:
 - `34_lark_dsl_examples`
 - `35_dsl_agent_and_db_gateway`
 - `36_memory_patterns_basics`
-- `37_vector_and_faiss_memory`
-- `38_knowledge_graph_memory`
-- `39_redis_memory_and_reliability`
 - `40_fastapi_llm_serving`
 - `41_multimodal_fastapi_serving`
 - `42_dockerized_service_apps`
