@@ -38,7 +38,7 @@ class PersonPromptTemplate(StringPromptTemplate):
             技能：{skills_text}
 
             请提供简要的{self.analysis_type}分析。"""
-        
+
         # 添加分析类型
         return prompt
 
