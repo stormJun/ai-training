@@ -62,7 +62,7 @@ OPENAI_API_BASE=https://dashscope.aliyuncs.com/compatible-mode/v1
 ```bash
 uv run python 01_qwen_api_basic.py
 uv run python 02_qwen_chat_basic.py
-uv run python 03_qwen_tool_calling_demo.py
+uv run python 03_qwen_function_tool_calling_demo.py
 uv run python 04_langchain_qwen_basic.py
 uv run python 05_langchain_qwen_extra.py
 uv run python 09_prompt_template_simple_demo.py
