@@ -1,4 +1,4 @@
-# Shared venv constraints (01_environment_setup–47_asyncio_basics; exclude 52_customer_service_platform/customer_service_platform)
+# Shared venv constraints (01_environment_setup–47_asyncio_and_gil_basics; exclude 52_customer_service_platform/customer_service_platform)
 #
 # Use this file whenever you install new packages into `/ai-training/.venv`,
 # to prevent the LangChain stack from being upgraded to `langchain-core>=1.0.0`.
@@ -22,4 +22,3 @@ langgraph-sdk==0.2.6
 
 # Keep the client compatible with the pinned LangChain versions.
 langsmith==0.5.0
-

@@ -3,7 +3,11 @@
 本目录汇集了服务化、部署与可观测性相关的全部教学示例，覆盖 **LLM 服务化、LangGraph 工作流、Web 前端集成、容器化部署、Kubernetes 灰度发布、日志观测与指标监控** 等核心主题。每个子项目都配套示例脚本或配置文件，便于在课堂上拆解演示，也方便学员自行动手实验。
 
 ## 目录速览
-- `P15-ollama-fastapi-server.py` / `P15-ollama-fastapi-client.py`：基于 FastAPI 的 Ollama 代理服务与测试脚本，讲解传统 LLM 与 RESTful API 的对接与流式输出。
+- `00_fastapi_hello_world.py`：纯本地可运行的 FastAPI hello world 脚本，不依赖 Ollama，适合作为最小入门示例。
+- `00_fastapi_hello_world_deep_dive.md`：围绕 `00` 代码讲 FastAPI / Starlette / ASGI / Uvicorn 分工与底层运行机制。
+- `01_ollama_fastapi_server.py` / `01_ollama_fastapi_client.py`：基于 FastAPI 的 Ollama 代理服务与测试脚本，讲解传统 LLM 与 RESTful API 的对接与流式输出。
+- `01_ollama_fastapi_intro.md`：`01` 入门教程，按“代码导读 + 跑通实战”方式拆解最小 FastAPI + Ollama 服务。
+- `02_mock_llm_fastapi_server.py`：本地 mock LLM 服务，演示更接近真实 AI 接口的请求模型、响应模型、错误处理与流式输出。
 - `P16-FastAPI-Qwen-VL-server.py` / `P16-FastAPI-Qwen-VL-client.py`：多模态模型 Qwen-VL 的部署示例，演示图文混合输入的处理流程。
 - `docker/`：LangGraph + 通义千问工作流的容器化示例，包含 `docker-compose.yml`、配置管理与一键部署脚本。
 - `p17_webLLM/`：进阶版 LangGraph AI 对话系统（FastAPI + Gradio + Celery + Postgres/SQLite），附详细文档与 Docker 化方案。
@@ -44,10 +48,20 @@ uv sync --locked --extra ray          # Ray Serve 教学脚本
 
 ## 教学模块概览
 ### 1. LLM 服务化与代理
-- **Ollama FastAPI 代理**：`P15-ollama-fastapi-server.py` 将本地 Ollama 接口包装为统一 REST API，支持流式输出，搭配 `P15-ollama-fastapi-client.py` 验证。
+- **FastAPI Hello World 入门**：`00_fastapi_hello_world.py` 提供完全本地可启动的最小服务，不依赖 Ollama，适合第一次理解 `FastAPI()`、路由、JSON 返回和 `uvicorn` 启动。
   ```bash
-  uvicorn P15-ollama-fastapi-server:app --host 0.0.0.0 --port 8000
-  python P15-ollama-fastapi-client.py
+  uv run python 00_fastapi_hello_world.py
+  ```
+  如果你想深入理解这份最小代码背后的机制，继续看 [00_fastapi_hello_world_deep_dive.md](00_fastapi_hello_world_deep_dive.md)。
+- **Ollama FastAPI 代理**：`01_ollama_fastapi_server.py` 将本地 Ollama 接口包装为统一 REST API，支持流式输出，搭配 `01_ollama_fastapi_client.py` 验证。
+  ```bash
+  uvicorn 01_ollama_fastapi_server:app --host 0.0.0.0 --port 8000
+  python 01_ollama_fastapi_client.py
+  ```
+  建议在 hello world 跑通后，再配合阅读 [01_ollama_fastapi_intro.md](01_ollama_fastapi_intro.md)，理解服务端代理转发和流式输出是怎么加上去的。
+- **本地 Mock LLM 服务**：`02_mock_llm_fastapi_server.py` 不依赖外部模型，但接口形状已经接近真实 AI 服务，适合在 hello world 之后练习请求模型、响应模型、`HTTPException` 和 `StreamingResponse`。
+  ```bash
+  uv run python 02_mock_llm_fastapi_server.py
   ```
 - **多模态接入**：`P16-FastAPI-Qwen-VL-server.py` 演示下载并加载 Qwen-VL-Chat，`P16-FastAPI-Qwen-VL-client.py` 提供兼容 OpenAI Chat Completions 的请求示例。适合说明显存占用、图文混合 prompt、以及多模态推理流程。
 

@@ -20,7 +20,7 @@ This repository collects numbered learning workspaces, grouped topic parents, as
   - `cd 40_fastapi_llm_serving && uv sync --locked`
   - `cd 13_rag_and_retrieval/16_local_rag_project/local_rag_project && python -m venv .venv && source .venv/bin/activate && pip install -r requirements.txt`
   - `cd 23_langgraph_demo_project/langgraph_demo_project && uv sync --locked`
-- Script-only topics may rely on dependency anchors kept in nearby overview directories such as `01_environment_setup/`, `09_finetuning_and_data_processing/09_finetuning_overview/`, `13_rag_and_retrieval/13_llamaindex_retrieval_basics/`, `18_prompt_templates/`, `27_multi_agent_frameworks/27_autogen_two_agent_chat/`, `33_dsl_design_basics/`, `36_memory_patterns_basics/`, `40_fastapi_llm_serving/`, and `47_asyncio_basics/`.
+- Script-only topics may rely on dependency anchors kept in nearby overview directories such as `01_environment_setup/`, `09_finetuning_and_data_processing/09_finetuning_overview/`, `13_rag_and_retrieval/13_llamaindex_retrieval_basics/`, `18_prompt_templates/`, `27_multi_agent_frameworks/27_autogen_two_agent_chat/`, `33_dsl_design_basics/`, `36_memory_patterns_basics/`, `40_fastapi_llm_serving/`, and `47_asyncio_and_gil_basics/`.
 - Run apps from their own root, for example `python main.py` or `uvicorn main:app --reload`, as documented in the local README or project files.
 
 ## Coding Style & Naming Conventions

@@ -1,4 +1,9 @@
-"""Runnable and chain examples extracted from the original notebook."""
+"""Runnable and chain examples extracted from the original notebook.
+
+This file is intentionally small and example-driven. Each demo focuses on one
+Runnable capability so it is easier to map the output back to the concept in
+18_chain_and_runnable_guide.md.
+"""
 
 import asyncio
 import time
@@ -18,6 +23,7 @@ def demo_prompt_schema() -> None:
         input_variables=["name", "age"],
         template="你好，我是{name}，今年{age}岁",
     )
+    # PromptTemplate 也是 Runnable，因此同样带有明确的输入输出 schema。
     print(prompt.input_schema.schema())
     print(prompt.output_schema.schema())
 
@@ -30,6 +36,7 @@ class SimpleRunnable:
         return f"结果: {user_input}"
 
     async def ainvoke(self, user_input: str) -> str:
+        # 这个例子用线程池包装同步逻辑，帮助理解很多异步调用的最小原理。
         loop = asyncio.get_running_loop()
         return await loop.run_in_executor(None, self.invoke, user_input)
 
@@ -41,6 +48,7 @@ class SimpleStreamRunnable(Runnable[str, str]):
         return f"完整处理结果: {user_input}"
 
     def stream(self, user_input: str) -> Iterator[str]:
+        # 这里故意把一句话切成多个 chunk，模拟模型逐步吐出 token 的感觉。
         words = f"逐步处理结果: {user_input}".split()
         for word in words:
             time.sleep(0.1)
@@ -56,6 +64,7 @@ class SimpleAnalyzer(Runnable[str, str]):
 
 def build_parallel_demo():
     """演示并行组合。"""
+    # 同一份输入被同时送到多个分支，各自产出不同视角的结果。
     return RunnableParallel(
         summary=RunnableLambda(lambda x: f"摘要: {x['text']}"),
         keywords=RunnableLambda(lambda x: ["LangChain", "Runnable", "Parser"]),
@@ -65,6 +74,7 @@ def build_parallel_demo():
 
 def build_branch_demo():
     """演示条件分支。"""
+    # RunnableBranch 的核心不是“并行”，而是“按条件路由到不同链路”。
     qa_chain = RunnableLambda(lambda x: f"问答处理: {x['content']}")
     summary_chain = RunnableLambda(lambda x: f"摘要处理: {x['content']}")
     default_chain = RunnableLambda(lambda x: f"通用处理: {x['content']}")
@@ -83,6 +93,7 @@ async def demo_async() -> None:
 
 def demo_stream() -> None:
     runnable = SimpleStreamRunnable()
+    # 逐个打印 chunk，方便看到 stream 和 invoke 在返回方式上的差别。
     for chunk in runnable.stream("流式输出"):
         print(chunk, end="", flush=True)
     print()
@@ -90,6 +101,7 @@ def demo_stream() -> None:
 
 def demo_batch() -> None:
     analyzer = SimpleAnalyzer()
+    # batch 会复用单条 invoke 逻辑，对多条输入做批量执行。
     results = analyzer.batch(["报告A", "合同B", "邮件C"])
     print(results)
 
@@ -107,6 +119,7 @@ def demo_branch() -> None:
 
 
 if __name__ == "__main__":
+    # 顺序执行，便于从“最基础的 schema”一路看到“批量 / 并行 / 分支”。
     demo_prompt_schema()
     asyncio.run(demo_async())
     demo_stream()
