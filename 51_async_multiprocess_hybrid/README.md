@@ -16,4 +16,4 @@
 ## 开始方式
 
 - 从 `p21_async_multiprocess_hybrid/run_demo.py` 开始
-- 环境准备可参考 `../47_asyncio_basics/README.md`
+- 环境准备可参考 `../47_asyncio_and_gil_basics/README.md`

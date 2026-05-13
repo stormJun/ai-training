@@ -81,10 +81,8 @@
 
 ### 47-52 并发性能与综合项目
 
-- `47_asyncio_basics/`
-  - asyncio 基础
-- `48_asyncio_primitives_and_gil/`
-  - Future、Task、Executor、GIL
+- `47_asyncio_and_gil_basics/`
+  - asyncio 基础、Future、Task、Executor、GIL
 - `49_async_web_patterns/`
   - 异步 Web 与 I/O 模式
 - `50_performance_benchmarking/`
@@ -135,5 +133,5 @@
   - `33_dsl_design_basics/`
   - `36_memory_patterns_basics/`
   - `40_fastapi_llm_serving/`
-  - `47_asyncio_basics/`
+  - `47_asyncio_and_gil_basics/`
 - 完整项目目录例如 `13_rag_and_retrieval/16_local_rag_project/`、`13_rag_and_retrieval/17_qanything_case_study/`、`06_langgraph_basics/23_langgraph_demo_project/`、`52_customer_service_platform/` 仍然保留各自的项目结构和运行方式。

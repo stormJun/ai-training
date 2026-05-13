@@ -18,10 +18,16 @@
   - 高级模板扩展示例
 - `13_prompt_template_config.json`
   - 示例配置文件
+- `13a_deerflow_prompt_template_design.md`
+  - DeerFlow 在复杂 agent 系统里的 prompt 分层设计案例
+- `13b_deerflow_prompt_layering_demo.py`
+  - 纯 Python 版 DeerFlow prompt 分层最小演示
 
 ## 开始方式
 
 - 本主题共用上一级 `01_langchain_basics/` 的 uv 环境
 - 在 `01_langchain_basics/` 目录执行 `uv sync --locked`
 - 优先阅读 `.md`
-- 再通过 `uv run python 09_prompt_template_simple_demo.py` 运行示例脚本
+- 建议先看 `07_prompt_template_overview.md`，再看 `13a_deerflow_prompt_template_design.md`
+- 再通过 `uv run python 09_prompt_template_simple_demo.py` 运行基础模板示例
+- 如果想看复杂 agent 场景里的最小落地原型，运行 `uv run python 13b_deerflow_prompt_layering_demo.py`
