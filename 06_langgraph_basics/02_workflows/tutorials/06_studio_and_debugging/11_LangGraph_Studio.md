@@ -1,89 +1,180 @@
-```python
-!pip install -U "langgraph-cli[inmem]"
+# LangGraph Studio
 
-# Install debugpy package
-!pip install debugpy
+这份材料的目标不是讲业务流程，而是讲：
+
+> 当你已经有一张 LangGraph 图时，怎样在本地把它跑成服务，并用 Studio 观察和调试。
+
+---
+
+## LangGraph Studio 是什么
+
+LangGraph Studio 可以理解成一个专门面向 LangGraph 项目的可视化调试入口。
+
+它通常和 `langgraph dev` 一起使用：
+
+- `langgraph dev`
+  在本地启动 LangGraph API
+- Studio
+  连接这个本地 API，查看图、输入、输出和执行过程
+
+所以 Studio 本身不是“单独运行一个脚本”，而是：
+
+> 先有一个符合 LangGraph 项目结构的目录，再通过 `langgraph dev` 启动它。
+
+---
+
+## 什么时候需要它
+
+当你只是想理解 `StateGraph` 基础概念时，其实不需要 Studio。
+
+Studio 更适合下面这些场景：
+
+- 图节点变多了，想看整体结构
+- 想验证不同输入会走哪条边
+- 想观察节点执行顺序和返回结果
+- 想在服务化项目里本地联调
+
+也就是说：
+
+- `01_intro`
+  主要靠读代码和直接运行脚本
+- `Studio`
+  更适合开始做项目化、本地服务化调试的时候用
+
+---
+
+## 最小准备
+
+先安装 CLI：
+
+```bash
+pip install -U "langgraph-cli[inmem]"
 ```
-**Output:**
+
+如果你想配合调试器，也可以装：
+
+```bash
+pip install debugpy
+```
+
+---
+
+## 创建一个新的 LangGraph 项目
+
+如果你想从空目录生成一个标准项目骨架，可以用：
+
+```bash
+langgraph new "/absolute/path/to/my_graph_app" --template new-langgraph-project-python
+```
+
+这个命令会生成一套标准结构，通常包括：
+
+- `src/agent/graph.py`
+- `langgraph.json`
+- `pyproject.toml`
+- `README.md`
+
+这类目录适合直接拿来跑 `langgraph dev`。
+
+---
+
+## 在本仓库里怎么用
+
+这个仓库里最适合配合 Studio 使用的不是当前 `02_workflows` 目录，而是后面的服务化项目：
+
+- `03_service_apps/projects/02_langgraph_server_minimal/`
+- `03_service_apps/projects/03_order_workflow_app/`
+
+推荐你直接在这些目录里运行：
+
+```bash
+cd /Users/songxijun/workspace/otherProject/ai-training/06_langgraph_basics/03_service_apps/projects/02_langgraph_server_minimal
+langgraph dev
+```
+
+或者：
+
+```bash
+cd /Users/songxijun/workspace/otherProject/ai-training/06_langgraph_basics/03_service_apps/projects/03_order_workflow_app
+langgraph dev
+```
+
+---
+
+## 启动后你通常会看到什么
+
+`langgraph dev` 正常启动后，通常会给出几个本地地址：
+
+- API
+  例如 `http://127.0.0.1:2024`
+- API 文档
+  例如 `http://127.0.0.1:2024/docs`
+- Studio URL
+  一般是带 `baseUrl=http://127.0.0.1:2024` 的链接
+
+你可以把它理解成这样一条链路：
 
 ```text
-Requirement already satisfied: langgraph-cli[inmem] in d:\software\miniconda3\envs\mlops\lib\site-packages (0.4.2)
-Requirement already satisfied: click>=8.1.7 in d:\software\miniconda3\envs\mlops\lib\site-packages (from langgraph-cli[inmem]) (8.2.1)
-Requirement already satisfied: langgraph-sdk>=0.1.0 in d:\software\miniconda3\envs\mlops\lib\site-packages (from langgraph-cli[inmem]) (0.2.6)
-Requirement already satisfied: langgraph-api<0.5.0,>=0.3 in d:\software\miniconda3\envs\mlops\lib\site-packages (from langgraph-cli[inmem]) (0.4.20)
-Requirement already satisfied: langgraph-runtime-inmem>=0.7 in d:\software\miniconda3\envs\mlops\lib\site-packages (from langgraph-cli[inmem]) (0.12.0)
-Requirement already satisfied: python-dotenv>=0.8.0 in d:\software\miniconda3\envs\mlops\lib\site-packages (from langgraph-cli[inmem]) (1.1.1)
-Requirement already satisfied: cloudpickle>=3.0.0 in d:\software\miniconda3\envs\mlops\lib\site-packages (from langgraph-api<0.5.0,>=0.3->langgraph-cli[inmem]) (3.1.1)
-Requirement already satisfied: cryptography<45.0,>=42.0.0 in d:\software\miniconda3\envs\mlops\lib\site-packages (from langgraph-api<0.5.0,>=0.3->langgraph-cli[inmem]) (44.0.3)
-Requirement already satisfied: httpx>=0.25.0 in d:\software\miniconda3\envs\mlops\lib\site-packages (from langgraph-api<0.5.0,>=0.3->langgraph-cli[inmem]) (0.28.1)
-Requirement already satisfied: jsonschema-rs<0.30,>=0.20.0 in d:\software\miniconda3\envs\mlops\lib\site-packages (from langgraph-api<0.5.0,>=0.3->langgraph-cli[inmem]) (0.29.1)
-Requirement already satisfied: langchain-core>=0.3.64 in d:\software\miniconda3\envs\mlops\lib\site-packages (from langgraph-api<0.5.0,>=0.3->langgraph-cli[inmem]) (0.3.75)
-Requirement already satisfied: langgraph-checkpoint>=2.0.23 in d:\software\miniconda3\envs\mlops\lib\site-packages (from langgraph-api<0.5.0,>=0.3->langgraph-cli[inmem]) (2.1.1)
-Requirement already satisfied: langgraph>=0.4.0 in d:\software\miniconda3\envs\mlops\lib\site-packages (from langgraph-api<0.5.0,>=0.3->langgraph-cli[inmem]) (0.6.7)
-Requirement already satisfied: langsmith>=0.3.45 in d:\software\miniconda3\envs\mlops\lib\site-packages (from langgraph-api<0.5.0,>=0.3->langgraph-cli[inmem]) (0.4.27)
-Requirement already satisfied: orjson>=3.9.7 in d:\software\miniconda3\envs\mlops\lib\site-packages (from langgraph-api<0.5.0,>=0.3->langgraph-cli[inmem]) (3.11.3)
-Requirement already satisfied: pyjwt>=2.9.0 in d:\software\miniconda3\envs\mlops\lib\site-packages (from langgraph-api<0.5.0,>=0.3->langgraph-cli[inmem]) (2.10.1)
-Requirement already satisfied: sse-starlette<2.2.0,>=2.1.0 in d:\software\miniconda3\envs\mlops\lib\site-packages (from langgraph-api<0.5.0,>=0.3->langgraph-cli[inmem]) (2.1.3)
-Requirement already satisfied: starlette>=0.38.6 in d:\software\miniconda3\envs\mlops\lib\site-packages (from langgraph-api<0.5.0,>=0.3->langgraph-cli[inmem]) (0.47.3)
-Requirement already satisfied: structlog<26,>=24.1.0 in d:\software\miniconda3\envs\mlops\lib\site-packages (from langgraph-api<0.5.0,>=0.3->langgraph-cli[inmem]) (25.4.0)
-Requirement already satisfied: tenacity>=8.0.0 in d:\software\miniconda3\envs\mlops\lib\site-packages (from langgraph-api<0.5.0,>=0.3->langgraph-cli[inmem]) (8.5.0)
-Requirement already satisfied: truststore>=0.1 in d:\software\miniconda3\envs\mlops\lib\site-packages (from langgraph-api<0.5.0,>=0.3->langgraph-cli[inmem]) (0.10.4)
-Requirement already satisfied: uvicorn>=0.26.0 in d:\software\miniconda3\envs\mlops\lib\site-packages (from langgraph-api<0.5.0,>=0.3->langgraph-cli[inmem]) (0.35.0)
-Requirement already satisfied: watchfiles>=0.13 in d:\software\miniconda3\envs\mlops\lib\site-packages (from langgraph-api<0.5.0,>=0.3->langgraph-cli[inmem]) (1.1.0)
-Requirement already satisfied: cffi>=1.12 in d:\software\miniconda3\envs\mlops\lib\site-packages (from cryptography<45.0,>=42.0.0->langgraph-api<0.5.0,>=0.3->langgraph-cli[inmem]) (1.17.1)
-Requirement already satisfied: blockbuster<2.0.0,>=1.5.24 in d:\software\miniconda3\envs\mlops\lib\site-packages (from langgraph-runtime-inmem>=0.7->langgraph-cli[inmem]) (1.5.25)
-Requirement already satisfied: forbiddenfruit>=0.1.4 in d:\software\miniconda3\envs\mlops\lib\site-packages (from blockbuster<2.0.0,>=1.5.24->langgraph-runtime-inmem>=0.7->langgraph-cli[inmem]) (0.1.4)
-Requirement already satisfied: anyio in d:\software\miniconda3\envs\mlops\lib\site-packages (from sse-starlette<2.2.0,>=2.1.0->langgraph-api<0.5.0,>=0.3->langgraph-cli[inmem]) (4.10.0)
-Requirement already satisfied: pycparser in d:\software\miniconda3\envs\mlops\lib\site-packages (from cffi>=1.12->cryptography<45.0,>=42.0.0->langgraph-api<0.5.0,>=0.3->langgraph-cli[inmem]) (2.22)
-Requirement already satisfied: colorama in d:\software\miniconda3\envs\mlops\lib\site-packages (from click>=8.1.7->langgraph-cli[inmem]) (0.4.6)
-Requirement already satisfied: certifi in d:\software\miniconda3\envs\mlops\lib\site-packages (from httpx>=0.25.0->langgraph-api<0.5.0,>=0.3->langgraph-cli[inmem]) (2025.8.3)
-Requirement already satisfied: httpcore==1.* in d:\software\miniconda3\envs\mlops\lib\site-packages (from httpx>=0.25.0->langgraph-api<0.5.0,>=0.3->langgraph-cli[inmem]) (1.0.9)
-Requirement already satisfied: idna in d:\software\miniconda3\envs\mlops\lib\site-packages (from httpx>=0.25.0->langgraph-api<0.5.0,>=0.3->langgraph-cli[inmem]) (3.10)
-Requirement already satisfied: h11>=0.16 in d:\software\miniconda3\envs\mlops\lib\site-packages (from httpcore==1.*->httpx>=0.25.0->langgraph-api<0.5.0,>=0.3->langgraph-cli[inmem]) (0.16.0)
-Requirement already satisfied: jsonpatch<2.0,>=1.33 in d:\software\miniconda3\envs\mlops\lib\site-packages (from langchain-core>=0.3.64->langgraph-api<0.5.0,>=0.3->langgraph-cli[inmem]) (1.33)
-Requirement already satisfied: PyYAML>=5.3 in d:\software\miniconda3\envs\mlops\lib\site-packages (from langchain-core>=0.3.64->langgraph-api<0.5.0,>=0.3->langgraph-cli[inmem]) (6.0.2)
-Requirement already satisfied: typing-extensions>=4.7 in d:\software\miniconda3\envs\mlops\lib\site-packages (from langchain-core>=0.3.64->langgraph-api<0.5.0,>=0.3->langgraph-cli[inmem]) (4.15.0)
-Requirement already satisfied: packaging>=23.2 in d:\software\miniconda3\envs\mlops\lib\site-packages (from langchain-core>=0.3.64->langgraph-api<0.5.0,>=0.3->langgraph-cli[inmem]) (25.0)
-Requirement already satisfied: pydantic>=2.7.4 in d:\software\miniconda3\envs\mlops\lib\site-packages (from langchain-core>=0.3.64->langgraph-api<0.5.0,>=0.3->langgraph-cli[inmem]) (2.11.7)
-Requirement already satisfied: jsonpointer>=1.9 in d:\software\miniconda3\envs\mlops\lib\site-packages (from jsonpatch<2.0,>=1.33->langchain-core>=0.3.64->langgraph-api<0.5.0,>=0.3->langgraph-cli[inmem]) (3.0.0)
-Requirement already satisfied: langgraph-prebuilt<0.7.0,>=0.6.0 in d:\software\miniconda3\envs\mlops\lib\site-packages (from langgraph>=0.4.0->langgraph-api<0.5.0,>=0.3->langgraph-cli[inmem]) (0.6.4)
-Requirement already satisfied: xxhash>=3.5.0 in d:\software\miniconda3\envs\mlops\lib\site-packages (from langgraph>=0.4.0->langgraph-api<0.5.0,>=0.3->langgraph-cli[inmem]) (3.5.0)
-Requirement already satisfied: ormsgpack>=1.10.0 in d:\software\miniconda3\envs\mlops\lib\site-packages (from langgraph-checkpoint>=2.0.23->langgraph-api<0.5.0,>=0.3->langgraph-cli[inmem]) (1.10.0)
-Requirement already satisfied: requests-toolbelt>=1.0.0 in d:\software\miniconda3\envs\mlops\lib\site-packages (from langsmith>=0.3.45->langgraph-api<0.5.0,>=0.3->langgraph-cli[inmem]) (1.0.0)
-Requirement already satisfied: requests>=2.0.0 in d:\software\miniconda3\envs\mlops\lib\site-packages (from langsmith>=0.3.45->langgraph-api<0.5.0,>=0.3->langgraph-cli[inmem]) (2.32.5)
-Requirement already satisfied: zstandard>=0.23.0 in d:\software\miniconda3\envs\mlops\lib\site-packages (from langsmith>=0.3.45->langgraph-api<0.5.0,>=0.3->langgraph-cli[inmem]) (0.24.0)
-Requirement already satisfied: annotated-types>=0.6.0 in d:\software\miniconda3\envs\mlops\lib\site-packages (from pydantic>=2.7.4->langchain-core>=0.3.64->langgraph-api<0.5.0,>=0.3->langgraph-cli[inmem]) (0.7.0)
-Requirement already satisfied: pydantic-core==2.33.2 in d:\software\miniconda3\envs\mlops\lib\site-packages (from pydantic>=2.7.4->langchain-core>=0.3.64->langgraph-api<0.5.0,>=0.3->langgraph-cli[inmem]) (2.33.2)
-Requirement already satisfied: typing-inspection>=0.4.0 in d:\software\miniconda3\envs\mlops\lib\site-packages (from pydantic>=2.7.4->langchain-core>=0.3.64->langgraph-api<0.5.0,>=0.3->langgraph-cli[inmem]) (0.4.1)
-Requirement already satisfied: charset_normalizer<4,>=2 in d:\software\miniconda3\envs\mlops\lib\site-packages (from requests>=2.0.0->langsmith>=0.3.45->langgraph-api<0.5.0,>=0.3->langgraph-cli[inmem]) (3.4.3)
-Requirement already satisfied: urllib3<3,>=1.21.1 in d:\software\miniconda3\envs\mlops\lib\site-packages (from requests>=2.0.0->langsmith>=0.3.45->langgraph-api<0.5.0,>=0.3->langgraph-cli[inmem]) (2.5.0)
-Requirement already satisfied: sniffio>=1.1 in d:\software\miniconda3\envs\mlops\lib\site-packages (from anyio->sse-starlette<2.2.0,>=2.1.0->langgraph-api<0.5.0,>=0.3->langgraph-cli[inmem]) (1.3.1)
-Requirement already satisfied: debugpy in d:\software\miniconda3\envs\mlops\lib\site-packages (1.8.16)
+graph.py
+  -> langgraph dev
+  -> 本地 API
+  -> Studio 连接本地 API
+  -> 可视化调试
 ```
-```python
-!langgraph new "D:\AI工程化训练营\workspace\02_workflows\app" --template new-langgraph-project-python
-```
-**Output:**
 
-```text
-📥 Attempting to download repository as a ZIP archive...
-URL: https://github.com/langchain-ai/new-langgraph-project/archive/refs/heads/main.zip
-✅ Downloaded and extracted repository to D:\AI工程化训练营\workspace\02_workflows\app
-🎉 New project created at D:\AI工程化训练营\workspace\02_workflows\app
-```
-```python
-!cd app && langgraph dev
-```
-**Output:**
+---
 
-```text
-^C
-```
-```python
-!cd app2 && langgraph dev
-```
-**Output:**
+## 调试时重点看什么
 
-```text
-^C
-```
+第一次用 Studio，不要试图一下看太多东西，先只看 4 个点：
+
+1. 图结构
+   节点和边是不是和你预期一致
+2. 输入状态
+   传入的字段是不是完整
+3. 节点输出
+   每个节点到底写回了什么
+4. 路由结果
+   条件边最后走到了哪里
+
+这样你就能把“代码里定义的图”和“运行时真实发生的事情”对上。
+
+---
+
+## `debugpy` 有什么用
+
+Studio 主要解决“图级别的观察”。
+
+但如果你还想进一步：
+
+- 在节点函数里打断点
+- 单步看具体 Python 逻辑
+- 检查某个状态字段为什么被写成某个值
+
+那就可以配合 `debugpy` 或 IDE 调试器一起用。
+
+也就是说：
+
+- Studio 负责看“工作流”
+- `debugpy` 负责看“节点内部代码”
+
+这两个并不冲突。
+
+---
+
+## 这份材料真正要你学会什么
+
+- Studio 不是替代 LangGraph，而是辅助调试工具
+- 它依赖 `langgraph dev` 提供本地 API
+- 最适合配合“服务化项目目录”使用
+- 当图开始复杂时，可视化调试会比只看终端输出高效很多
+
+---
+
+## 建议下一步
+
+如果你只是第一次接触 Studio，建议下一步直接去跑：
+
+- `03_service_apps/projects/02_langgraph_server_minimal`
+
+这是最小、最干净、最适合配 Studio 的示例。  
