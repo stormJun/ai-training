@@ -1,14 +1,32 @@
-# Memory
+# 记忆机制
 
-This unit covers short-term and long-term memory patterns in LangGraph-oriented systems.
+这一组内容主要讲两件事：
 
-## Order
+1. LangGraph / Agent 系统里的短期记忆和长期记忆分别是什么
+2. 如何把记忆能力真正落到工程里，例如 Redis、窗口记忆、Mem0
 
-1. `05_记忆机制_基础.md` / `.py`
-2. `06_记忆机制_Mem0.md` / `.py`
+## 建议阅读顺序
 
-## Focus
+1. `05_记忆机制_基础.md` / `05_记忆机制_基础.py`
+   先看一个更基础的长期记忆示例，理解“跨会话保存和取回上下文”。
+2. `06_记忆机制_Mem0.md` / `06_记忆机制_Mem0.py`
+   再看 LangChain 旧式 memory、窗口记忆、Redis，以及 Mem0 这种更偏工程化的记忆层方案。
 
-- Thread-scoped memory
-- Conversation history management
-- Memory extensions such as Mem0
+## 这一组的重点
+
+- 短期记忆
+  一次会话内部如何保留上下文
+- 长期记忆
+  不同线程 / 多轮会话之间如何记住用户信息
+- 工程化实现
+  Redis 持久化、窗口裁剪、语义检索式记忆
+
+## 阅读建议
+
+这一组既有“概念说明”，也有“可运行示例”，但不少示例会依赖：
+
+- `DASHSCOPE_API_KEY`
+- Redis
+- `mem0`
+
+所以建议先读文档理解思路，再决定要不要把对应环境跑起来。
