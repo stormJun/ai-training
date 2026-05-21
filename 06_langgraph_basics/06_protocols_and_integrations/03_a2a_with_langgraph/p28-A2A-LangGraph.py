@@ -1,14 +1,23 @@
 import os
 from collections.abc import AsyncIterable
 from typing import Any, Dict, Literal
+
 from langchain_core.tools import tool
-from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_openai import ChatOpenAI
 from dotenv import load_dotenv
 from langgraph.checkpoint.memory import MemorySaver
 from langgraph.prebuilt import create_react_agent
 from pydantic import BaseModel
-from tavily import TavilyClient
+
+try:
+    from langchain_google_genai import ChatGoogleGenerativeAI
+except ImportError:  # pragma: no cover - exercised via runtime checks
+    ChatGoogleGenerativeAI = None
+
+try:
+    from tavily import TavilyClient
+except ImportError:  # pragma: no cover - exercised via runtime checks
+    TavilyClient = None
 
 # 初始化内存存储
 memory = MemorySaver()
@@ -66,6 +75,10 @@ def build_model():
             raise ValueError(
                 "GOOGLE_API_KEY/GEMINI_API_KEY 未配置，无法使用 Google 模型。"
             )
+        if ChatGoogleGenerativeAI is None:
+            raise ImportError(
+                "当前环境未安装 langchain-google-genai，无法使用 Google 模型。"
+            )
         return ChatGoogleGenerativeAI(model="gemini-2.0-flash")
 
     api_key = resolve_openai_compatible_api_key()
@@ -99,6 +112,12 @@ def search_tavily(query: str, search_depth: str = "basic") -> Dict[str, Any]:
             return {
                 "success": False,
                 "error": "TAVILY_API_KEY 未配置，当前 Web 搜索功能不可用。",
+                "query": query,
+            }
+        if TavilyClient is None:
+            return {
+                "success": False,
+                "error": "未安装 tavily-python，当前 Web 搜索功能不可用。",
                 "query": query,
             }
 

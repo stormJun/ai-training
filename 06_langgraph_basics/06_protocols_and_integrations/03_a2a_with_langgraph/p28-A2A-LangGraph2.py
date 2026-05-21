@@ -8,18 +8,6 @@ from typing import List, AsyncGenerator
 import click
 import httpx
 import uvicorn
-from a2a.server.apps import A2AStarletteApplication
-from a2a.server.request_handlers import DefaultRequestHandler
-from a2a.server.tasks import (
-    BasePushNotificationSender,
-    InMemoryPushNotificationConfigStore,
-    InMemoryTaskStore,
-)
-from a2a.types import (
-    AgentCapabilities,
-    AgentCard,
-    AgentSkill,
-)
 from dotenv import load_dotenv
 
 # 导入我们之前创建的SearchAgent
@@ -42,6 +30,29 @@ logger = logging.getLogger(__name__)
 
 class MissingAPIKeyError(Exception):
     """Exception for missing API key."""
+
+
+def import_a2a_components():
+    """按需导入 A2A 运行时依赖。"""
+    from a2a.server.apps import A2AStarletteApplication
+    from a2a.server.request_handlers import DefaultRequestHandler
+    from a2a.server.tasks import (
+        BasePushNotificationSender,
+        InMemoryPushNotificationConfigStore,
+        InMemoryTaskStore,
+    )
+    from a2a.types import AgentCapabilities, AgentCard, AgentSkill
+
+    return {
+        "A2AStarletteApplication": A2AStarletteApplication,
+        "DefaultRequestHandler": DefaultRequestHandler,
+        "BasePushNotificationSender": BasePushNotificationSender,
+        "InMemoryPushNotificationConfigStore": InMemoryPushNotificationConfigStore,
+        "InMemoryTaskStore": InMemoryTaskStore,
+        "AgentCapabilities": AgentCapabilities,
+        "AgentCard": AgentCard,
+        "AgentSkill": AgentSkill,
+    }
 
 
 def validate_runtime_configuration() -> dict:
@@ -86,15 +97,16 @@ class SearchAgentExecutor:
 def main(host, port):
     """启动搜索Agent服务器"""
     try:
+        a2a = import_a2a_components()
         runtime_config = validate_runtime_configuration()
         if not runtime_config["search_enabled"]:
             logger.warning("TAVILY_API_KEY 未配置，服务将启动，但 Web 搜索功能会以降级模式运行。")
 
         # 配置Agent能力
-        capabilities = AgentCapabilities(streaming=True, pushNotifications=True)
+        capabilities = a2a["AgentCapabilities"](streaming=True, pushNotifications=True)
         
         # 定义搜索技能
-        skill = AgentSkill(
+        skill = a2a["AgentSkill"](
             id="search_web",
             name="搜索工具",
             description="搜索web上的相关信息",
@@ -103,7 +115,7 @@ def main(host, port):
         )
 
         # 定义Agent卡片
-        agent_card = AgentCard(
+        agent_card = a2a["AgentCard"](
             name="搜索助手",
             description="搜索Web上的相关信息",
             url=f"http://{host}:{port}/",
@@ -120,22 +132,22 @@ def main(host, port):
 
         # 配置HTTP客户端和推送通知
         httpx_client = httpx.AsyncClient()
-        push_config_store = InMemoryPushNotificationConfigStore()
-        push_sender = BasePushNotificationSender(
+        push_config_store = a2a["InMemoryPushNotificationConfigStore"]()
+        push_sender = a2a["BasePushNotificationSender"](
             httpx_client=httpx_client,
             config_store=push_config_store
         )
 
         # 创建请求处理器
-        request_handler = DefaultRequestHandler(
+        request_handler = a2a["DefaultRequestHandler"](
             agent_executor=agent_executor,
-            task_store=InMemoryTaskStore(),
+            task_store=a2a["InMemoryTaskStore"](),
             push_config_store=push_config_store,
             push_sender=push_sender
         )
 
         # 创建A2A服务器
-        server = A2AStarletteApplication(
+        server = a2a["A2AStarletteApplication"](
             agent_card=agent_card, 
             http_handler=request_handler
         )
