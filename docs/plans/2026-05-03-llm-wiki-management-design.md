@@ -67,11 +67,11 @@ llm_wiki/
 
 - `README.md`
 - `AGENTS.md`
-- `13_rag_and_retrieval/`
-- `36_memory_patterns_basics/`
-- `56_skill_engineering/`
-- `13_rag_and_retrieval/16_local_rag_project/`
-- `13_rag_and_retrieval/17_qanything_case_study/`
+- `04_rag_and_retrieval/`
+- `10_memory_patterns_basics/`
+- `18_skill_engineering/`
+- `04_rag_and_retrieval/05_local_rag_project/`
+- `04_rag_and_retrieval/06_qanything_case_study/`
 
 ### `llm_wiki/wiki/index.md`
 
@@ -252,9 +252,9 @@ LLM Wiki 可以总结并链接这些文件，但不能无声地与它们冲突�
 
 第一批只覆盖小而有代表性的区域：
 
-1. `13_rag_and_retrieval/`
-2. `36_memory_patterns_basics/`
-3. `56_skill_engineering/`
+1. `04_rag_and_retrieval/`
+2. `10_memory_patterns_basics/`
+3. `18_skill_engineering/`
 4. 根目录 `README.md`
 5. 根目录 `AGENTS.md`
 

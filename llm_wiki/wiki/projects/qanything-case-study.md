@@ -12,15 +12,15 @@ tags:
   - "project"
   - "project/rag"
 sources:
-  - "13_rag_and_retrieval/17_qanything_case_study/README.md"
+  - "04_rag_and_retrieval/06_qanything_case_study/README.md"
 ---
 
 # QAnything 案例
 
 ## 仓库位置
 
-- `13_rag_and_retrieval/17_qanything_case_study/`
-- 案例目录：`13_rag_and_retrieval/17_qanything_case_study/qanything_case_study/`
+- `04_rag_and_retrieval/06_qanything_case_study/`
+- 案例目录：`04_rag_and_retrieval/06_qanything_case_study/qanything_case_study/`
 
 ## 项目目的
 
@@ -32,9 +32,9 @@ sources:
 
 ## 安装与运行入口
 
-- 主题入口：`13_rag_and_retrieval/17_qanything_case_study/README.md`
-- 案例 README：`13_rag_and_retrieval/17_qanything_case_study/qanything_case_study/README.md`
-- 前端说明：`13_rag_and_retrieval/17_qanything_case_study/qanything_case_study/front_end/README.md`
+- 主题入口：`04_rag_and_retrieval/06_qanything_case_study/README.md`
+- 案例 README：`04_rag_and_retrieval/06_qanything_case_study/qanything_case_study/README.md`
+- 前端说明：`04_rag_and_retrieval/06_qanything_case_study/qanything_case_study/front_end/README.md`
 
 ## 相关课程主题
 

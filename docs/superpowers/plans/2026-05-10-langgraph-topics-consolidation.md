@@ -2,7 +2,7 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Move the advanced LangGraph topic directories into `06_langgraph_basics/` and repair repository-level navigation so `06_langgraph_basics/` becomes the unified entrypoint.
+**Goal:** Move the advanced LangGraph topic directories into `02_langgraph_basics/` and repair repository-level navigation so `02_langgraph_basics/` becomes the unified entrypoint.
 
 **Architecture:** This is a filesystem-first reorganization. Move the three target directories intact, then update the small set of active README files that present repository structure. Verification is based on path existence and targeted reference searches rather than application tests.
 
@@ -13,9 +13,9 @@
 ### Task 1: Move the three LangGraph topic directories
 
 **Files:**
-- Create: `06_langgraph_basics/21_langgraph_workflows/`
-- Create: `06_langgraph_basics/31_mcp_langgraph_integration/`
-- Create: `06_langgraph_basics/32_a2a_langgraph/`
+- Create: `02_langgraph_basics/21_langgraph_workflows/`
+- Create: `02_langgraph_basics/31_mcp_langgraph_integration/`
+- Create: `02_langgraph_basics/32_a2a_langgraph/`
 - Remove: `21_langgraph_workflows/`
 - Remove: `30_agent_protocols_and_mcp/31_mcp_langgraph_integration/`
 - Remove: `30_agent_protocols_and_mcp/32_a2a_langgraph/`
@@ -23,62 +23,62 @@
 - [ ] **Step 1: Verify the source and destination paths before moving**
 
 ```bash
-test -d 06_langgraph_basics
+test -d 02_langgraph_basics
 test -d 21_langgraph_workflows
 test -d 30_agent_protocols_and_mcp/31_mcp_langgraph_integration
 test -d 30_agent_protocols_and_mcp/32_a2a_langgraph
-test ! -e 06_langgraph_basics/21_langgraph_workflows
-test ! -e 06_langgraph_basics/31_mcp_langgraph_integration
-test ! -e 06_langgraph_basics/32_a2a_langgraph
+test ! -e 02_langgraph_basics/21_langgraph_workflows
+test ! -e 02_langgraph_basics/31_mcp_langgraph_integration
+test ! -e 02_langgraph_basics/32_a2a_langgraph
 ```
 
 Expected: no output and exit code `0`.
 
-- [ ] **Step 2: Move `21_langgraph_workflows` into `06_langgraph_basics/`**
+- [ ] **Step 2: Move `21_langgraph_workflows` into `02_langgraph_basics/`**
 
 ```bash
-mv 21_langgraph_workflows 06_langgraph_basics/
+mv 21_langgraph_workflows 02_langgraph_basics/
 ```
 
-- [ ] **Step 3: Move `31_mcp_langgraph_integration` into `06_langgraph_basics/`**
+- [ ] **Step 3: Move `31_mcp_langgraph_integration` into `02_langgraph_basics/`**
 
 ```bash
-mv 30_agent_protocols_and_mcp/31_mcp_langgraph_integration 06_langgraph_basics/
+mv 30_agent_protocols_and_mcp/31_mcp_langgraph_integration 02_langgraph_basics/
 ```
 
-- [ ] **Step 4: Move `32_a2a_langgraph` into `06_langgraph_basics/`**
+- [ ] **Step 4: Move `32_a2a_langgraph` into `02_langgraph_basics/`**
 
 ```bash
-mv 30_agent_protocols_and_mcp/32_a2a_langgraph 06_langgraph_basics/
+mv 30_agent_protocols_and_mcp/32_a2a_langgraph 02_langgraph_basics/
 ```
 
 - [ ] **Step 5: Verify the new directory layout**
 
 ```bash
-find 06_langgraph_basics -maxdepth 1 -type d | sort
+find 02_langgraph_basics -maxdepth 1 -type d | sort
 ```
 
 Expected output contains:
-- `06_langgraph_basics`
-- `06_langgraph_basics/21_langgraph_workflows`
-- `06_langgraph_basics/31_mcp_langgraph_integration`
-- `06_langgraph_basics/32_a2a_langgraph`
+- `02_langgraph_basics`
+- `02_langgraph_basics/21_langgraph_workflows`
+- `02_langgraph_basics/31_mcp_langgraph_integration`
+- `02_langgraph_basics/32_a2a_langgraph`
 
 - [ ] **Step 6: Commit the directory move**
 
 ```bash
-git add 06_langgraph_basics 21_langgraph_workflows 30_agent_protocols_and_mcp
+git add 02_langgraph_basics 21_langgraph_workflows 30_agent_protocols_and_mcp
 git commit -m "refactor: consolidate langgraph topics under basics"
 ```
 
 ### Task 2: Update repository navigation readmes
 
 **Files:**
-- Modify: `06_langgraph_basics/README.md`
+- Modify: `02_langgraph_basics/README.md`
 - Modify: `README.md`
 - Modify: `30_agent_protocols_and_mcp/README.md`
 
-- [ ] **Step 1: Rewrite `06_langgraph_basics/README.md` as the unified LangGraph entrypoint**
+- [ ] **Step 1: Rewrite `02_langgraph_basics/README.md` as the unified LangGraph entrypoint**
 
 Replace its contents with:
 
@@ -115,18 +115,18 @@ Replace its contents with:
 - [ ] **Step 2: Update the root `README.md` LangGraph entries to the new paths**
 
 Change the LangGraph section so:
-- the top-level entry for `21_langgraph_workflows/` becomes `06_langgraph_basics/`
+- the top-level entry for `21_langgraph_workflows/` becomes `02_langgraph_basics/`
 - the protocol section no longer lists `31_mcp_langgraph_integration/` and `32_a2a_langgraph/` as children
-- the `06_langgraph_basics/` description mentions the embedded `21_langgraph_workflows/`, `31_mcp_langgraph_integration/`, and `32_a2a_langgraph/`
+- the `02_langgraph_basics/` description mentions the embedded `21_langgraph_workflows/`, `31_mcp_langgraph_integration/`, and `32_a2a_langgraph/`
 
 - [ ] **Step 3: Update `30_agent_protocols_and_mcp/README.md` to remove the moved child topics**
 
-Rewrite the file so it describes only the topics that remain in place and adds a note that LangGraph-related integration topics were moved to `../06_langgraph_basics/`.
+Rewrite the file so it describes only the topics that remain in place and adds a note that LangGraph-related integration topics were moved to `../02_langgraph_basics/`.
 
 - [ ] **Step 4: Review the modified markdown for stale navigation paths**
 
 ```bash
-rg -n '21_langgraph_workflows/|31_mcp_langgraph_integration/|32_a2a_langgraph/' README.md 06_langgraph_basics/README.md 30_agent_protocols_and_mcp/README.md
+rg -n '21_langgraph_workflows/|31_mcp_langgraph_integration/|32_a2a_langgraph/' README.md 02_langgraph_basics/README.md 30_agent_protocols_and_mcp/README.md
 ```
 
 Expected: any remaining matches should reflect the new nested locations or an explicit migration note.
@@ -134,14 +134,14 @@ Expected: any remaining matches should reflect the new nested locations or an ex
 - [ ] **Step 5: Commit the README updates**
 
 ```bash
-git add README.md 06_langgraph_basics/README.md 30_agent_protocols_and_mcp/README.md
+git add README.md 02_langgraph_basics/README.md 30_agent_protocols_and_mcp/README.md
 git commit -m "docs: update langgraph topic navigation"
 ```
 
 ### Task 3: Run repository-structure verification
 
 **Files:**
-- Verify: `06_langgraph_basics/`
+- Verify: `02_langgraph_basics/`
 - Verify: `README.md`
 - Verify: `30_agent_protocols_and_mcp/README.md`
 
@@ -158,9 +158,9 @@ Expected: no output and exit code `0`.
 - [ ] **Step 2: Confirm the new paths exist**
 
 ```bash
-test -d 06_langgraph_basics/21_langgraph_workflows
-test -d 06_langgraph_basics/31_mcp_langgraph_integration
-test -d 06_langgraph_basics/32_a2a_langgraph
+test -d 02_langgraph_basics/21_langgraph_workflows
+test -d 02_langgraph_basics/31_mcp_langgraph_integration
+test -d 02_langgraph_basics/32_a2a_langgraph
 ```
 
 Expected: no output and exit code `0`.

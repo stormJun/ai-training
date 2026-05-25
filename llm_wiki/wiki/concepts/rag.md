@@ -12,7 +12,7 @@ tags:
   - "concept"
   - "concept/rag"
 sources:
-  - "13_rag_and_retrieval/README.md"
+  - "04_rag_and_retrieval/README.md"
 ---
 
 # RAG
@@ -27,7 +27,7 @@ RAG 是训练营中连接“文档资料”和“LLM 应用”的核心能力。
 
 ## 在本仓库中的位置
 
-RAG 主体内容集中在 `13_rag_and_retrieval/`，其中包含 LlamaIndex 检索基础、Ragas 评测、GraphRAG、本地 RAG 项目和 QAnything 案例。
+RAG 主体内容集中在 `04_rag_and_retrieval/`，其中包含 LlamaIndex 检索基础、Ragas 评测、GraphRAG、本地 RAG 项目和 QAnything 案例。
 
 ## 相关主题
 
@@ -41,9 +41,9 @@ RAG 主体内容集中在 `13_rag_and_retrieval/`，其中包含 LlamaIndex 检�
 
 ## 来源引用
 
-- `13_rag_and_retrieval/README.md`
-- `13_rag_and_retrieval/13_llamaindex_retrieval_basics/README.md`
-- `13_rag_and_retrieval/16_local_rag_project/README.md`
+- `04_rag_and_retrieval/README.md`
+- `04_rag_and_retrieval/02_llamaindex_retrieval_basics/README.md`
+- `04_rag_and_retrieval/05_local_rag_project/README.md`
 
 ## 维护备注
 

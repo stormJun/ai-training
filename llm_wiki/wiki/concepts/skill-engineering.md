@@ -12,7 +12,7 @@ tags:
   - "concept"
   - "concept/skill"
 sources:
-  - "56_skill_engineering/README.md"
+  - "18_skill_engineering/README.md"
 ---
 
 # Skill Engineering
@@ -27,7 +27,7 @@ LLM Wiki 的维护质量依赖清晰的操作规则。Skill Engineering 提供�
 
 ## 在本仓库中的位置
 
-相关资料位于 `56_skill_engineering/`，入口包括 Skill 访谈问答、Skill authoring best practices 中文材料，以及 OpenAI Skills 最佳实践笔记。
+相关资料位于 `18_skill_engineering/`，入口包括 Skill 访谈问答、Skill authoring best practices 中文材料，以及 OpenAI Skills 最佳实践笔记。
 
 ## 相关主题
 
@@ -40,10 +40,10 @@ LLM Wiki 的维护质量依赖清晰的操作规则。Skill Engineering 提供�
 
 ## 来源引用
 
-- `56_skill_engineering/README.md`
-- `56_skill_engineering/skill_engineering/claude-skills-interview-qa.md`
-- `56_skill_engineering/skill_engineering/Skill authoring best practices - Claude API Docs.zh-CN.md`
-- `56_skill_engineering/skill_engineering/openai-skills-best-practices.md`
+- `18_skill_engineering/README.md`
+- `18_skill_engineering/skill_engineering/claude-skills-interview-qa.md`
+- `18_skill_engineering/skill_engineering/Skill authoring best practices - Claude API Docs.zh-CN.md`
+- `18_skill_engineering/skill_engineering/openai-skills-best-practices.md`
 
 ## 维护备注
 

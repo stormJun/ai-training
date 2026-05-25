@@ -12,7 +12,7 @@ tags:
   - "concept"
   - "concept/memory"
 sources:
-  - "36_memory_patterns_basics/README.md"
+  - "10_memory_patterns_basics/README.md"
 ---
 
 # Agent Memory
@@ -27,7 +27,7 @@ Agent Memory 是让智能体在一次或多次交互中保存、检索、压缩�
 
 ## 在本仓库中的位置
 
-相关内容集中在 `36_memory_patterns_basics/`，包括短期记忆、摘要记忆、滑动窗口、向量记忆、FAISS、知识图谱记忆、Redis 时序记忆，以及工具调用重试与降级。
+相关内容集中在 `10_memory_patterns_basics/`，包括短期记忆、摘要记忆、滑动窗口、向量记忆、FAISS、知识图谱记忆、Redis 时序记忆，以及工具调用重试与降级。
 
 ## 相关主题
 
@@ -41,9 +41,9 @@ Agent Memory 是让智能体在一次或多次交互中保存、检索、压缩�
 
 ## 来源引用
 
-- `36_memory_patterns_basics/README.md`
-- `36_memory_patterns_basics/TECH_DOC.md`
-- `36_memory_patterns_basics/LLM-Memory核心观点-Anthropic与OpenAI.md`
+- `10_memory_patterns_basics/README.md`
+- `10_memory_patterns_basics/TECH_DOC.md`
+- `10_memory_patterns_basics/LLM-Memory核心观点-Anthropic与OpenAI.md`
 
 ## 维护备注
 

@@ -137,10 +137,10 @@ LLM Wiki 可以解释这些来源、建立交叉引用、记录维护状态，�
 第一批实现覆盖：
 
 - 根目录导航
-- `13_rag_and_retrieval/`
-- `36_memory_patterns_basics/`
-- `56_skill_engineering/`
-- `13_rag_and_retrieval/` 下的 RAG 项目入口页
+- `04_rag_and_retrieval/`
+- `10_memory_patterns_basics/`
+- `18_skill_engineering/`
+- `04_rag_and_retrieval/` 下的 RAG 项目入口页
 
 ## Obsidian 连接
 

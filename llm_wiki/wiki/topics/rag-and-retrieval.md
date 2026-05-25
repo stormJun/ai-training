@@ -12,14 +12,14 @@ tags:
   - "topic"
   - "topic/rag"
 sources:
-  - "13_rag_and_retrieval/README.md"
+  - "04_rag_and_retrieval/README.md"
 ---
 
 # RAG 与检索
 
 ## 仓库位置
 
-- `13_rag_and_retrieval/`
+- `04_rag_and_retrieval/`
 
 ## 在课程中的角色
 
@@ -48,12 +48,12 @@ sources:
 
 ## 关键文件与入口
 
-- `13_rag_and_retrieval/README.md`
-- `13_rag_and_retrieval/13_llamaindex_retrieval_basics/README.md`
-- `13_rag_and_retrieval/14_ragas_retrieval_evaluation/README.md`
-- `13_rag_and_retrieval/15_graphrag_basics/README.md`
-- `13_rag_and_retrieval/16_local_rag_project/README.md`
-- `13_rag_and_retrieval/17_qanything_case_study/README.md`
+- `04_rag_and_retrieval/README.md`
+- `04_rag_and_retrieval/02_llamaindex_retrieval_basics/README.md`
+- `04_rag_and_retrieval/03_ragas_retrieval_evaluation/README.md`
+- `04_rag_and_retrieval/04_graphrag_basics/README.md`
+- `04_rag_and_retrieval/05_local_rag_project/README.md`
+- `04_rag_and_retrieval/06_qanything_case_study/README.md`
 
 ## 相关概念
 

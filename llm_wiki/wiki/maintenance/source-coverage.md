@@ -24,11 +24,11 @@ sources:
 | --- | --- | --- |
 | `root_readme` | `README.md` | `wiki/index.md`, `wiki/curriculum-map.md`, `wiki/maintenance/topic-inventory.md` |
 | `root_agents` | `AGENTS.md` | `llm_wiki/AGENTS.md`, `wiki/maintenance/open-questions.md` |
-| `rag_and_retrieval` | `13_rag_and_retrieval/` | `wiki/topics/rag-and-retrieval.md`, `wiki/concepts/rag.md`, `wiki/concepts/graphrag.md` |
-| `memory_patterns` | `36_memory_patterns_basics/` | `wiki/topics/memory-patterns.md`, `wiki/concepts/agent-memory.md` |
-| `skill_engineering` | `56_skill_engineering/` | `wiki/topics/skill-engineering.md`, `wiki/concepts/skill-engineering.md`, `wiki/concepts/schema-guided-ai-maintenance.md` |
-| `local_rag_project` | `13_rag_and_retrieval/16_local_rag_project/` | `wiki/projects/local-rag-project.md` |
-| `qanything_case_study` | `13_rag_and_retrieval/17_qanything_case_study/` | `wiki/projects/qanything-case-study.md` |
+| `rag_and_retrieval` | `04_rag_and_retrieval/` | `wiki/topics/rag-and-retrieval.md`, `wiki/concepts/rag.md`, `wiki/concepts/graphrag.md` |
+| `memory_patterns` | `10_memory_patterns_basics/` | `wiki/topics/memory-patterns.md`, `wiki/concepts/agent-memory.md` |
+| `skill_engineering` | `18_skill_engineering/` | `wiki/topics/skill-engineering.md`, `wiki/concepts/skill-engineering.md`, `wiki/concepts/schema-guided-ai-maintenance.md` |
+| `local_rag_project` | `04_rag_and_retrieval/05_local_rag_project/` | `wiki/projects/local-rag-project.md` |
+| `qanything_case_study` | `04_rag_and_retrieval/06_qanything_case_study/` | `wiki/projects/qanything-case-study.md` |
 
 ## 后续覆盖
 

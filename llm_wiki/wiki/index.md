@@ -36,10 +36,10 @@ sources:
 
 - 来自 `README.md` 的仓库导航
 - 来自 `AGENTS.md` 的仓库维护规则
-- `13_rag_and_retrieval/` 中的 RAG 与检索主题
-- `36_memory_patterns_basics/` 中的记忆主题
-- `56_skill_engineering/` 中的 Skill 工程主题
-- `13_rag_and_retrieval/` 下两个 RAG 项目入口页
+- `04_rag_and_retrieval/` 中的 RAG 与检索主题
+- `10_memory_patterns_basics/` 中的记忆主题
+- `18_skill_engineering/` 中的 Skill 工程主题
+- `04_rag_and_retrieval/` 下两个 RAG 项目入口页
 
 ## 查询规则
 

@@ -12,15 +12,15 @@ tags:
   - "project"
   - "project/rag"
 sources:
-  - "13_rag_and_retrieval/16_local_rag_project/README.md"
+  - "04_rag_and_retrieval/05_local_rag_project/README.md"
 ---
 
 # 本地 RAG 项目
 
 ## 仓库位置
 
-- `13_rag_and_retrieval/16_local_rag_project/`
-- 项目目录：`13_rag_and_retrieval/16_local_rag_project/local_rag_project/`
+- `04_rag_and_retrieval/05_local_rag_project/`
+- 项目目录：`04_rag_and_retrieval/05_local_rag_project/local_rag_project/`
 
 ## 项目目的
 
@@ -32,8 +32,8 @@ sources:
 
 ## 安装与运行入口
 
-- 主题入口：`13_rag_and_retrieval/16_local_rag_project/README.md`
-- 项目 README：`13_rag_and_retrieval/16_local_rag_project/local_rag_project/README.md`
+- 主题入口：`04_rag_and_retrieval/05_local_rag_project/README.md`
+- 项目 README：`04_rag_and_retrieval/05_local_rag_project/local_rag_project/README.md`
 
 ## 相关课程主题
 

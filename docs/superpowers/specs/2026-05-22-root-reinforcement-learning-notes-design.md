@@ -8,24 +8,24 @@
 
 本设计仅覆盖以下新增内容：
 
-- 根目录新建 `reinforcement_learning_notes/`
+- 根目录新建 `22_reinforcement_learning_notes/`
 - 在该目录下新增 `README.md`
 - 文档采用中文撰写，风格为系统学习笔记
 
-本设计不会替换或重组现有的强化学习专题目录 `53_model_extensions/55_reinforcement_learning/`，两者并行存在。
+本设计不会替换或重组现有的强化学习专题目录 `17_model_extensions/03_reinforcement_learning/`，两者并行存在。
 
 ## Target Structure
 
 完成后，仓库根目录将新增：
 
-- `reinforcement_learning_notes/`
-- `reinforcement_learning_notes/README.md`
+- `22_reinforcement_learning_notes/`
+- `22_reinforcement_learning_notes/README.md`
 
 ## Design Decisions
 
 ### 1. 使用根目录独立目录，而不是复用现有 55 号主题目录
 
-仓库已经存在 `53_model_extensions/55_reinforcement_learning/`，但用户明确要求在仓库根目录下再创建一个全新的独立目录。因此本次新增文档将作为一个单独入口存在，不修改既有专题资料结构。
+仓库已经存在 `17_model_extensions/03_reinforcement_learning/`，但用户明确要求在仓库根目录下再创建一个全新的独立目录。因此本次新增文档将作为一个单独入口存在，不修改既有专题资料结构。
 
 ### 2. 使用单文件 `README.md` 作为入口文档
 
@@ -69,7 +69,7 @@
 
 ## Content Outline
 
-`reinforcement_learning_notes/README.md` 将至少包含以下部分：
+`22_reinforcement_learning_notes/README.md` 将至少包含以下部分：
 
 1. 强化学习的定义与直觉
 2. 强化学习与监督学习的差异
@@ -87,7 +87,7 @@
 
 ### 1. 与现有强化学习资料产生重复
 
-仓库已有 `53_model_extensions/55_reinforcement_learning/`。本次新增文档需要明确定位为“独立系统学习入口”，而不是重复搬运已有文件。
+仓库已有 `17_model_extensions/03_reinforcement_learning/`。本次新增文档需要明确定位为“独立系统学习入口”，而不是重复搬运已有文件。
 
 ### 2. 公式密度过高导致阅读负担增加
 
@@ -101,16 +101,16 @@
 
 这是一次文档型变更，验证方式以结构与内容检查为主：
 
-1. 确认 `reinforcement_learning_notes/README.md` 已创建。
+1. 确认 `22_reinforcement_learning_notes/README.md` 已创建。
 2. 确认文档包含 MDP、Q-Learning、Policy Gradient、Actor-Critic 等目标章节。
 3. 确认文档中没有 `TODO`、`TBD` 或明显占位内容。
-4. 确认现有 `53_model_extensions/55_reinforcement_learning/` 未被改动。
+4. 确认现有 `17_model_extensions/03_reinforcement_learning/` 未被改动。
 
 ## Out of Scope
 
 以下内容明确不在本次范围内：
 
 - 新增强化学习代码示例或训练脚本
-- 重构现有 `55_reinforcement_learning/` 目录
+- 重构现有 `03_reinforcement_learning/` 目录
 - 深入讲解 DQN、PPO、SAC、DDPG、TRPO 等高级算法
 - 将文档拆分为多篇系列文章

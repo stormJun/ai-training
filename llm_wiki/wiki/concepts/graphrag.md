@@ -12,7 +12,7 @@ tags:
   - "concept"
   - "concept/graphrag"
 sources:
-  - "13_rag_and_retrieval/15_graphrag_basics/README.md"
+  - "04_rag_and_retrieval/04_graphrag_basics/README.md"
 ---
 
 # GraphRAG
@@ -27,7 +27,7 @@ GraphRAG 是在 RAG 中引入图结构或实体关系，用于增强跨文档、
 
 ## 在本仓库中的位置
 
-GraphRAG 相关内容位于 `13_rag_and_retrieval/15_graphrag_basics/`，属于 RAG 与检索专题的一部分。
+GraphRAG 相关内容位于 `04_rag_and_retrieval/04_graphrag_basics/`，属于 RAG 与检索专题的一部分。
 
 ## 相关主题
 
@@ -40,8 +40,8 @@ GraphRAG 相关内容位于 `13_rag_and_retrieval/15_graphrag_basics/`，属于 
 
 ## 来源引用
 
-- `13_rag_and_retrieval/README.md`
-- `13_rag_and_retrieval/15_graphrag_basics/README.md`
+- `04_rag_and_retrieval/README.md`
+- `04_rag_and_retrieval/04_graphrag_basics/README.md`
 
 ## 维护备注
 
