@@ -66,11 +66,11 @@
 
 - 根目录 `README.md`
 - 根目录 `AGENTS.md`
-- `13_rag_and_retrieval/`
-- `36_memory_patterns_basics/`
-- `56_skill_engineering/`
-- `13_rag_and_retrieval/16_local_rag_project/`
-- `13_rag_and_retrieval/17_qanything_case_study/`
+- `04_rag_and_retrieval/`
+- `10_memory_patterns_basics/`
+- `18_skill_engineering/`
+- `04_rag_and_retrieval/05_local_rag_project/`
+- `04_rag_and_retrieval/06_qanything_case_study/`
 
 - [x] **步骤 3：验证 schema 文件存在**
 
@@ -201,7 +201,7 @@ done
 
 - [x] **步骤 1：创建第一批项目页**
 
-为 `13_rag_and_retrieval/` 下两个 RAG 项目型入口创建项目页。
+为 `04_rag_and_retrieval/` 下两个 RAG 项目型入口创建项目页。
 
 - [x] **步骤 2：创建维护页**
 
@@ -264,11 +264,11 @@ find llm_wiki -type f | sort
 for path in \
   README.md \
   AGENTS.md \
-  13_rag_and_retrieval \
-  36_memory_patterns_basics \
-  56_skill_engineering \
-  13_rag_and_retrieval/16_local_rag_project \
-  13_rag_and_retrieval/17_qanything_case_study
+  04_rag_and_retrieval \
+  10_memory_patterns_basics \
+  18_skill_engineering \
+  04_rag_and_retrieval/05_local_rag_project \
+  04_rag_and_retrieval/06_qanything_case_study
 do
   test -e "$path" || exit 1
 done

@@ -23,24 +23,24 @@ sources:
 
 | 主题 | 来源路径 | Wiki 页面 | 状态 |
 | --- | --- | --- | --- |
-| RAG 与检索 | `13_rag_and_retrieval/` | `wiki/topics/rag-and-retrieval.md` | 已覆盖 |
-| Agent Memory | `36_memory_patterns_basics/` | `wiki/topics/memory-patterns.md` | 已覆盖 |
-| Skill Engineering | `56_skill_engineering/` | `wiki/topics/skill-engineering.md` | 已覆盖 |
+| RAG 与检索 | `04_rag_and_retrieval/` | `wiki/topics/rag-and-retrieval.md` | 已覆盖 |
+| Agent Memory | `10_memory_patterns_basics/` | `wiki/topics/memory-patterns.md` | 已覆盖 |
+| Skill Engineering | `18_skill_engineering/` | `wiki/topics/skill-engineering.md` | 已覆盖 |
 
 ## 第一批项目
 
 | 项目 | 来源路径 | Wiki 页面 | 状态 |
 | --- | --- | --- | --- |
-| 本地 RAG 项目 | `13_rag_and_retrieval/16_local_rag_project/` | `wiki/projects/local-rag-project.md` | 已覆盖 |
-| QAnything 案例 | `13_rag_and_retrieval/17_qanything_case_study/` | `wiki/projects/qanything-case-study.md` | 已覆盖 |
+| 本地 RAG 项目 | `04_rag_and_retrieval/05_local_rag_project/` | `wiki/projects/local-rag-project.md` | 已覆盖 |
+| QAnything 案例 | `04_rag_and_retrieval/06_qanything_case_study/` | `wiki/projects/qanything-case-study.md` | 已覆盖 |
 
 ## 后续候选
 
-- `23_langgraph_demo_project/`
-- `30_agent_protocols_and_mcp/`
-- `52_customer_service_platform/`
-- `57_harness_engineering/`
-- `58_learning_methodology/`
+- `02_langgraph_basics/04_demo_project/`
+- `02_langgraph_basics/06_protocols_and_integrations/`
+- `16_customer_service_platform/`
+- `19_harness_engineering/`
+- `20_learning_methodology/`
 
 ## 来源引用
 

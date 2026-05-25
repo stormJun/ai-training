@@ -25,14 +25,14 @@ sources:
 
 ## 后续覆盖区域
 
-- `23_langgraph_demo_project/`
-- `52_customer_service_platform/`
+- `02_langgraph_basics/04_demo_project/`
+- `16_customer_service_platform/`
 - `reference_projects/`
 
 ## 来源引用
 
-- `13_rag_and_retrieval/16_local_rag_project/README.md`
-- `13_rag_and_retrieval/17_qanything_case_study/README.md`
+- `04_rag_and_retrieval/05_local_rag_project/README.md`
+- `04_rag_and_retrieval/06_qanything_case_study/README.md`
 - `README.md`
 
 ## Obsidian 连接

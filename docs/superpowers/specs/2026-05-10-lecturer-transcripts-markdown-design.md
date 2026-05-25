@@ -2,19 +2,19 @@
 
 ## Goal
 
-Convert the two lecturer transcript text files under `06_langgraph_basics/21_langgraph_workflows/` into readable Markdown documents that preserve the lecturer's meaning while improving readability for study.
+Convert the two lecturer transcript text files under `02_langgraph_basics/21_langgraph_workflows/` into readable Markdown documents that preserve the lecturer's meaning while improving readability for study.
 
 ## In Scope
 
 The work applies to these two source files:
 
-- `06_langgraph_basics/21_langgraph_workflows/02_工作流编排_讲师文稿.txt`
-- `06_langgraph_basics/21_langgraph_workflows/03_工作流编排_讲师笔记.txt`
+- `02_langgraph_basics/21_langgraph_workflows/02_工作流编排_讲师文稿.txt`
+- `02_langgraph_basics/21_langgraph_workflows/03_工作流编排_讲师笔记.txt`
 
 The result will add two Markdown companions:
 
-- `06_langgraph_basics/21_langgraph_workflows/02_工作流编排_讲师文稿.md`
-- `06_langgraph_basics/21_langgraph_workflows/03_工作流编排_讲师笔记.md`
+- `02_langgraph_basics/21_langgraph_workflows/02_工作流编排_讲师文稿.md`
+- `02_langgraph_basics/21_langgraph_workflows/03_工作流编排_讲师笔记.md`
 
 The original `.txt` files will remain in place.
 

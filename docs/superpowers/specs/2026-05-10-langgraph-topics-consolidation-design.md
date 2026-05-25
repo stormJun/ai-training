@@ -2,7 +2,7 @@
 
 ## Goal
 
-Consolidate the advanced LangGraph learning topics under `06_langgraph_basics/` so the repository presents a single, unified LangGraph learning area without duplicating content.
+Consolidate the advanced LangGraph learning topics under `02_langgraph_basics/` so the repository presents a single, unified LangGraph learning area without duplicating content.
 
 ## Scope
 
@@ -12,17 +12,17 @@ This design covers the physical relocation of three existing topic directories:
 - `30_agent_protocols_and_mcp/31_mcp_langgraph_integration/`
 - `30_agent_protocols_and_mcp/32_a2a_langgraph/`
 
-They will be moved into `06_langgraph_basics/` while preserving each moved directory's existing internal structure and directory name.
+They will be moved into `02_langgraph_basics/` while preserving each moved directory's existing internal structure and directory name.
 
 ## Target Structure
 
 After the change, the repository structure will include:
 
-- `06_langgraph_basics/05-2langgraph.py`
-- `06_langgraph_basics/README.md`
-- `06_langgraph_basics/21_langgraph_workflows/`
-- `06_langgraph_basics/31_mcp_langgraph_integration/`
-- `06_langgraph_basics/32_a2a_langgraph/`
+- `02_langgraph_basics/05-2langgraph.py`
+- `02_langgraph_basics/README.md`
+- `02_langgraph_basics/21_langgraph_workflows/`
+- `02_langgraph_basics/31_mcp_langgraph_integration/`
+- `02_langgraph_basics/32_a2a_langgraph/`
 
 The following old paths will no longer exist as standalone topic locations:
 
@@ -47,7 +47,7 @@ This minimizes risk during the move because it avoids unnecessary renaming of in
 Documentation that acts as repository navigation or topic entry guidance will be updated to point to the new paths. This includes at least:
 
 - repository root `README.md`
-- `06_langgraph_basics/README.md`
+- `02_langgraph_basics/README.md`
 - `30_agent_protocols_and_mcp/README.md`
 
 Additional markdown files that explicitly describe these topics at the repository structure level may also be updated if they are clearly intended as active navigation documents rather than historical notes.
@@ -95,7 +95,7 @@ The repository already has unrelated changes. This work must avoid reverting or 
 Verification for this reorganization is lightweight and repository-structure focused:
 
 1. Confirm the three source directories no longer exist at their old locations.
-2. Confirm the three directories exist under `06_langgraph_basics/`.
+2. Confirm the three directories exist under `02_langgraph_basics/`.
 3. Confirm updated README files reference the new paths.
 4. Run targeted search queries for the moved top-level paths in active navigation documents to catch obvious stale references.
 
@@ -107,4 +107,4 @@ The following are explicitly out of scope for this task:
 - rewriting notebook cell content in bulk
 - updating every historical design document under `docs/plans/`
 - changing code imports unless a moved file path is directly referenced by active repository documentation
-- reorganizing other LangGraph-related projects such as `22_langgraph_service_apps/`, `23_langgraph_demo_project/`, or `52_customer_service_platform/`
+- reorganizing other LangGraph-related projects such as `22_langgraph_service_apps/`, `23_langgraph_demo_project/`, or `16_customer_service_platform/`

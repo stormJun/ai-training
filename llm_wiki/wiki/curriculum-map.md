@@ -33,9 +33,9 @@ sources:
 
 ## 第一批管理区域
 
-- [RAG 与检索](topics/rag-and-retrieval.md)：覆盖 `13_rag_and_retrieval/`。
-- [Agent Memory](topics/memory-patterns.md)：覆盖 `36_memory_patterns_basics/`。
-- [Skill Engineering](topics/skill-engineering.md)：覆盖 `56_skill_engineering/`。
+- [RAG 与检索](topics/rag-and-retrieval.md)：覆盖 `04_rag_and_retrieval/`。
+- [Agent Memory](topics/memory-patterns.md)：覆盖 `10_memory_patterns_basics/`。
+- [Skill Engineering](topics/skill-engineering.md)：覆盖 `18_skill_engineering/`。
 
 ## 跨主题关系
 
@@ -47,9 +47,9 @@ sources:
 ## 来源引用
 
 - `README.md`
-- `13_rag_and_retrieval/README.md`
-- `36_memory_patterns_basics/README.md`
-- `56_skill_engineering/README.md`
+- `04_rag_and_retrieval/README.md`
+- `10_memory_patterns_basics/README.md`
+- `18_skill_engineering/README.md`
 
 ## Obsidian 连接
 

@@ -26,9 +26,9 @@ sources:
 
 ## 来源引用
 
-- `13_rag_and_retrieval/README.md`
-- `36_memory_patterns_basics/README.md`
-- `56_skill_engineering/README.md`
+- `04_rag_and_retrieval/README.md`
+- `10_memory_patterns_basics/README.md`
+- `18_skill_engineering/README.md`
 
 ## Obsidian 连接
 

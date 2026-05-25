@@ -12,14 +12,14 @@ tags:
   - "topic"
   - "topic/skill"
 sources:
-  - "56_skill_engineering/README.md"
+  - "18_skill_engineering/README.md"
 ---
 
 # Skill Engineering
 
 ## 仓库位置
 
-- `56_skill_engineering/`
+- `18_skill_engineering/`
 
 ## 在课程中的角色
 
@@ -47,10 +47,10 @@ sources:
 
 ## 关键文件与入口
 
-- `56_skill_engineering/README.md`
-- `56_skill_engineering/skill_engineering/claude-skills-interview-qa.md`
-- `56_skill_engineering/skill_engineering/Skill authoring best practices - Claude API Docs.zh-CN.md`
-- `56_skill_engineering/skill_engineering/openai-skills-best-practices.md`
+- `18_skill_engineering/README.md`
+- `18_skill_engineering/skill_engineering/claude-skills-interview-qa.md`
+- `18_skill_engineering/skill_engineering/Skill authoring best practices - Claude API Docs.zh-CN.md`
+- `18_skill_engineering/skill_engineering/openai-skills-best-practices.md`
 
 ## 相关概念
 

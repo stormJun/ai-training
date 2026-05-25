@@ -44,7 +44,7 @@ Schema 驱动的 AI 维护，是用明确的目录结构、页面模板、来源
 - `llm_wiki/AGENTS.md`
 - `llm_wiki/sources.yml`
 - `docs/plans/2026-05-03-llm-wiki-management-design.md`
-- `56_skill_engineering/README.md`
+- `18_skill_engineering/README.md`
 
 ## 维护备注
 

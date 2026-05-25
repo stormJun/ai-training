@@ -4,7 +4,7 @@
 
 **Goal:** Create a standalone reinforcement learning study-notes directory at the repository root and write a structured Chinese `README.md` that covers the core RL learning path from concepts to Actor-Critic.
 
-**Architecture:** This is a documentation-only addition. Keep the existing `53_model_extensions/55_reinforcement_learning/` topic intact, add a new root-level `reinforcement_learning_notes/` directory, and place a single entrypoint `README.md` inside it. Verification is based on path existence, heading checks, and a placeholder scan.
+**Architecture:** This is a documentation-only addition. Keep the existing `17_model_extensions/03_reinforcement_learning/` topic intact, add a new root-level `22_reinforcement_learning_notes/` directory, and place a single entrypoint `README.md` inside it. Verification is based on path existence, heading checks, and a placeholder scan.
 
 **Tech Stack:** Markdown, git, shell utilities (`mkdir`, `test`, `rg`, `sed`)
 
@@ -13,12 +13,12 @@
 ### Task 1: Create the standalone root-level notes directory
 
 **Files:**
-- Create: `reinforcement_learning_notes/`
+- Create: `22_reinforcement_learning_notes/`
 
 - [ ] **Step 1: Verify the target directory does not already exist**
 
 ```bash
-test ! -e reinforcement_learning_notes
+test ! -e 22_reinforcement_learning_notes
 ```
 
 Expected: no output and exit code `0`.
@@ -26,13 +26,13 @@ Expected: no output and exit code `0`.
 - [ ] **Step 2: Create the directory**
 
 ```bash
-mkdir -p reinforcement_learning_notes
+mkdir -p 22_reinforcement_learning_notes
 ```
 
 - [ ] **Step 3: Verify the directory now exists**
 
 ```bash
-test -d reinforcement_learning_notes
+test -d 22_reinforcement_learning_notes
 ```
 
 Expected: no output and exit code `0`.
@@ -40,15 +40,15 @@ Expected: no output and exit code `0`.
 ### Task 2: Write the reinforcement learning study notes document
 
 **Files:**
-- Create: `reinforcement_learning_notes/README.md`
+- Create: `22_reinforcement_learning_notes/README.md`
 
-- [ ] **Step 1: Write `reinforcement_learning_notes/README.md` with the following content**
+- [ ] **Step 1: Write `22_reinforcement_learning_notes/README.md` with the following content**
 
 ```md
 # 强化学习系统学习笔记
 
 > 本文档是仓库根目录下的独立强化学习学习入口，目标是从概念直觉逐步走到 MDP、Q-Learning、Policy Gradient 和 Actor-Critic。
-> 如果你还想结合仓库中的原有专题资料继续阅读，可以再查看 `53_model_extensions/55_reinforcement_learning/`。
+> 如果你还想结合仓库中的原有专题资料继续阅读，可以再查看 `17_model_extensions/03_reinforcement_learning/`。
 
 ## 1. 强化学习是什么
 
@@ -388,7 +388,7 @@ Critic 更新：
 - [ ] **Step 2: Verify the file was created**
 
 ```bash
-test -f reinforcement_learning_notes/README.md
+test -f 22_reinforcement_learning_notes/README.md
 ```
 
 Expected: no output and exit code `0`.
@@ -396,13 +396,13 @@ Expected: no output and exit code `0`.
 ### Task 3: Run documentation verification
 
 **Files:**
-- Verify: `reinforcement_learning_notes/README.md`
+- Verify: `22_reinforcement_learning_notes/README.md`
 
 - [ ] **Step 1: Check the required section keywords exist**
 
 ```bash
-rg -n '^## ' reinforcement_learning_notes/README.md
-rg -n 'MDP|Q-Learning|Policy Gradient|Actor-Critic|贝尔曼方程' reinforcement_learning_notes/README.md
+rg -n '^## ' 22_reinforcement_learning_notes/README.md
+rg -n 'MDP|Q-Learning|Policy Gradient|Actor-Critic|贝尔曼方程' 22_reinforcement_learning_notes/README.md
 ```
 
 Expected: the heading list is present and the key reinforcement learning topics are found.
@@ -410,7 +410,7 @@ Expected: the heading list is present and the key reinforcement learning topics 
 - [ ] **Step 2: Scan for placeholder text**
 
 ```bash
-rg -n 'TODO|TBD|占位|待补充' reinforcement_learning_notes/README.md
+rg -n 'TODO|TBD|占位|待补充' 22_reinforcement_learning_notes/README.md
 ```
 
 Expected: no matches.
@@ -418,7 +418,7 @@ Expected: no matches.
 - [ ] **Step 3: Confirm the existing topic directory remains untouched**
 
 ```bash
-test -d 53_model_extensions/55_reinforcement_learning
+test -d 17_model_extensions/03_reinforcement_learning
 ```
 
 Expected: no output and exit code `0`.
@@ -436,7 +436,7 @@ Expected: only the newly added reinforcement learning notes files and any unrela
 ```bash
 git add docs/superpowers/specs/2026-05-22-root-reinforcement-learning-notes-design.md \
   docs/superpowers/plans/2026-05-22-root-reinforcement-learning-notes.md \
-  reinforcement_learning_notes/README.md
+  22_reinforcement_learning_notes/README.md
 git commit -m "docs: add root reinforcement learning study notes"
 ```
 

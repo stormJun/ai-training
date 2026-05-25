@@ -25,8 +25,8 @@ The new structure should:
 Each numbered top-level directory must represent a single subject, for example:
 
 - `02_llm_api_calls`
-- `21_langgraph_workflows`
-- `40_fastapi_llm_serving`
+- `02_langgraph_basics`
+- `11_fastapi_serving`
 
 Broad collection names such as `llm_api_and_tool_calling` or `workflow_orchestration` should no longer exist as primary learning directories.
 
@@ -69,63 +69,30 @@ These directories remain as supporting structures:
 
 ## Target Numbered Mainline
 
-The mainline becomes a flat ordered set of single-topic directories:
+The current mainline is a flat ordered set of real top-level learning directories:
 
-- `01_environment_setup`
-- `02_llm_api_calls`
-- `03_http_model_requests`
-- `04_tool_calling_chat`
-- `05_langchain_basics`
-- `06_langgraph_basics`
-- `07_llamaindex_basics`
-- `08_intent_recognition_agent`
-- `09_finetuning_overview`
-- `10_massive_dataset_processing`
-- `11_lora_qlora_training`
-- `12_local_finetuning_platform`
-- `13_llamaindex_retrieval_basics`
-- `14_ragas_retrieval_evaluation`
-- `15_graphrag_basics`
-- `16_local_rag_project`
-- `17_qanything_case_study`
-- `18_prompt_templates`
-- `19_output_parsing_and_chains`
-- `20_routing_react_and_tools`
-- `21_langgraph_workflows`
-- `22_langgraph_service_apps`
-- `23_langgraph_demo_project`
-- `24_code_assistant_workflow`
-- `25_vllm_wrapper_demo`
-- `26_rpa_and_ai_workflow`
-- `27_autogen_two_agent_chat`
-- `28_crewai_basics`
-- `29_langgraph_multi_agent`
-- `30_mcp_basics`
-- `31_mcp_langgraph_integration`
-- `32_a2a_langgraph`
-- `33_dsl_design_basics`
-- `34_lark_dsl_examples`
-- `35_dsl_agent_and_db_gateway`
-- `36_memory_patterns_basics`
-- `40_fastapi_llm_serving`
-- `41_multimodal_fastapi_serving`
-- `42_dockerized_service_apps`
-- `43_kubernetes_deployment`
-- `44_elk_observability`
-- `45_prometheus_ollama_exporter`
-- `46_ray_serve_streaming`
-- `47_asyncio_basics`
-- `48_asyncio_primitives_and_gil`
-- `49_async_web_patterns`
-- `50_performance_benchmarking`
-- `51_async_multiprocess_hybrid`
-- `52_customer_service_platform`
-- `53_slm_optimization`
-- `54_multimodal_clip_search`
-- `55_reinforcement_learning`
-- `56_skill_engineering`
-- `57_harness_engineering`
-- `58_learning_methodology`
+- `01_langchain_basics`
+- `02_langgraph_basics`
+- `03_intent_recognition_agent`
+- `04_rag_and_retrieval`
+- `05_ontology_and_foundry`
+- `06_finetuning_and_data_processing_and_routing_react_and_tools`
+- `07_tooling_and_automation_workflows`
+- `08_multi_agent_frameworks`
+- `09_dsl`
+- `10_memory_patterns_basics`
+- `11_fastapi_serving`
+- `12_dockerized_service_apps`
+- `13_kubernetes_deployment`
+- `14_observability_and_serving_runtime`
+- `15_python_concurrency_and_performance`
+- `16_customer_service_platform`
+- `17_model_extensions`
+- `18_skill_engineering`
+- `19_harness_engineering`
+- `20_learning_methodology`
+- `21_claudecode_source_analysis`
+- `22_reinforcement_learning_notes`
 
 ## Mapping Strategy
 
@@ -141,10 +108,10 @@ Current broad folders are decomposed by topic boundaries, not by week boundaries
 
 Already-standalone projects move mostly unchanged:
 
-- `03_rag_and_retrieval/local_rag_project` -> `16_local_rag_project`
-- `03_rag_and_retrieval/qanything_case_study` -> `17_qanything_case_study`
+- `03_rag_and_retrieval/local_rag_project` -> `05_local_rag_project`
+- `03_rag_and_retrieval/qanything_case_study` -> `06_qanything_case_study`
 - `04_workflow_orchestration/langgraph_demo_project` -> `23_langgraph_demo_project`
-- `10_capstone_customer_service/customer_service_platform` -> `52_customer_service_platform`
+- `10_capstone_customer_service/customer_service_platform` -> `16_customer_service_platform`
 
 ### Existing Partial Split Work
 

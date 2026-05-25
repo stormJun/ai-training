@@ -12,14 +12,14 @@ tags:
   - "topic"
   - "topic/memory"
 sources:
-  - "36_memory_patterns_basics/README.md"
+  - "10_memory_patterns_basics/README.md"
 ---
 
 # Agent Memory
 
 ## 仓库位置
 
-- `36_memory_patterns_basics/`
+- `10_memory_patterns_basics/`
 
 ## 在课程中的角色
 
@@ -50,14 +50,14 @@ sources:
 
 ## 关键文件与入口
 
-- `36_memory_patterns_basics/README.md`
-- `36_memory_patterns_basics/TECH_DOC.md`
-- `36_memory_patterns_basics/p04-shortMEM.py`
-- `36_memory_patterns_basics/p06-summaryMEM.py`
-- `36_memory_patterns_basics/p08-vectorMEM.py`
-- `36_memory_patterns_basics/p09-faissMEM.py`
-- `36_memory_patterns_basics/p10-KnowledgeTripleMEM.py`
-- `36_memory_patterns_basics/p11-redisMEM.py`
+- `10_memory_patterns_basics/README.md`
+- `10_memory_patterns_basics/TECH_DOC.md`
+- `10_memory_patterns_basics/p04-shortMEM.py`
+- `10_memory_patterns_basics/p06-summaryMEM.py`
+- `10_memory_patterns_basics/p08-vectorMEM.py`
+- `10_memory_patterns_basics/p09-faissMEM.py`
+- `10_memory_patterns_basics/p10-KnowledgeTripleMEM.py`
+- `10_memory_patterns_basics/p11-redisMEM.py`
 
 ## 相关概念
 

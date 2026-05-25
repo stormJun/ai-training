@@ -19,8 +19,8 @@ sources:
 ## 当前问题
 
 1. 是否需要把 `llm_wiki/` 入口链接加入根目录 `README.md`？
-2. 是否需要为 `30_agent_protocols_and_mcp/` 增加第二批主题页？
-3. 是否需要为 `52_customer_service_platform/` 建立项目级 wiki 页面？
+2. 是否需要为 `02_langgraph_basics/06_protocols_and_integrations/` 增加第二批主题页？
+3. 是否需要为 `16_customer_service_platform/` 建立项目级 wiki 页面？
 4. 是否需要添加自动化脚本检查 wiki 内部链接？
 
 ## 当前决策

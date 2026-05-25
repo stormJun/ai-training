@@ -24,7 +24,7 @@ sources:
 
   - id: rag_and_retrieval
     name_zh: RAG 与检索专题
-    path: 13_rag_and_retrieval/
+    path: 04_rag_and_retrieval/
     type: topic_group
     status: first_batch
     wiki_pages:
@@ -36,7 +36,7 @@ sources:
 
   - id: memory_patterns
     name_zh: Agent Memory 专题
-    path: 36_memory_patterns_basics/
+    path: 10_memory_patterns_basics/
     type: topic_group
     status: first_batch
     wiki_pages:
@@ -45,7 +45,7 @@ sources:
 
   - id: skill_engineering
     name_zh: Skill Engineering 专题
-    path: 56_skill_engineering/
+    path: 18_skill_engineering/
     type: topic
     status: first_batch
     wiki_pages:
@@ -55,7 +55,7 @@ sources:
 
   - id: local_rag_project
     name_zh: 本地 RAG 项目
-    path: 13_rag_and_retrieval/16_local_rag_project/
+    path: 04_rag_and_retrieval/05_local_rag_project/
     type: runnable_project_entry
     status: first_batch
     wiki_pages:
@@ -63,7 +63,7 @@ sources:
 
   - id: qanything_case_study
     name_zh: QAnything 案例
-    path: 13_rag_and_retrieval/17_qanything_case_study/
+    path: 04_rag_and_retrieval/06_qanything_case_study/
     type: runnable_project_entry
     status: first_batch
     wiki_pages:

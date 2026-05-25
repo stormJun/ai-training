@@ -46,13 +46,13 @@ Expected: only intentional historical references remain, or no matches after the
 - Create: `03_http_model_requests/README.md`
 - Create: `04_tool_calling_chat/README.md`
 - Create: `05_langchain_basics/README.md`
-- Create: `06_langgraph_basics/README.md`
+- Create: `02_langgraph_basics/README.md`
 - Create: `07_llamaindex_basics/README.md`
-- Create: `08_intent_recognition_agent/README.md`
-- Create: `09_finetuning_overview/README.md`
-- Create: `10_massive_dataset_processing/README.md`
-- Create: `11_lora_qlora_training/README.md`
-- Create: `12_local_finetuning_platform/README.md`
+- Create: `03_intent_recognition_agent/README.md`
+- Create: `01_finetuning_overview/README.md`
+- Create: `02_massive_dataset_processing/README.md`
+- Create: `03_lora_qlora_training/README.md`
+- Create: `04_local_finetuning_platform/README.md`
 
 **Step 1: Create new top-level topic directories**
 
@@ -64,7 +64,7 @@ Move environment docs, API scripts, HTTP request examples, tool-calling chat exa
 
 **Step 3: Keep runnable groups intact**
 
-Keep `local_ft/` intact under `12_local_finetuning_platform/`, and keep dataset-processing scripts with the data files they require.
+Keep `local_ft/` intact under `04_local_finetuning_platform/`, and keep dataset-processing scripts with the data files they require.
 
 **Step 4: Add minimal topic READMEs**
 
@@ -72,7 +72,7 @@ Each new topic root gets a short `README.md` describing content and local run en
 
 **Step 5: Verify moved roots**
 
-Run: `find 01_environment_setup 02_llm_api_calls 12_local_finetuning_platform -maxdepth 2 -type f | sort`
+Run: `find 01_environment_setup 02_llm_api_calls 04_local_finetuning_platform -maxdepth 2 -type f | sort`
 
 Expected: moved code and support files exist under the new single-topic roots.
 
@@ -127,7 +127,7 @@ Split asyncio basics, task/future/executor topics, I/O concurrency patterns, ben
 
 **Step 3: Move capstone**
 
-Move `10_capstone_customer_service/customer_service_platform` intact to `52_customer_service_platform/`.
+Move `10_capstone_customer_service/customer_service_platform` intact to `16_customer_service_platform/`.
 
 **Step 4: Flatten extension topics**
 
