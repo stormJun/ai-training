@@ -65,8 +65,8 @@
 ### 17-22 扩展专题
 
 - `17_model_extensions/`
-  - 合并后的父目录，收纳 53-55 三个模型扩展主题
-  - 子目录：`01_slm_optimization/`、`02_multimodal_clip_search/`、`03_reinforcement_learning/`
+  - 合并后的父目录，当前收纳小模型优化与多模态检索两个模型扩展主题
+  - 子目录：`01_slm_optimization/`、`02_multimodal_clip_search/`
 - `18_skill_engineering/`
   - Skill / Prompt 工程扩展资料
 - `19_harness_engineering/`
@@ -76,7 +76,7 @@
 - `21_claudecode_source_analysis/`
   - Claude Code / Codex 源码分析与实现理解
 - `22_reinforcement_learning_notes/`
-  - 强化学习系统学习笔记
+  - 强化学习系统学习笔记，包含并入的 Q-Learning 补充资料与演示项目
 
 ## 其他目录
 

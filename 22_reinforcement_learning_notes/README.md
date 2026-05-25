@@ -1,7 +1,12 @@
 # 强化学习系统学习笔记
 
 > 本文档是仓库根目录下的独立强化学习学习入口，目标是从概念直觉逐步走到 MDP、Q-Learning、Policy Gradient 和 Actor-Critic。
-> 如果你还想结合仓库中的原有专题资料继续阅读，可以再查看 `17_model_extensions/03_reinforcement_learning/`。
+> 原 `17_model_extensions/03_reinforcement_learning/` 中的 Q-Learning 补充材料已经并入当前目录，可继续查看 `reinforcement_learning/`。
+
+## 阅读路径
+
+- 先阅读当前 `README.md`，建立强化学习核心概念框架
+- 再进入 `reinforcement_learning/README.md`，补充 Q-Learning 专题讲义和演示项目
 
 ## 1. 强化学习是什么
 
