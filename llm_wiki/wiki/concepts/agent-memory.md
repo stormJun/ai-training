@@ -2,7 +2,7 @@
 type: "concept"
 status: "active"
 created: "2026-05-03"
-updated: "2026-05-03"
+updated: "2026-06-12"
 aliases:
   - "Agent Memory"
   - "智能体记忆"
@@ -12,7 +12,7 @@ tags:
   - "concept"
   - "concept/memory"
 sources:
-  - "10_memory_patterns_basics/强化学习系统学习笔记.md"
+  - "10_memory_patterns_basics/"
 ---
 
 # Agent Memory
@@ -41,7 +41,7 @@ Agent Memory 是让智能体在一次或多次交互中保存、检索、压缩�
 
 ## 来源引用
 
-- `10_memory_patterns_basics/README.md`
+- `10_memory_patterns_basics/`
 - `10_memory_patterns_basics/TECH_DOC.md`
 - `10_memory_patterns_basics/LLM-Memory核心观点-Anthropic与OpenAI.md`
 
@@ -54,5 +54,4 @@ Agent Memory 是让智能体在一次或多次交互中保存、检索、压缩�
 - [[wiki/index|AI 工程化训练营 LLM Wiki]]
 - [[wiki/topics/memory-patterns|Agent Memory]]
 - [[wiki/concepts/rag|RAG]]
-- [[wiki/concepts/llm-wiki|LLM Wiki]]
 - [[wiki/concepts/skill-engineering|Skill Engineering]]

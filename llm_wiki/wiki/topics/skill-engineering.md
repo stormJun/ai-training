@@ -2,7 +2,7 @@
 type: "topic"
 status: "active"
 created: "2026-05-03"
-updated: "2026-05-03"
+updated: "2026-06-12"
 aliases:
   - "Skill Engineering"
   - "技能工程专题"
@@ -12,7 +12,7 @@ tags:
   - "topic"
   - "topic/skill"
 sources:
-  - "18_skill_engineering/强化学习系统学习笔记.md"
+  - "18_skill_engineering/"
 ---
 
 # Skill Engineering
@@ -47,7 +47,7 @@ sources:
 
 ## 关键文件与入口
 
-- `18_skill_engineering/README.md`
+- `18_skill_engineering/`
 - `18_skill_engineering/skill_engineering/claude-skills-interview-qa.md`
 - `18_skill_engineering/skill_engineering/Skill authoring best practices - Claude API Docs.zh-CN.md`
 - `18_skill_engineering/skill_engineering/openai-skills-best-practices.md`
@@ -55,8 +55,6 @@ sources:
 ## 相关概念
 
 - [Skill Engineering](../concepts/skill-engineering.md)
-- [Schema 驱动的 AI 维护](../concepts/schema-guided-ai-maintenance.md)
-- [LLM Wiki](../concepts/llm-wiki.md)
 
 ## 维护备注
 
@@ -67,6 +65,4 @@ sources:
 - [[wiki/index|AI 工程化训练营 LLM Wiki]]
 - [[wiki/curriculum-map|课程地图]]
 - [[wiki/concepts/skill-engineering|Skill Engineering]]
-- [[wiki/concepts/schema-guided-ai-maintenance|Schema 驱动的 AI 维护]]
-- [[wiki/concepts/llm-wiki|LLM Wiki]]
 - [[wiki/topics/memory-patterns|Agent Memory]]

@@ -2,7 +2,7 @@
 type: "hub"
 status: "active"
 created: "2026-05-03"
-updated: "2026-05-03"
+updated: "2026-06-12"
 aliases:
   - "AI 工程化训练营 LLM Wiki"
   - "Wiki 首页"
@@ -11,7 +11,7 @@ tags:
   - "llm-wiki"
   - "hub"
 sources:
-  - "强化学习系统学习笔记.md"
+  - "README.md"
   - "AGENTS.md"
 ---
 
@@ -19,7 +19,7 @@ sources:
 
 本 wiki 是 `ai-training` 仓库的知识管理地图，用于帮助人和 AI 助手理解课程结构、主题关系、项目入口和维护状态。
 
-事实来源仍然在 wiki 之外。需要精确课程内容、运行命令或项目配置时，应回到 `../sources.yml` 登记的来源路径和仓库内的 README 文件。
+事实来源仍然在 wiki 之外。需要精确课程内容、运行命令或项目配置时，应回到 `../sources.yml` 登记的来源路径、根目录 `README.md`、代码、配置和专题文档。
 
 ## 主要入口
 
@@ -27,7 +27,6 @@ sources:
 - [概念索引](concepts/index.md)
 - [主题索引](topics/index.md)
 - [项目索引](projects/index.md)
-- [作业索引](assignments/index.md)
 - [维护索引](maintenance/index.md)
 
 ## 第一批覆盖范围
@@ -49,8 +48,6 @@ sources:
 
 - `README.md`
 - `AGENTS.md`
-- `docs/plans/2026-05-03-llm-wiki-management-design.md`
-- `docs/plans/2026-05-03-llm-wiki-management-implementation-plan.md`
 
 ## Obsidian 连接
 
@@ -58,6 +55,5 @@ sources:
 - [[wiki/concepts/index|概念索引]]
 - [[wiki/topics/index|主题索引]]
 - [[wiki/projects/index|项目索引]]
-- [[wiki/assignments/index|作业索引]]
 - [[wiki/maintenance/index|维护索引]]
-- [[wiki/concepts/llm-wiki|LLM Wiki]]
+- [[wiki/maintenance/audit-protocol|只读巡检协议]]

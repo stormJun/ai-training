@@ -21,7 +21,7 @@ This repository collects numbered learning workspaces, grouped topic parents, as
   - `cd 04_rag_and_retrieval/05_local_rag_project/local_rag_project && python -m venv .venv && source .venv/bin/activate && pip install -r requirements.txt`
   - `cd 02_langgraph_basics/04_demo_project/langgraph_demo_project && uv sync --locked`
 - Script-only topics may rely on dependency anchors kept in nearby overview directories such as `06_finetuning_and_data_processing_and_routing_react_and_tools/01_finetuning_and_data_processing/01_finetuning_overview/`, `04_rag_and_retrieval/02_llamaindex_retrieval_basics/`, `08_multi_agent_frameworks/01_autogen_two_agent_chat/`, `09_dsl/01_dsl_design_basics/`, `10_memory_patterns_basics/`, `11_fastapi_serving/`, and `15_python_concurrency_and_performance/01_asyncio_and_gil_basics/`.
-- Run apps from their own root, for example `python main.py` or `uvicorn main:app --reload`, as documented in the local README or project files.
+- Run apps from their own root, for example `python main.py` or `uvicorn main:app --reload`, using the project files, `Makefile`, or nearby configuration as the source of truth.
 
 ## Coding Style & Naming Conventions
 
@@ -32,7 +32,7 @@ This repository collects numbered learning workspaces, grouped topic parents, as
 ## Testing Guidelines
 
 - Tests live under `tests/` within each subproject and commonly use `pytest` or `pytest-asyncio`.
-- From a subproject root, run `pytest` or project-specific targets described in its README or `Makefile`.
+- From a subproject root, run `pytest` or project-specific targets described in its `Makefile`, `pyproject.toml`, or local project files.
 - For new features, add tests that mirror existing patterns and keep them fast and deterministic; aim for meaningful coverage rather than a specific percentage.
 
 ## Commit & Pull Request Guidelines

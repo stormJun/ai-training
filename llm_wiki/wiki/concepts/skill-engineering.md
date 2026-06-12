@@ -2,7 +2,7 @@
 type: "concept"
 status: "active"
 created: "2026-05-03"
-updated: "2026-05-03"
+updated: "2026-06-12"
 aliases:
   - "Skill Engineering"
   - "技能工程"
@@ -12,7 +12,7 @@ tags:
   - "concept"
   - "concept/skill"
 sources:
-  - "18_skill_engineering/强化学习系统学习笔记.md"
+  - "18_skill_engineering/"
 ---
 
 # Skill Engineering
@@ -40,7 +40,7 @@ LLM Wiki 的维护质量依赖清晰的操作规则。Skill Engineering 提供�
 
 ## 来源引用
 
-- `18_skill_engineering/README.md`
+- `18_skill_engineering/`
 - `18_skill_engineering/skill_engineering/claude-skills-interview-qa.md`
 - `18_skill_engineering/skill_engineering/Skill authoring best practices - Claude API Docs.zh-CN.md`
 - `18_skill_engineering/skill_engineering/openai-skills-best-practices.md`
@@ -53,6 +53,5 @@ LLM Wiki 的维护质量依赖清晰的操作规则。Skill Engineering 提供�
 
 - [[wiki/index|AI 工程化训练营 LLM Wiki]]
 - [[wiki/topics/skill-engineering|Skill Engineering]]
-- [[wiki/concepts/schema-guided-ai-maintenance|Schema 驱动的 AI 维护]]
-- [[wiki/concepts/llm-wiki|LLM Wiki]]
+- [[wiki/maintenance/audit-protocol|只读巡检协议]]
 - [[wiki/concepts/agent-memory|Agent Memory]]

@@ -2,7 +2,7 @@
 type: "map"
 status: "active"
 created: "2026-05-03"
-updated: "2026-05-03"
+updated: "2026-06-12"
 aliases:
   - "课程地图"
   - "训练营学习地图"
@@ -12,7 +12,7 @@ tags:
   - "map"
   - "curriculum"
 sources:
-  - "强化学习系统学习笔记.md"
+  - "README.md"
 ---
 
 # 课程地图
@@ -47,9 +47,9 @@ sources:
 ## 来源引用
 
 - `README.md`
-- `04_rag_and_retrieval/README.md`
-- `10_memory_patterns_basics/README.md`
-- `18_skill_engineering/README.md`
+- `04_rag_and_retrieval/`
+- `10_memory_patterns_basics/`
+- `18_skill_engineering/`
 
 ## Obsidian 连接
 
@@ -57,4 +57,4 @@ sources:
 - [[wiki/topics/rag-and-retrieval|RAG 与检索]]
 - [[wiki/topics/memory-patterns|Agent Memory]]
 - [[wiki/topics/skill-engineering|Skill Engineering]]
-- [[wiki/concepts/llm-wiki|LLM Wiki]]
+- [[wiki/maintenance/audit-protocol|只读巡检协议]]

@@ -2,7 +2,7 @@
 type: "schema"
 status: "active"
 created: "2026-05-03"
-updated: "2026-05-03"
+updated: "2026-06-12"
 aliases:
   - "LLM Wiki 维护规则"
   - "Wiki Schema"
@@ -29,9 +29,9 @@ sources:
 - 合并后的主题父目录
 - `assignments/`
 - `reference_projects/`
-- 各项目自己的 README 与配置文件
+- 各项目自己的代码、配置文件和专题文档
 
-LLM Wiki 可以解释这些来源、建立交叉引用、记录维护状态，但不能无声地覆盖或否定来源文件。发现冲突时，应记录到 `wiki/maintenance/open-questions.md` 或 `wiki/maintenance/wiki-lint-report.md`。
+LLM Wiki 可以解释这些来源、建立交叉引用、记录维护状态，但不能无声地覆盖或否定来源文件。发现冲突时，应先写入只读巡检报告；只有用户明确要求采纳报告时，才更新 wiki 页面。
 
 ## 编辑边界
 
@@ -45,7 +45,7 @@ LLM Wiki 可以解释这些来源、建立交叉引用、记录维护状态，�
 
 - 修改根目录 `README.md`
 - 修改根目录 `AGENTS.md`
-- 修改课程 README
+- 修改课程目录内文档
 - 修改代码、Notebook、作业、示例答案或项目配置
 
 ## 查询流程
@@ -53,7 +53,7 @@ LLM Wiki 可以解释这些来源、建立交叉引用、记录维护状态，�
 回答仓库知识类问题时：
 
 1. 先读 `llm_wiki/wiki/index.md`。
-2. 沿链接阅读相关概念页、主题页、项目页、作业页或维护页。
+2. 沿链接阅读相关概念页、主题页、项目页或维护页。
 3. 如果 wiki 覆盖不足，再检查 `llm_wiki/sources.yml` 中登记的来源路径。
 4. 回答时给出相关来源路径。
 5. 如果答案中出现可复用知识，应提出或直接应用仅限 wiki 的更新。
@@ -65,16 +65,16 @@ LLM Wiki 可以解释这些来源、建立交叉引用、记录维护状态，�
 每次摄入时：
 
 1. 在 `llm_wiki/sources.yml` 中确认来源条目。
-2. 阅读来源 README 和附近高价值 Markdown 文件。
+2. 阅读来源目录和附近高价值 Markdown 文件。
 3. 优先更新现有 wiki 页面，再创建新页面。
 4. 页面应作为地图和索引，不复制完整课程内容。
 5. 每个涉及仓库事实的页面都要写明来源路径。
-6. 在 `wiki/maintenance/source-coverage.md` 记录覆盖变化。
-7. 在 `wiki/maintenance/change-log.md` 记录重要变更。
+6. 如果新增或移除来源覆盖，应同步更新 `llm_wiki/sources.yml`。
+7. 如果变更影响治理规则，应同步更新 `wiki/maintenance/audit-protocol.md` 或本文件。
 
 ## 巡检流程
 
-巡检是指检查 wiki 是否与仓库结构和来源内容发生漂移。
+巡检是指检查 wiki 是否与仓库结构和来源内容发生漂移。默认巡检是只读流程，不修改任何文件。
 
 需要检查：
 
@@ -86,7 +86,9 @@ LLM Wiki 可以解释这些来源、建立交叉引用、记录维护状态，�
 - 来源路径是否已经不存在
 - 项目页是否缺少安装或运行入口
 
-巡检结果写入 `wiki/maintenance/wiki-lint-report.md`。
+巡检结果默认输出到终端；如果用户要求保存报告，应写入 `runtime_artifacts/llm_wiki_audit/`。只有用户明确要求采纳巡检结果时，才更新 `llm_wiki/` 下的治理页面。
+
+详细巡检协议见 `wiki/maintenance/audit-protocol.md`。
 
 ## 页面标准
 
@@ -146,5 +148,4 @@ LLM Wiki 可以解释这些来源、建立交叉引用、记录维护状态，�
 
 - [[wiki/index|AI 工程化训练营 LLM Wiki]]
 - [[wiki/maintenance/index|维护索引]]
-- [[wiki/concepts/schema-guided-ai-maintenance|Schema 驱动的 AI 维护]]
-- [[wiki/concepts/llm-wiki|LLM Wiki]]
+- [[wiki/maintenance/audit-protocol|只读巡检协议]]

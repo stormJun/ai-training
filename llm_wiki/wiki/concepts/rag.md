@@ -2,7 +2,7 @@
 type: "concept"
 status: "active"
 created: "2026-05-03"
-updated: "2026-05-03"
+updated: "2026-06-12"
 aliases:
   - "RAG"
   - "Retrieval-Augmented Generation"
@@ -12,7 +12,7 @@ tags:
   - "concept"
   - "concept/rag"
 sources:
-  - "04_rag_and_retrieval/强化学习系统学习笔记.md"
+  - "04_rag_and_retrieval/"
 ---
 
 # RAG
@@ -41,9 +41,9 @@ RAG 主体内容集中在 `04_rag_and_retrieval/`，其中包含 LlamaIndex 检�
 
 ## 来源引用
 
-- `04_rag_and_retrieval/README.md`
-- `04_rag_and_retrieval/02_llamaindex_retrieval_basics/README.md`
-- `04_rag_and_retrieval/05_local_rag_project/README.md`
+- `04_rag_and_retrieval/`
+- `04_rag_and_retrieval/02_llamaindex_retrieval_basics/`
+- `04_rag_and_retrieval/05_local_rag_project/`
 
 ## 维护备注
 
@@ -55,6 +55,5 @@ RAG 主体内容集中在 `04_rag_and_retrieval/`，其中包含 LlamaIndex 检�
 - [[wiki/topics/rag-and-retrieval|RAG 与检索]]
 - [[wiki/concepts/graphrag|GraphRAG]]
 - [[wiki/concepts/agent-memory|Agent Memory]]
-- [[wiki/concepts/llm-wiki|LLM Wiki]]
 - [[wiki/projects/local-rag-project|本地 RAG 项目]]
 - [[wiki/projects/qanything-case-study|QAnything 案例]]

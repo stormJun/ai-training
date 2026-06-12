@@ -5,13 +5,12 @@ wiki_policy: llm_wiki_summarizes_links_and_records_maintenance_state
 sources:
   - id: root_readme
     name_zh: 仓库总览
-    path: 强化学习系统学习笔记.md
+    path: README.md
     type: repository_overview
     status: first_batch
     wiki_pages:
       - wiki/index.md
       - wiki/curriculum-map.md
-      - wiki/maintenance/topic-inventory.md
 
   - id: root_agents
     name_zh: 仓库维护规则
@@ -20,7 +19,7 @@ sources:
     status: first_batch
     wiki_pages:
       - AGENTS.md
-      - wiki/maintenance/open-questions.md
+      - wiki/maintenance/audit-protocol.md
 
   - id: rag_and_retrieval
     name_zh: RAG 与检索专题
@@ -51,7 +50,6 @@ sources:
     wiki_pages:
       - wiki/topics/skill-engineering.md
       - wiki/concepts/skill-engineering.md
-      - wiki/concepts/schema-guided-ai-maintenance.md
 
   - id: local_rag_project
     name_zh: 本地 RAG 项目
@@ -68,19 +66,3 @@ sources:
     status: first_batch
     wiki_pages:
       - wiki/projects/qanything-case-study.md
-
-  - id: assignments
-    name_zh: 作业集合
-    path: assignments/
-    type: assignment_group
-    status: later_batch
-    wiki_pages:
-      - wiki/assignments/index.md
-
-  - id: reference_projects
-    name_zh: 参考项目集合
-    path: reference_projects/
-    type: reference_project_group
-    status: later_batch
-    wiki_pages:
-      - wiki/projects/index.md

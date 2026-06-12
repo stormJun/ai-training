@@ -8,7 +8,7 @@
 # **Q**uestion and **A**nswer based on **Anything**
 
 <p align="center">
-  <a href="./README.md">English</a> |
+  <a href="https://github.com/netease-youdao/QAnything/blob/qanything-v2/README.md">English</a> |
   <a href="./README_zh.md">简体中文</a>
 </p>
 
