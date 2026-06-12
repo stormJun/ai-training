@@ -45,7 +45,7 @@ jobs:
         uses: codespell-project/actions-codespell@v2
         with:
           ignore_words_file: .codespellignore
-          path: README.md
+          path: 强化学习系统学习笔记.md
       - name: Check code spelling
         uses: codespell-project/actions-codespell@v2
         with:

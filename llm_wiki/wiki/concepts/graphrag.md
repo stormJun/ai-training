@@ -12,7 +12,7 @@ tags:
   - "concept"
   - "concept/graphrag"
 sources:
-  - "04_rag_and_retrieval/04_graphrag_basics/README.md"
+  - "04_rag_and_retrieval/04_graphrag_basics/强化学习系统学习笔记.md"
 ---
 
 # GraphRAG

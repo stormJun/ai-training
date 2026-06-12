@@ -142,7 +142,7 @@ Update `AGENTS.md` so future work references topic directories, assignments, and
 Run:
 
 ```bash
-rg -n "week0[0-9]|10_capstone_customer_service/customer_service_platform|archive/intermediate_materials|archive/pre_course_utilities" README.md AGENTS.md
+rg -n "week0[0-9]|10_capstone_customer_service/customer_service_platform|archive/intermediate_materials|archive/pre_course_utilities" 强化学习系统学习笔记.md AGENTS.md
 ```
 
 Expected: no week-based root guidance remains, aside from intentional historical references if explicitly documented.

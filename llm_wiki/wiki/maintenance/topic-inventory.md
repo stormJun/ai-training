@@ -11,7 +11,7 @@ tags:
   - "maintenance"
   - "maintenance/inventory"
 sources:
-  - "README.md"
+  - "强化学习系统学习笔记.md"
   - "llm_wiki/sources.yml"
 ---
 

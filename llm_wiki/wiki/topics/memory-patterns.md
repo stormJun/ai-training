@@ -12,7 +12,7 @@ tags:
   - "topic"
   - "topic/memory"
 sources:
-  - "10_memory_patterns_basics/README.md"
+  - "10_memory_patterns_basics/强化学习系统学习笔记.md"
 ---
 
 # Agent Memory
