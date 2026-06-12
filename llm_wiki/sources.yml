@@ -5,7 +5,7 @@ wiki_policy: llm_wiki_summarizes_links_and_records_maintenance_state
 sources:
   - id: root_readme
     name_zh: 仓库总览
-    path: README.md
+    path: 强化学习系统学习笔记.md
     type: repository_overview
     status: first_batch
     wiki_pages:

@@ -12,7 +12,7 @@ tags:
   - "concept"
   - "concept/rag"
 sources:
-  - "04_rag_and_retrieval/README.md"
+  - "04_rag_and_retrieval/强化学习系统学习笔记.md"
 ---
 
 # RAG

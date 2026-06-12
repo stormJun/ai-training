@@ -12,7 +12,7 @@ tags:
   - "project"
   - "project/rag"
 sources:
-  - "04_rag_and_retrieval/06_qanything_case_study/README.md"
+  - "04_rag_and_retrieval/06_qanything_case_study/强化学习系统学习笔记.md"
 ---
 
 # QAnything 案例

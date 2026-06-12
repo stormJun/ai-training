@@ -262,7 +262,7 @@ find llm_wiki -type f | sort
 
 ```bash
 for path in \
-  README.md \
+  强化学习系统学习笔记.md \
   AGENTS.md \
   04_rag_and_retrieval \
   10_memory_patterns_basics \

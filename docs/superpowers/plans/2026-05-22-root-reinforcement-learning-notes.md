@@ -388,7 +388,7 @@ Critic 更新：
 - [ ] **Step 2: Verify the file was created**
 
 ```bash
-test -f 22_reinforcement_learning_notes/README.md
+test -f 22_reinforcement_learning_notes/强化学习系统学习笔记.md
 ```
 
 Expected: no output and exit code `0`.
@@ -401,8 +401,8 @@ Expected: no output and exit code `0`.
 - [ ] **Step 1: Check the required section keywords exist**
 
 ```bash
-rg -n '^## ' 22_reinforcement_learning_notes/README.md
-rg -n 'MDP|Q-Learning|Policy Gradient|Actor-Critic|贝尔曼方程' 22_reinforcement_learning_notes/README.md
+rg -n '^## ' 22_reinforcement_learning_notes/强化学习系统学习笔记.md
+rg -n 'MDP|Q-Learning|Policy Gradient|Actor-Critic|贝尔曼方程' 22_reinforcement_learning_notes/强化学习系统学习笔记.md
 ```
 
 Expected: the heading list is present and the key reinforcement learning topics are found.
@@ -410,7 +410,7 @@ Expected: the heading list is present and the key reinforcement learning topics 
 - [ ] **Step 2: Scan for placeholder text**
 
 ```bash
-rg -n 'TODO|TBD|占位|待补充' 22_reinforcement_learning_notes/README.md
+rg -n 'TODO|TBD|占位|待补充' 22_reinforcement_learning_notes/强化学习系统学习笔记.md
 ```
 
 Expected: no matches.
@@ -436,7 +436,7 @@ Expected: only the newly added reinforcement learning notes files and any unrela
 ```bash
 git add docs/superpowers/specs/2026-05-22-root-reinforcement-learning-notes-design.md \
   docs/superpowers/plans/2026-05-22-root-reinforcement-learning-notes.md \
-  22_reinforcement_learning_notes/README.md
+  22_reinforcement_learning_notes/强化学习系统学习笔记.md
 git commit -m "docs: add root reinforcement learning study notes"
 ```
 

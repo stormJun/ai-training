@@ -126,7 +126,7 @@ Rewrite the file so it describes only the topics that remain in place and adds a
 - [ ] **Step 4: Review the modified markdown for stale navigation paths**
 
 ```bash
-rg -n '21_langgraph_workflows/|31_mcp_langgraph_integration/|32_a2a_langgraph/' README.md 02_langgraph_basics/README.md 30_agent_protocols_and_mcp/README.md
+rg -n '21_langgraph_workflows/|31_mcp_langgraph_integration/|32_a2a_langgraph/' 强化学习系统学习笔记.md 02_langgraph_basics/强化学习系统学习笔记.md 30_agent_protocols_and_mcp/强化学习系统学习笔记.md
 ```
 
 Expected: any remaining matches should reflect the new nested locations or an explicit migration note.
@@ -134,7 +134,7 @@ Expected: any remaining matches should reflect the new nested locations or an ex
 - [ ] **Step 5: Commit the README updates**
 
 ```bash
-git add README.md 02_langgraph_basics/README.md 30_agent_protocols_and_mcp/README.md
+git add 强化学习系统学习笔记.md 02_langgraph_basics/强化学习系统学习笔记.md 30_agent_protocols_and_mcp/强化学习系统学习笔记.md
 git commit -m "docs: update langgraph topic navigation"
 ```
 

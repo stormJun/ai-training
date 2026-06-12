@@ -12,7 +12,7 @@ tags:
   - "topic"
   - "topic/skill"
 sources:
-  - "18_skill_engineering/README.md"
+  - "18_skill_engineering/强化学习系统学习笔记.md"
 ---
 
 # Skill Engineering

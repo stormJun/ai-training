@@ -12,7 +12,7 @@ tags:
   - "project"
   - "project/rag"
 sources:
-  - "04_rag_and_retrieval/05_local_rag_project/README.md"
+  - "04_rag_and_retrieval/05_local_rag_project/强化学习系统学习笔记.md"
 ---
 
 # 本地 RAG 项目

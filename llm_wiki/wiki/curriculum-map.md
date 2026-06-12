@@ -12,7 +12,7 @@ tags:
   - "map"
   - "curriculum"
 sources:
-  - "README.md"
+  - "强化学习系统学习笔记.md"
 ---
 
 # 课程地图

@@ -11,7 +11,7 @@ tags:
   - "llm-wiki"
   - "hub"
 sources:
-  - "README.md"
+  - "强化学习系统学习笔记.md"
   - "AGENTS.md"
 ---
 
