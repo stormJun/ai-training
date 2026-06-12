@@ -2,7 +2,7 @@
 type: "topic"
 status: "active"
 created: "2026-05-03"
-updated: "2026-05-03"
+updated: "2026-06-12"
 aliases:
   - "RAG 与检索"
   - "检索专题"
@@ -12,7 +12,7 @@ tags:
   - "topic"
   - "topic/rag"
 sources:
-  - "04_rag_and_retrieval/强化学习系统学习笔记.md"
+  - "04_rag_and_retrieval/"
 ---
 
 # RAG 与检索
@@ -48,22 +48,21 @@ sources:
 
 ## 关键文件与入口
 
-- `04_rag_and_retrieval/README.md`
-- `04_rag_and_retrieval/02_llamaindex_retrieval_basics/README.md`
-- `04_rag_and_retrieval/03_ragas_retrieval_evaluation/README.md`
-- `04_rag_and_retrieval/04_graphrag_basics/README.md`
-- `04_rag_and_retrieval/05_local_rag_project/README.md`
-- `04_rag_and_retrieval/06_qanything_case_study/README.md`
+- `04_rag_and_retrieval/`
+- `04_rag_and_retrieval/02_llamaindex_retrieval_basics/`
+- `04_rag_and_retrieval/03_ragas_retrieval_evaluation/`
+- `04_rag_and_retrieval/04_graphrag_basics/`
+- `04_rag_and_retrieval/05_local_rag_project/`
+- `04_rag_and_retrieval/06_qanything_case_study/`
 
 ## 相关概念
 
 - [RAG](../concepts/rag.md)
 - [GraphRAG](../concepts/graphrag.md)
-- [LLM Wiki](../concepts/llm-wiki.md)
 
 ## 维护备注
 
-本主题页维护聚合视图；具体运行方式以各子目录 README 为准。
+本主题页维护聚合视图；具体运行方式以各子目录中的代码、配置、脚本或专题文档为准。
 
 ## Obsidian 连接
 

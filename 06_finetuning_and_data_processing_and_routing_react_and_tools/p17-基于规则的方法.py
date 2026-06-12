@@ -1,0 +1,219 @@
+# -*- coding: utf-8 -*-
+# Converted from p17-基于规则的方法.ipynb
+
+# Unsupported cell 1: raw
+
+# Unsupported cell 2: raw
+
+# %%
+# 步骤1: 输入处理
+
+# 用户输入: "我要查订单号123456的物流状态"
+text = "我要查订单号123456的物流状态"
+
+# %%
+# 规则引擎核心 (rule_engine.py)
+
+class RuleBasedIntentRecognizer:
+    def __init__(self):
+        self.regex_matcher = RegexMatcher()
+        self.keyword_matcher = KeywordMatcher()
+        self.fsm_processor = FSMProcessor()
+        self.slot_filler = SlotFiller()
+
+    def recognize(self, text):
+        """多策略融合的意图识别"""
+        results = []
+
+        # 1. 正则匹配 (优先级最高)
+        regex_result = self.regex_matcher.match(text)
+        if regex_result['confidence'] > 0.8:
+            results.append(regex_result)
+
+        # 2. 关键词匹配
+        keyword_result = self.keyword_matcher.match(text)
+        results.append(keyword_result)
+
+        # 3. 状态机处理
+        fsm_result = self.fsm_processor.process(text)
+        if fsm_result:
+            results.append(fsm_result)
+
+        # 4. 融合决策
+        final_intent = self._merge_results(results)
+
+        # 5. 槽位填充
+        slots = self.slot_filler.extract_slots(text, final_intent['intent'])
+
+        return {
+            'intent': final_intent['intent'],
+            'confidence': final_intent['confidence'],
+            'slots': slots,
+            'matched_rules': final_intent['rules']
+        }
+
+
+# %%
+# 步骤2: 正则匹配器执行
+
+# 遍历正则模式
+patterns = {
+    'query_order': [r'查.*订单.*(\d+)', r'订单号.*?(\d{6,})']
+}
+
+# 匹配成功: r'订单号.*?(\d{6,})'
+# 提取到订单号: 123456
+regex_result = {
+    'intent': 'query_order',
+    'confidence': 0.9,
+    'matched_pattern': r'订单号.*?(\d{6,})',
+    'extracted_value': ('123456',)
+}
+
+# %%
+# 正则匹配器 (regex_matcher.py)
+
+class RegexMatcher:
+    def __init__(self):
+        self.patterns = {
+            'query_order': [
+                r'查.*订单.*(\d+)',
+                r'订单号.*?(\d{6,})',
+                r'我的订单.*状态'
+            ],
+            'refund': [
+                r'退.*款',
+                r'取消.*订单',
+                r'不要.*了'
+            ],
+            'issue_invoice': [
+                r'开.*发票',
+                r'要.*发票',
+                r'发票.*开'
+            ]
+        }
+
+    def match(self, text):
+        """正则模式匹配"""
+        for intent, patterns in self.patterns.items():
+            for pattern in patterns:
+                match = re.search(pattern, text, re.IGNORECASE)
+                if match:
+                    return {
+                        'intent': intent,
+                        'confidence': 0.9,
+                        'matched_pattern': pattern,
+                        'extracted_value': match.groups() if match.groups() else None
+                    }
+        return {'intent': 'unknown', 'confidence': 0.0}
+
+# %%
+# 步骤3: 关键词匹配器执行
+
+# 扫描关键词
+keywords = {
+    'query_order': {
+        'primary': ['查订单', '订单状态', '物流信息']
+    }
+}
+
+# 匹配到: "查订单", "物流"
+# 计算得分: 0.8 + 0.4 = 1.2 (截断为1.0)
+keyword_result = {
+    'intent': 'query_order',
+    'confidence': 1.0,
+    'matched_words': ['查订单', '物流']
+}
+
+# %%
+# 关键词匹配器 (keyword_matcher.py)
+
+class KeywordMatcher:
+    def __init__(self):
+        self.keywords = {
+            'query_order': {
+                'primary': ['查订单', '订单状态', '物流信息'],
+                'secondary': ['快递', '发货', '到了吗'],
+                'weights': {'primary': 0.8, 'secondary': 0.4}
+            },
+            'refund': {
+                'primary': ['退钱', '退款', '退货'],
+                'secondary': ['不要', '取消', '退回'],
+                'weights': {'primary': 0.8, 'secondary': 0.4}
+            }
+        }
+
+    def match(self, text):
+        """关键词打分匹配"""
+        scores = {}
+
+        for intent, config in self.keywords.items():
+            score = 0
+            matched_words = []
+
+            # 计算主关键词得分
+            for word in config['primary']:
+                if word in text:
+                    score += config['weights']['primary']
+                    matched_words.append(word)
+
+            # 计算次关键词得分
+            for word in config['secondary']:
+                if word in text:
+                    score += config['weights']['secondary']
+                    matched_words.append(word)
+
+            if score > 0:
+                scores[intent] = {
+                    'score': score,
+                    'matched_words': matched_words
+                }
+
+        # 返回得分最高的意图
+        if scores:
+            best_intent = max(scores.keys(), key=lambda x: scores[x]['score'])
+            return {
+                'intent': best_intent,
+                'confidence': min(scores[best_intent]['score'], 1.0),
+                'matched_words': scores[best_intent]['matched_words']
+            }
+
+        return {'intent': 'unknown', 'confidence': 0.0}
+
+# %%
+# 步骤4: 结果融合决策
+
+def _merge_results(self, results):
+    # 正则匹配confidence > 0.8，直接采用
+    if regex_result['confidence'] > 0.8:
+        return regex_result
+
+    # 否则选择confidence最高的结果
+    return max(results, key=lambda x: x['confidence'])
+
+# %%
+# 步骤5: 槽位填充
+
+# 根据意图类型提取槽位
+slots = {
+    'order_id': '123456',  # 从正则提取
+    'query_type': '物流状态'  # 从关键词推断
+}
+
+# %%
+# 步骤6: 最终输出
+
+final_result = {
+    'intent': 'query_order',
+    'confidence': 0.9,
+    'slots': {'order_id': '123456', 'query_type': '物流状态'},
+    'matched_rules': ['regex_pattern_2', 'keyword_primary']
+}
+
+# %% [markdown]
+# **关键设计思想**
+#
+# - 分层判断: 正则 → 关键词 → 状态机，优先级递减
+# - 置信度机制: 每种方法都输出置信度，便于融合决策
+# - 可解释性: 记录匹配的具体规则和模式
+# - 兜底策略: 当所有规则都无法匹配时返回 'unknown'

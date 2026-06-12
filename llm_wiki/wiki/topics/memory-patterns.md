@@ -2,7 +2,7 @@
 type: "topic"
 status: "active"
 created: "2026-05-03"
-updated: "2026-05-03"
+updated: "2026-06-12"
 aliases:
   - "Agent Memory"
   - "记忆模式"
@@ -12,7 +12,7 @@ tags:
   - "topic"
   - "topic/memory"
 sources:
-  - "10_memory_patterns_basics/强化学习系统学习笔记.md"
+  - "10_memory_patterns_basics/"
 ---
 
 # Agent Memory
@@ -50,7 +50,7 @@ sources:
 
 ## 关键文件与入口
 
-- `10_memory_patterns_basics/README.md`
+- `10_memory_patterns_basics/`
 - `10_memory_patterns_basics/TECH_DOC.md`
 - `10_memory_patterns_basics/p04-shortMEM.py`
 - `10_memory_patterns_basics/p06-summaryMEM.py`
@@ -63,7 +63,6 @@ sources:
 
 - [Agent Memory](../concepts/agent-memory.md)
 - [RAG](../concepts/rag.md)
-- [LLM Wiki](../concepts/llm-wiki.md)
 
 ## 维护备注
 

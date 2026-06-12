@@ -2,7 +2,6 @@
 name = "serving-deployment-and-observability"
 version = "0.1.0"
 description = "服务化、部署与可观测性教学示例：LLM 服务化、LangGraph、K8s、监控与多模态实践"
-readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
     "fastapi",

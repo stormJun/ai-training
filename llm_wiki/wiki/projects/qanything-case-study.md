@@ -2,7 +2,7 @@
 type: "project"
 status: "active"
 created: "2026-05-03"
-updated: "2026-05-03"
+updated: "2026-06-12"
 aliases:
   - "QAnything 案例"
   - "QAnything Case Study"
@@ -12,7 +12,7 @@ tags:
   - "project"
   - "project/rag"
 sources:
-  - "04_rag_and_retrieval/06_qanything_case_study/强化学习系统学习笔记.md"
+  - "04_rag_and_retrieval/06_qanything_case_study/"
 ---
 
 # QAnything 案例
@@ -28,13 +28,13 @@ sources:
 
 ## 架构摘要
 
-主题目录提供案例入口，具体工程位于 `qanything_case_study/`，前端说明位于其 `front_end/README.md`。运行细节以案例目录 README 为准。
+主题目录提供案例入口，具体工程位于 `qanything_case_study/`，前端内容位于其 `front_end/` 子目录。运行细节以案例目录中的代码、配置和脚本为准。
 
 ## 安装与运行入口
 
-- 主题入口：`04_rag_and_retrieval/06_qanything_case_study/README.md`
-- 案例 README：`04_rag_and_retrieval/06_qanything_case_study/qanything_case_study/README.md`
-- 前端说明：`04_rag_and_retrieval/06_qanything_case_study/qanything_case_study/front_end/README.md`
+- 主题入口：`04_rag_and_retrieval/06_qanything_case_study/`
+- 案例目录：`04_rag_and_retrieval/06_qanything_case_study/qanything_case_study/`
+- 前端说明：`04_rag_and_retrieval/06_qanything_case_study/qanything_case_study/front_end/`
 
 ## 相关课程主题
 

@@ -2,7 +2,7 @@
 type: "project"
 status: "active"
 created: "2026-05-03"
-updated: "2026-05-03"
+updated: "2026-06-12"
 aliases:
   - "本地 RAG 项目"
   - "Local RAG Project"
@@ -12,7 +12,7 @@ tags:
   - "project"
   - "project/rag"
 sources:
-  - "04_rag_and_retrieval/05_local_rag_project/强化学习系统学习笔记.md"
+  - "04_rag_and_retrieval/05_local_rag_project/"
 ---
 
 # 本地 RAG 项目
@@ -28,12 +28,12 @@ sources:
 
 ## 架构摘要
 
-该主题目录是项目入口，真正的项目实现位于 `local_rag_project/` 子目录。安装、依赖和运行细节以项目自己的 README 为准。
+该主题目录是项目入口，真正的项目实现位于 `local_rag_project/` 子目录。安装、依赖和运行细节以项目代码、配置和脚本为准。
 
 ## 安装与运行入口
 
-- 主题入口：`04_rag_and_retrieval/05_local_rag_project/README.md`
-- 项目 README：`04_rag_and_retrieval/05_local_rag_project/local_rag_project/README.md`
+- 主题入口：`04_rag_and_retrieval/05_local_rag_project/`
+- 项目目录：`04_rag_and_retrieval/05_local_rag_project/local_rag_project/`
 
 ## 相关课程主题
 
@@ -42,11 +42,10 @@ sources:
 ## 相关概念
 
 - [RAG](../concepts/rag.md)
-- [LLM Wiki](../concepts/llm-wiki.md)
 
 ## 维护备注
 
-本页只提供项目地图。不要在 wiki 中复制项目完整运行说明，以免与项目 README 漂移。
+本页只提供项目地图。不要在 wiki 中复制项目完整运行说明，以免与项目代码、配置和脚本漂移。
 
 ## Obsidian 连接
 
@@ -54,4 +53,3 @@ sources:
 - [[wiki/projects/index|项目索引]]
 - [[wiki/topics/rag-and-retrieval|RAG 与检索]]
 - [[wiki/concepts/rag|RAG]]
-- [[wiki/concepts/llm-wiki|LLM Wiki]]

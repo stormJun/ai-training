@@ -2,7 +2,7 @@
 type: "index"
 status: "active"
 created: "2026-05-03"
-updated: "2026-05-03"
+updated: "2026-06-12"
 aliases:
   - "主题索引"
 tags:
@@ -11,7 +11,7 @@ tags:
   - "index"
   - "topic"
 sources:
-  - "强化学习系统学习笔记.md"
+  - "README.md"
 ---
 
 # 主题索引
@@ -26,9 +26,9 @@ sources:
 
 ## 来源引用
 
-- `04_rag_and_retrieval/README.md`
-- `10_memory_patterns_basics/README.md`
-- `18_skill_engineering/README.md`
+- `04_rag_and_retrieval/`
+- `10_memory_patterns_basics/`
+- `18_skill_engineering/`
 
 ## Obsidian 连接
 

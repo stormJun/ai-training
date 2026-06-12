@@ -2,7 +2,7 @@
 type: "index"
 status: "active"
 created: "2026-05-03"
-updated: "2026-05-03"
+updated: "2026-06-12"
 aliases:
   - "概念索引"
 tags:
@@ -24,13 +24,10 @@ sources:
 - [GraphRAG](graphrag.md)
 - [Agent Memory](agent-memory.md)
 - [Skill Engineering](skill-engineering.md)
-- [LLM Wiki](llm-wiki.md)
-- [Schema 驱动的 AI 维护](schema-guided-ai-maintenance.md)
 
 ## 来源引用
 
 - `llm_wiki/sources.yml`
-- `docs/plans/2026-05-03-llm-wiki-management-design.md`
 
 ## Obsidian 连接
 
@@ -39,5 +36,3 @@ sources:
 - [[wiki/concepts/graphrag|GraphRAG]]
 - [[wiki/concepts/agent-memory|Agent Memory]]
 - [[wiki/concepts/skill-engineering|Skill Engineering]]
-- [[wiki/concepts/llm-wiki|LLM Wiki]]
-- [[wiki/concepts/schema-guided-ai-maintenance|Schema 驱动的 AI 维护]]

@@ -2,7 +2,6 @@
 name = "finetuning-and-peft-foundations"
 version = "0.1.0"
 description = "AI工程化训练营第二周项目"
-readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
 	"fastapi>=0.112.0",

@@ -2,7 +2,7 @@
 type: "index"
 status: "active"
 created: "2026-05-03"
-updated: "2026-05-03"
+updated: "2026-06-12"
 aliases:
   - "项目索引"
 tags:
@@ -11,12 +11,12 @@ tags:
   - "index"
   - "project"
 sources:
-  - "强化学习系统学习笔记.md"
+  - "README.md"
 ---
 
 # 项目索引
 
-项目页总结可运行项目或项目型案例。精确安装、启动和配置命令以项目自己的 README 为准。
+项目页总结可运行项目或项目型案例。精确安装、启动和配置命令以项目目录中的代码、配置、脚本或专题文档为准。
 
 ## 第一批项目
 
@@ -31,8 +31,8 @@ sources:
 
 ## 来源引用
 
-- `04_rag_and_retrieval/05_local_rag_project/README.md`
-- `04_rag_and_retrieval/06_qanything_case_study/README.md`
+- `04_rag_and_retrieval/05_local_rag_project/`
+- `04_rag_and_retrieval/06_qanything_case_study/`
 - `README.md`
 
 ## Obsidian 连接

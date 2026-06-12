@@ -2,7 +2,7 @@
 type: "concept"
 status: "active"
 created: "2026-05-03"
-updated: "2026-05-03"
+updated: "2026-06-12"
 aliases:
   - "GraphRAG"
   - "图增强 RAG"
@@ -12,7 +12,7 @@ tags:
   - "concept"
   - "concept/graphrag"
 sources:
-  - "04_rag_and_retrieval/04_graphrag_basics/强化学习系统学习笔记.md"
+  - "04_rag_and_retrieval/04_graphrag_basics/"
 ---
 
 # GraphRAG
@@ -40,8 +40,8 @@ GraphRAG 相关内容位于 `04_rag_and_retrieval/04_graphrag_basics/`，属于 
 
 ## 来源引用
 
-- `04_rag_and_retrieval/README.md`
-- `04_rag_and_retrieval/04_graphrag_basics/README.md`
+- `04_rag_and_retrieval/`
+- `04_rag_and_retrieval/04_graphrag_basics/`
 
 ## 维护备注
 
@@ -53,4 +53,3 @@ GraphRAG 相关内容位于 `04_rag_and_retrieval/04_graphrag_basics/`，属于 
 - [[wiki/concepts/rag|RAG]]
 - [[wiki/topics/rag-and-retrieval|RAG 与检索]]
 - [[wiki/concepts/agent-memory|Agent Memory]]
-- [[wiki/concepts/llm-wiki|LLM Wiki]]
