@@ -1,8 +1,13 @@
 # AI 工程化训练营目录总览
 
-本仓库现在按“编号主线 + 少量合并父目录”的方式组织。大多数编号目录承载一个知识主题或一个独立项目；对强相关的连续主题，会放进同一个编号父目录下，减少顶层目录数量。仓库只保留根目录 `README.md` 作为总览入口，具体内容直接进入对应目录查看代码、Notebook、讲义或配置文件。
+本仓库现在按“编号主线 + 少量合并父目录”的方式组织。大多数编号目录承载一个知识主题或一个独立项目；对强相关的连续主题，会放进同一个编号父目录下，减少顶层目录数量。仓库只保留根目录 `README.md` 作为总览入口，具体内容直接进入对应目录查看代码、Notebook、讲义或配置文件。结构化的主题关系、学习路径与维护状态另见 `llm_wiki/` 知识库。
 
 ## 主线目录
+
+### 00 前置基础
+
+- `00_go/`
+  - Go 语言基础概念笔记（GC、runtime、并发等），单文件 `基础概念`
 
 ### 01-03 基础能力
 
@@ -13,25 +18,23 @@
 - `03_intent_recognition_agent/`
   - 意图识别与多智能体示例
 
-### 04-05 检索与知识建模
+### 04 检索与知识建模
 
 - `04_rag_and_retrieval/`
   - 合并后的父目录，收纳 RAG 与检索相关主题，并补充纳入 `01_llamaindex_basics/`
   - 子目录：`01_llamaindex_basics/`、`02_llamaindex_retrieval_basics/`、`03_ragas_retrieval_evaluation/`、`04_graphrag_basics/`、`05_local_rag_project/`、`06_qanything_case_study/`
-- `05_ontology_and_foundry/`
-  - 本体、知识建模与 Foundry 相关内容
 
 ### 06-08 工作流与 Agent 工程
 
 - `06_finetuning_and_data_processing_and_routing_react_and_tools/`
   - 当前收纳 Router、ReAct、工具调用，以及迁入的 `09-12` 微调与数据处理内容
-  - 子目录：`09_finetuning_and_data_processing/`
+  - 子目录：`01_finetuning_and_data_processing/`
 - `06_finetuning_and_data_processing_and_routing_react_and_tools/01_finetuning_and_data_processing/`
   - 保留原 09-12 微调与数据处理父目录结构
   - 子目录：`01_finetuning_overview/`、`02_massive_dataset_processing/`、`03_lora_qlora_training/`、`04_local_finetuning_platform/`
 - `07_tooling_and_automation_workflows/`
-  - 合并后的父目录，收纳 24-26 三个相近主题
-  - 子目录：`01_code_assistant_workflow/`、`02_vllm_wrapper_demo/`、`03_rpa_and_ai_workflow/`
+  - 合并后的父目录，收纳代码助手工作流与 RPA+AI 工作流两个相近主题
+  - 子目录：`01_code_assistant_workflow/`、`02_rpa_and_ai_workflow/`
 
 ### 09-10 DSL 与记忆能力
 
@@ -62,7 +65,7 @@
 - `16_customer_service_platform/`
   - 智能客服综合项目
 
-### 17-22 扩展专题
+### 17-26 扩展专题
 
 - `17_model_extensions/`
   - 合并后的父目录，当前收纳小模型优化与多模态检索两个模型扩展主题
@@ -77,23 +80,40 @@
   - Claude Code / Codex 源码分析与实现理解
 - `22_reinforcement_learning_notes/`
   - 强化学习系统学习笔记，包含并入的 Q-Learning 补充资料与演示项目
+- `23apply/`
+  - Agentic Engineering 应用实践，当前收录金融可信智能体工程实践与演进
+- `24cli/`
+  - Agent CLI 工具与面向 Agent Skill 的 CLI SSO 鉴权体系
+- `25_deepagents/`
+  - Deep Agents 定制与说明
+- `26vllm/`
+  - vLLM serving 封装 Demo（原 `07` 下的 vllm wrapper demo 迁入此处）
+  - 子目录：`vllm_wrapper_demo/`
 
 ## 其他目录
 
+- `llm_wiki/`
+  - 结构化知识库（Obsidian wiki），含课程地图、概念/主题/项目/维护索引，作为仓库的知识管理地图
 - `assignments/`
   - 课程作业与示例答案
 - `reference_projects/`
   - 独立参考项目
+- `openclaw/`
+  - OpenClaw 算子设计与企业数据资产架构实践
+- `ralph_demo/`
+  - Ralph Demo 设计文档
+- `siweidebenzhi/`
+  - 杜威《How We Think》中译本，思维方法论阅读材料
+- `scripts/`
+  - 辅助脚本（ipynb 转 md、共享环境检查与安装）
 - `archive/`
   - 历史资料与非主线内容
 - `third_party_sources/`
   - 第三方引入源码
-- `shared_assets/`
-  - 共享资料、遗留概览与辅助笔记
+- `logs/`
+  - 本地运行日志
 - `runtime_artifacts/`
   - 运行产物与本地环境迁移残留
-- `docs/plans/`
-  - 设计文档与重构计划
 
 ## 运行说明
 
@@ -106,4 +126,4 @@
   - `10_memory_patterns_basics/`
   - `11_fastapi_serving/`
   - `15_python_concurrency_and_performance/01_asyncio_and_gil_basics/`
-- 完整项目目录例如 `04_rag_and_retrieval/05_local_rag_project/`、`04_rag_and_retrieval/06_qanything_case_study/`、`02_langgraph_basics/23_langgraph_demo_project/`、`16_customer_service_platform/` 仍然保留各自的项目结构和运行方式。
+- 完整项目目录例如 `04_rag_and_retrieval/05_local_rag_project/`、`04_rag_and_retrieval/06_qanything_case_study/`、`02_langgraph_basics/04_demo_project/`、`16_customer_service_platform/` 仍然保留各自的项目结构和运行方式。
