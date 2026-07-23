@@ -1,8 +1,0 @@
-src/massive/**/__pycache__/*
-*~
-*.pyc
-*.swp
-.idea/
-__pycache__/
-.DS_Store
-

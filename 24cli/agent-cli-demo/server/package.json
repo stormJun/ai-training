@@ -1,9 +1,0 @@
-{
-  "name": "agent-cli-demo-server",
-  "private": true,
-  "type": "module",
-  "scripts": {
-    "start": "node src/index.js",
-    "test": "node --test"
-  }
-}

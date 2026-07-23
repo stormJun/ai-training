@@ -38,10 +38,28 @@ def query(user_prompt: str) -> str:
         )
 
     try:
+        # OpenAI官方Python SDK 调用对话大模型的标准请求代码，作用：向大模型发送提问，接收模型返回的全部数据，存入变量 response
         response = client.chat.completions.create(
             model=DEFAULT_MODEL,
             messages=[{"role": "user", "content": user_prompt}],
         )
+        # {
+        #     "id": "chatcmpl-xxx",
+        #     "object": "chat.completion",
+        #     "created": 1700000000,
+        #     "model": "gpt-3.5-turbo",
+        #     "choices": [
+        #         {
+        #             "index": 0,
+        #             "message": {
+        #                 "role": "assistant",
+        #                 "content": "你好，我是AI助手"
+        #             },
+        #             "finish_reason": "stop"
+        #         }
+        #     ],
+        #     "usage": {"prompt_tokens": 10, "completion_tokens": 5, "total_tokens": 15}
+        # }
         return response.choices[0].message.content
     except Exception as exc:
         return f"错误: {exc}"

@@ -1,0 +1,132 @@
+// ==================== 交易策略DSL语法定义 ====================
+start: strategy
+
+// 策略顶层结构
+strategy: strategy_header config_section* rule_section*
+
+strategy_header: "STRATEGY" STRING "VERSION" VERSION
+                "AUTHOR" STRING
+                "CAPITAL" MONEY
+                "RISK_PER_TRADE" PERCENTAGE
+
+// 配置区域
+config_section: risk_control | trading_hours
+
+// 规则区域
+rule_section: entry_rule | exit_rule
+
+// ==================== 入场规则 ====================
+entry_rule: "ENTRY_RULE" STRING
+           "WHEN" condition
+           "THEN" action_buy
+
+// ==================== 出场规则 ====================
+exit_rule: "EXIT_RULE" STRING
+          "WHEN" condition
+          "THEN" action_sell
+
+// ==================== 条件表达式 ====================
+condition: comparison
+         | condition "AND" condition
+         | condition "OR" condition
+         | "(" condition ")"
+
+comparison: expression COMP_OP expression
+          | expression "TOUCHES" expression
+
+expression: indicator
+          | price_field
+          | NUMBER
+          | MONEY
+          | PERCENTAGE
+          | expression "*" expression
+          | expression "/" expression
+          | expression "+" expression
+          | expression "-" expression
+
+// ==================== 技术指标 ====================
+indicator: "SMA" "(" NUMBER ")"
+         | "RSI" "(" NUMBER ")"
+         | "ATR" "(" NUMBER ")"
+         | "MACD_HISTOGRAM"
+         | "MACD_SIGNAL"
+         | "AVG_VOLUME"
+
+price_field: "price"
+           | "volume"
+           | "entry_price"
+           | "SUPPORT_LEVEL"
+
+// ==================== 买入动作 ====================
+action_buy: "BUY" "AT" price_type
+           size_spec
+           stop_loss_spec?
+           take_profit_spec?
+
+price_type: "market_price"
+          | "limit_price" "=" expression
+
+size_spec: "SIZE" "=" expression
+
+stop_loss_spec: "STOP_LOSS" "=" expression
+
+take_profit_spec: "TAKE_PROFIT" "=" expression
+
+// ==================== 卖出动作 ====================
+action_sell: "SELL" quantity "AT" price_type urgency_spec?
+           | "SELL" quantity "AT" price_type adjust_stop?
+
+quantity: "ALL"
+        | PERCENTAGE
+        | NUMBER
+
+urgency_spec: "URGENCY" ("high" | "medium" | "low")
+
+adjust_stop: "ADJUST_STOP_LOSS" "TO" expression
+
+// ==================== 风控配置 ====================
+risk_control: "RISK_CONTROL"
+             risk_param+
+
+risk_param: "MAX_POSITIONS" "=" NUMBER
+          | "MAX_DAILY_LOSS" "=" MONEY
+          | "MAX_POSITION_SIZE" "=" MONEY
+          | "BLACKLIST" "=" "[" string_list "]"
+
+string_list: STRING ("," STRING)*
+
+// ==================== 交易时段 ====================
+trading_hours: "TRADING_HOURS"
+              time_rule+
+
+time_rule: "ACTIVE_BETWEEN" TIME "AND" TIME "TIMEZONE" STRING
+         | "AVOID_FIRST" DURATION
+         | "AVOID_LAST" DURATION
+
+// ==================== 终结符（词法规则） ====================
+COMP_OP: ">" | "<" | ">=" | "<=" | "==" | "!="
+
+// 金额类型（必须带$符号，防止货币混淆）
+MONEY: /\$\d+(\.\d{2})?/
+
+// 百分比类型（必须带%符号）
+PERCENTAGE: /\d+(\.\d+)?%/
+
+// 版本号
+VERSION: /\d+\.\d+/
+
+// 时间格式
+TIME: /\d{2}:\d{2}/
+DURATION: /\d+min/
+
+// 基础类型
+NUMBER: /\d+(\.\d+)?/
+STRING: /"[^"]*"/
+ID: /[a-zA-Z_][a-zA-Z0-9_]*/
+
+COMMENT: /#[^\n]*/
+
+%ignore " "
+%ignore "\t"
+%ignore /\r?\n/
+%ignore COMMENT

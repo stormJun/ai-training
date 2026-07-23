@@ -1,0 +1,7 @@
+id,name,phone,email,age
+1,Alice,13800138000,alice@example.com,28
+2,Bob,13900139000,bob@example.com,31
+2,Bob,13900139000,bob@example.com,31
+3,,13700137000,missing-name@example.com,22
+4,Chen,,chen@example.com,41
+5,Dana,13600136000,dana@example.com,35
