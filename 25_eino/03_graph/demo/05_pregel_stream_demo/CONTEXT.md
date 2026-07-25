@@ -1,7 +1,7 @@
 # Pregel Stream Demo
 
 从零手写最小 Pregel 引擎，逐步逼近 eino 内部机制。每个 increment 用最少代码实现最核心机制逻辑。
-本 demo 在 02_pregel_checkpoint_demo 基础上新增增量 4: Streaming（四范式 + StreamReader/Writer + Copy + Merge）。
+本 demo 在 04_pregel_checkpoint_demo 基础上新增增量 4: Streaming（四范式 + StreamReader/Writer + Copy + Merge）。
 
 ## Language
 
@@ -101,6 +101,21 @@ _Avoid_: 合并流（与 Merge 混淆--concat 是流->单值，Merge 是多流->
 **StreamReader / StreamWriter**:
 流的接收端 / 发送端。Pipe 创建一对：writer 写 chunk，reader 逐块读，EOF 表示流结束。底层是 channel（生产者-消费者）。
 _Avoid_: 流、管道（太宽泛）
+
+**扇出（fan-out）**:
+一个节点的输出分给多个后继（一发多）。像扇子从一个点散开：`model ──┬──▶ search` `└──▶ calc`。
+- 单值模式：直接 `append` 复制值（值不可变，复制无成本）
+- 流式模式：流有状态、取走就没，不能直接给两份，需 **Copy** 复制成独立管道
+_Avoid_: 分发、广播（语义偏差）
+
+**扇入（fan-in）**:
+多个前驱的输出汇入一个节点（多发一）。像扇子反过来收拢：`search ──┐` `├──▶ model` `calc ──┘`。
+- 单值模式：收成 `[]Message{a, b}`（append 到数组）
+- 流式模式：多个流不能"收成数组"，需 **Merge** 合成一个管道给消费者
+_Avoid_: 汇聚、聚合（太宽泛）
+
+**为什么流式下扇入扇出是问题**:
+值是死数据，复制无成本（`append` 随便复制）；流是活管道，有状态，chunk 取走就没（直接给两个接收方，先读的吃光，后读的拿空）。所以流式下扇出要 Copy、扇入要 Merge--这是这两个机制存在的根本理由。
 
 **Copy（扇出）**:
 一个流复制成多个独立流，让多个消费者各读各的。eino 用 lazy 实现（sync.Once + 链表）：谁先到谁触发从源读，后来的读缓存；不预读整流。demo 对齐 eino 的 lazy 实现。

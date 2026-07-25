@@ -7,13 +7,13 @@
 > - [`demo.go`](./demo.go)：演示场景（顶点加 StreamCompute + 场景六 StreamRun）
 > - [`CONTEXT.md`](./CONTEXT.md)：领域术语表（含 Streaming 术语）
 >
-> 上游：[`../02_pregel_checkpoint_demo`](../02_pregel_checkpoint_demo/pregel_checkpoint_demo.md)（Checkpoint + Interrupt + State，本 demo 在其基础上新增增量 4）
+> 上游：[`../04_pregel_checkpoint_demo`](../04_pregel_checkpoint_demo/pregel_checkpoint_demo.md)（Checkpoint + Interrupt + State，本 demo 在其基础上新增增量 4）
 >
 > 本文仅介绍新增的机制 ⑧ Streaming；前七机制见上游文档。
 
 ## 一、概述
 
-本 demo 在 02_pregel_checkpoint_demo 基础上新增 **Streaming** 能力（增量 4），约 350 行新增代码：
+本 demo 在 04_pregel_checkpoint_demo 基础上新增 **Streaming** 能力（增量 4），约 350 行新增代码：
 
 | 新增 | 内容 | 行数 |
 |------|------|------|
@@ -26,7 +26,7 @@
 ## 二、运行
 
 ```bash
-cd /Users/songxijun/workspace/otherProject/ai-training/25_eino/03_graph/demo/03_pregel_stream_demo
+cd /Users/songxijun/workspace/otherProject/ai-training/25_eino/03_graph/demo/05_pregel_stream_demo
 go run .
 ```
 
@@ -114,7 +114,42 @@ StreamReader 有 4 种内部实现（`typ` 字段区分）：
 | `readerTypeChild` | lazy 链表 | Copy 出来的子流 |
 | `readerTypeMerged` | channel-based | Merge 的输出 |
 
-### 4.2 Copy（扇出，lazy）
+### 4.2 扇出与扇入：为什么需要 Copy 和 Merge
+
+场景一的图里，model 同时面对两个拓扑结构：
+
+```
+START ──▶ model ──┬──▶ search ──┐
+                   │             ├──▶ model ──▶ END
+                   └──▶ calc  ──┘
+                   扇出          扇入
+```
+
+- **扇出（fan-out）**：一个节点的输出分给多个后继（model 的输出给 search 和 calc）
+- **扇入（fan-in）**：多个前驱的输出汇入一个节点（search 和 calc 的结果汇回 model）
+
+**单值模式下这俩很简单**，因为值是不可变的"死数据"，复制无成本：
+
+| | 单值（Run 模式） | 做法 |
+|---|---|---|
+| 扇出 | `next["search"]=append(...,out)`<br>`next["calc"]=append(...,out)` | append 把值复制进两个 slice，各读各的 |
+| 扇入 | `next["model"] = []Message{search结果, calc结果}` | 收成数组 |
+
+**流式模式下这俩成了问题**，因为流是"活管道"，有状态，chunk 取走就没：
+
+- **扇出问题**：model 产出一个流，直接给 search 和 calc 两个接收方。流里的 chunk 被先读的接收方取走，后读的拿空。**流只能被消费一次。**
+- **扇入问题**：search 和 calc 各产一个流，但 model 的 StreamCompute 只收一个流。**两个流不能直接当一个用。**
+
+所以流式下需要两个专门机制：
+
+| | 流式（StreamRun 模式） | 机制 |
+|---|---|---|
+| 扇出 | 把一个流复制成多个独立管道，各读各的 | **Copy** |
+| 扇入 | 把多个流合并成一个管道给消费者 | **Merge** |
+
+**本质区别**：值是死数据，复制无成本（append 随便复制）；流是活管道，有状态，取走就没。这是 Copy 和 Merge 存在的根本理由。
+
+### 4.3 Copy（扇出，lazy）
 
 一个流复制成 n 个独立子流。**lazy 实现（对齐 eino）：sync.Once + 链表。**
 
@@ -139,7 +174,7 @@ type cpElement[T any] struct {
 func (r *StreamReader[T]) Copy(n int) []*StreamReader[T]
 ```
 
-### 4.3 Merge（扇入）
+### 4.4 Merge（扇入）
 
 多个流合并成一个，chunk 按到达顺序交错。**goroutine-per-source 实现：**
 
@@ -149,7 +184,7 @@ func MergeStreamReaders[T any](srs []*StreamReader[T]) *StreamReader[T]
 
 每个源一个 goroutine 转发 chunk 到输出流，全部 EOF 时关闭输出。比 eino 的 `select`（手写 1-5 路 + reflect.Select）更简单，支持任意 N，非确定交错。
 
-### 4.4 concat（流 -> 单值）
+### 4.5 concat（流 -> 单值）
 
 ```go
 func concatStreamReader[T any](sr, merge func([]T) T) (T, error)

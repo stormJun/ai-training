@@ -6,14 +6,14 @@
 > - [`demo.go`](./demo.go)：演示场景（顶点实现、Resume 函数、main 函数）
 > - [`CONTEXT.md`](./CONTEXT.md)：领域术语表（概念定义与辨析）
 >
-> 上游:[`../01_pregel_demo`](../01_pregel_demo/README.md)(Pregel 四机制 + Compile,本 demo 在其上**只增不改**)
+> 上游:[`../03_pregel_compile`](../03_pregel_compile/README.md)(Pregel 四机制 + Compile,本 demo 在其上**只增不改**)
 > 配套概念文档:[`../pregel.md`](../pregel.md)
 >
 > 本文仅介绍新增的机制 ⑥ Checkpoint + ⑦ State;Pregel 前五机制的完整拆解见上游 README,此处不再重复。
 
 ## 一、概述
 
-本 demo 在 01_pregel_demo 基础上逐步引入三个增量:
+本 demo 在 03_pregel_compile 基础上逐步引入三个增量:
 
 | 增量 | 机制 | 新增代码 | 核心能力 |
 |------|------|---------|---------|
@@ -24,7 +24,7 @@
 ## 二、运行
 
 ```bash
-cd /Users/songxijun/workspace/otherProject/ai-training/25_eino/03_graph/demo/02_pregel_checkpoint_demo
+cd /Users/songxijun/workspace/otherProject/ai-training/25_eino/03_graph/demo/04_pregel_checkpoint_demo
 go run .
 ```
 
