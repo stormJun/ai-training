@@ -2,7 +2,7 @@
 
 > 源码:[`main.go`](./main.go)(纯标准库,不依赖 eino)
 > 配套概念文档:[`../pregel.md`](../pregel.md)
-> 下游:[`../02_pregel_barrier`](../02_pregel_barrier/README.md)(+ 屏障 / 并行 / 可中断)
+> 下游:[`../02_pregel_barrier`](../02_pregel_barrier/pregel_barrier.md)(+ 屏障 / 并行 / 可中断)
 
 Pregel 四机制的**最小可运行实现**:`顶点为中心 + 超步循环 + 消息 S->S+1 + 触发与终止`。
 Compute **串行**、拓扑**内联**(无 Graph/Compile),无屏障、无并行--先把"Pregel 怎么转起来"讲清楚。

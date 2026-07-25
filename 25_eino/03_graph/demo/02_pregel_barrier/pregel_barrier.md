@@ -1,8 +1,8 @@
 # 02 Pregel + 屏障(并行 / 可中断)
 
 > 源码:[`main.go`](./main.go)(纯标准库,不依赖 eino)
-> 上游:[`../01_pregel_core`](../01_pregel_core/README.md)(串行四机制)
-> 下游:[`../03_pregel_compile`](../03_pregel_compile/README.md)(+ Compile / 环检测)
+> 上游:[`../01_pregel_core`](../01_pregel_core/pregel_core.md)(串行四机制)
+> 下游:[`../03_pregel_compile`](../03_pregel_compile/pregel_compile.md)(+ Compile / 环检测)
 > 配套概念文档:[`../pregel.md`](../pregel.md)
 
 在 01 串行版基础上引入 **taskManager 屏障**:`Compute 并行 + 步间屏障 + panic 恢复 + ctx 取消`。

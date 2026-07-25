@@ -2,7 +2,7 @@
 
 > 源码:[`main.go`](./main.go)(纯标准库,不依赖 eino)
 > 配套概念文档:[`../pregel.md`](../pregel.md)
-> 上游:[`../02_pregel_barrier`](../02_pregel_barrier/README.md)(串行四机制 + 屏障/并行/可中断,本阶段在其上引入 Compile)
+> 上游:[`../02_pregel_barrier`](../02_pregel_barrier/pregel_barrier.md)(串行四机制 + 屏障/并行/可中断,本阶段在其上引入 Compile)
 >
 > 本文完整描述这份 demo 的设计:从零实现一个最小的 Pregel 执行引擎,涵盖 Pregel 四机制 + 最小 Compile 阶段 + 可中断屏障(taskManager),实现思路参考 eino(`compose/graph_run.go`、`compose/pregel.go`、`compose/graph.go`、`compose/graph_manager.go`)。
 

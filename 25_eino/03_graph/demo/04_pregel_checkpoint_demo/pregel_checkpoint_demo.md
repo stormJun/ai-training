@@ -6,7 +6,7 @@
 > - [`demo.go`](./demo.go)：演示场景（顶点实现、Resume 函数、main 函数）
 > - [`CONTEXT.md`](./CONTEXT.md)：领域术语表（概念定义与辨析）
 >
-> 上游:[`../03_pregel_compile`](../03_pregel_compile/README.md)(Pregel 四机制 + Compile,本 demo 在其上**只增不改**)
+> 上游:[`../03_pregel_compile`](../03_pregel_compile/pregel_compile.md)(Pregel 四机制 + Compile,本 demo 在其上**只增不改**)
 > 配套概念文档:[`../pregel.md`](../pregel.md)
 >
 > 本文仅介绍新增的机制 ⑥ Checkpoint + ⑦ State;Pregel 前五机制的完整拆解见上游 README,此处不再重复。
