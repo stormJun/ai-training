@@ -88,7 +88,7 @@ Pregel 是 Google 2010 年提出的大规模图计算系统(论文《Pregel: A S
 ## 二、运行
 
 ```bash
-cd /Users/songxijun/workspace/otherProject/ai-training/26eino/03_graph/demo/pregel_demo
+cd /Users/songxijun/workspace/otherProject/ai-training/25_eino/03_graph/demo/01_pregel_demo
 go run .
 ```
 

@@ -336,4 +336,4 @@ Pregel 带来的额外收益:因为每一"轮"就是普通的图 superstep,图�
 
 一句话:Pregel 在 Eino 里 = `pregelChannel`(值袋式通道)+ `AnyPredecessor`(任一前驱即触发)+ superstep 主循环(逐步 submit/calculateNextSteps)+ `MaxRunSteps` 兜底。它把"模型↔工具"的往复编码成节点间通过通道传值、引擎逐超步推进,从而业务代码不必写 `for`,还能白拿流式、中断、检查点能力。
 
-> 配套最小实现见 [`demo/pregel_demo/README.md`](./demo/pregel_demo/README.md)--一份从零写的最小 Pregel MVP(含 Compile 阶段 + 可中断屏障)。
+> 配套最小实现见 [`demo/01_pregel_demo/README.md`](./demo/01_pregel_demo/README.md)--一份从零写的最小 Pregel MVP(含 Compile 阶段 + 可中断屏障)。

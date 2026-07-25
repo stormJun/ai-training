@@ -1,7 +1,7 @@
 # Pregel Stream Demo
 
 从零手写最小 Pregel 引擎，逐步逼近 eino 内部机制。每个 increment 用最少代码实现最核心机制逻辑。
-本 demo 在 pregel_checkpoint_demo 基础上新增增量 4: Streaming（四范式 + StreamReader/Writer + Copy + Merge）。
+本 demo 在 02_pregel_checkpoint_demo 基础上新增增量 4: Streaming（四范式 + StreamReader/Writer + Copy + Merge）。
 
 ## Language
 

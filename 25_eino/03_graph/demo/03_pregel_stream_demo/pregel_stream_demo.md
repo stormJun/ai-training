@@ -7,13 +7,13 @@
 > - [`demo.go`](./demo.go)：演示场景（顶点加 StreamCompute + 场景六 StreamRun）
 > - [`CONTEXT.md`](./CONTEXT.md)：领域术语表（含 Streaming 术语）
 >
-> 上游：[`../pregel_checkpoint_demo`](../pregel_checkpoint_demo/pregel_checkpoint_demo.md)（Checkpoint + Interrupt + State，本 demo 在其基础上新增增量 4）
+> 上游：[`../02_pregel_checkpoint_demo`](../02_pregel_checkpoint_demo/pregel_checkpoint_demo.md)（Checkpoint + Interrupt + State，本 demo 在其基础上新增增量 4）
 >
 > 本文仅介绍新增的机制 ⑧ Streaming；前七机制见上游文档。
 
 ## 一、概述
 
-本 demo 在 pregel_checkpoint_demo 基础上新增 **Streaming** 能力（增量 4），约 350 行新增代码：
+本 demo 在 02_pregel_checkpoint_demo 基础上新增 **Streaming** 能力（增量 4），约 350 行新增代码：
 
 | 新增 | 内容 | 行数 |
 |------|------|------|
@@ -26,7 +26,7 @@
 ## 二、运行
 
 ```bash
-cd /Users/songxijun/workspace/otherProject/ai-training/25_eino/03_graph/demo/pregel_stream_demo
+cd /Users/songxijun/workspace/otherProject/ai-training/25_eino/03_graph/demo/03_pregel_stream_demo
 go run .
 ```
 
@@ -221,7 +221,88 @@ else:
 5. **Copy 的 lazy 特性**：消费者速度不同步时，慢的拖住缓存增长，但快的能读已缓存的部分。源只读一次。
 6. **Merge 顺序非确定**：chunk 按到达顺序交错，不保证 search 结果在 calc 之前。需要顺序的场景应用 concat 或自定义合并。
 
-## 七、与 eino 的对应
+## 七、简化说明：demo 对 eino 做了哪些简化
+
+本 demo 的原则是"最少代码实现最核心机制"。以下逐项说明 demo 在哪些地方简化了 eino，eino 原本怎么做，demo 怎么做，简化了什么，为什么。
+
+### 7.1 Merge 实现：select → goroutine-per-source
+
+| | eino | demo |
+|---|---|---|
+| 做法 | `select` 同时监听多 channel；1-5 路手写 select 优化，6+ 路用 `reflect.Select` | 每个源启一个 goroutine 转发 chunk 到输出流，`sync.WaitGroup` 等全部 EOF |
+| 代码 | ~80 行（含 select.go 的 receiveN 手写分支） | ~25 行 |
+| 简化了什么 | select 的手写优化路径、reflect.Select 回退 | |
+| 为什么 | demo 的 Merge 只用于 search+calc 两路扇入，goroutine-per-source 更直观、支持任意 N，足以展示"多流交错合并"的核心机制 |
+
+### 7.2 分支点路由：StreamGraphBranch → Copy-for-peek（concat 决定）
+
+| | eino | demo |
+|---|---|---|
+| 做法 | `NewStreamGraphBranch`：条件函数收 `*StreamReader[T]`，可**只读首个 chunk** 决定路由，流原样传给目标（不 concat 整流） | `Branch.Cond` 收 `Message`；分支点 `Copy(2)` 一份 `concat` 得 Message 决定路由，另一份传给目标 |
+| 代码 | StreamGraphBranchCondition 类型 + 流式条件逻辑 | Copy-for-peek ~10 行 |
+| 简化了什么 | 流式条件（基于首块决定，保持端到端 lazy） | |
+| 代价 | demo 分支点必须 concat 完整流才能决定路由，破坏了该处的 lazy | |
+| 为什么 | demo 的 `Branch.Cond(Message)` 与 Run 模式共用，不改签名最省代码；分支点 concat 在 demo 场景下可接受（model 输出就一两块） |
+
+### 7.3 checkpoint 集成：streamConvertPair → 不集成
+
+| | eino | demo |
+|---|---|---|
+| 做法 | `streamConvertPair{concatStream, restoreStream}`：checkpoint 时 `concatStream` 把流物化成单值持久化，恢复时 `restoreStream` 把单值变回流 | StreamRun 完全不碰 checkpoint |
+| 代码 | generic_helper.go 的 streamConvertPair + checkpoint.go 的 streamConverter | 0 行 |
+| 简化了什么 | 流的物化/反物化、流式 checkpoint 的存取 | |
+| 为什么 | 流式 + checkpoint 极复杂，超出"最少代码"范围；崩溃恢复已由 Run + checkpoint 覆盖 |
+
+### 7.4 范式存储：只存 i 和 t（推导） → 直接存 Compute + StreamCompute
+
+| | eino | demo |
+|---|---|---|
+| 做法 | `composableRunnable` 只存 `i`（invoke）和 `t`（transform）；Stream/Collect 在入口处用 wrap/concat 桥接到 i 或 t；12 个推导函数 + 优先级选择 | 顶点直接实现 `Compute`（Invoke）+ `StreamCompute`（Transform）；Run 走 Compute，StreamRun 走 StreamCompute |
+| 代码 | 12 个 `xxxByYyy` 推导函数 + newRunnablePacker 优先级 | 0 推导函数（顶点两方法并存） |
+| 简化了什么 | 12 个推导闭包、优先级选择、只存两个的工程优化 | |
+| 为什么 | demo 顶点数量少，直接存两方法最省事；自动推导的"wrap+concat 桥接"机制在 StreamRun 内部（wrap 输入、concat 决定路由）已自然体现 |
+
+### 7.5 StreamReader 内部类型：5 种 → 4 种
+
+| | eino | demo |
+|---|---|---|
+| 内部类型 | Stream / Array / MultiStream / WithConvert / Child（5 种） | Stream / Array / Child / Merged（4 种） |
+| 简化了什么 | `WithConvert`（流的逐块转换 + 过滤 + OnEOF 注入） | |
+| 为什么 | demo 不需要流转换/过滤；Merge 的输出复用 Stream 类型（channel-based），不需要单独 MultiStream 类型 |
+
+### 7.6 concat 类型合并：注册表 → 单一 mergeMessages
+
+| | eino | demo |
+|---|---|---|
+| 做法 | `ConcatItems` + 类型注册表：string 拼接、数值 useLast、bool useLast、map 递归合并、struct 用户注册 `RegisterStreamChunkConcatFunc` | `concatStreamReader` 接收 `merge func([]T) T` 参数；demo 传 `mergeMessages`（ToolCalls/Results 拼接、Answer useLast） |
+| 代码 | internal/concat.go ~200 行（含 reflect） | mergeMessages ~10 行 |
+| 简化了什么 | 多类型合并策略、reflect 反射、用户注册机制 | |
+| 为什么 | demo 只有 Message 一种类型，不需要通用合并注册表；传 merge 函数既灵活又省代码 |
+
+### 7.7 Copy 清理：close 计数 → 无清理
+
+| | eino | demo |
+|---|---|---|
+| 做法 | `parentStreamReader.close(idx)` 设 nil + `closedNum` 原子计数，全部子流关闭才关源 | demo 的 childStreamReader.close 只设 closed 标志，不关源 |
+| 简化了什么 | 子流关闭计数、源的资源回收 | |
+| 代价 | demo 的源流不会被主动关闭（依赖 GC）；长时间运行的流可能延迟释放 | |
+| 为什么 | demo 是短运行教学程序，无资源泄漏问题；清理逻辑不影响理解 Copy 的 lazy 核心机制 |
+
+### 7.8 简化总览
+
+| # | 简化点 | eino 机制 | demo 替代 | 影响 |
+|---|---|---|---|---|
+| 1 | Merge | select + reflect.Select | goroutine-per-source | 无（功能等价） |
+| 2 | 分支路由 | StreamGraphBranch（流式条件） | Copy-for-peek（concat） | 分支点失去 lazy |
+| 3 | checkpoint | streamConvertPair | 不集成 | 流式无崩溃恢复 |
+| 4 | 范式存储 | 只存 i/t + 12 推导 | 直接存两方法 | 无（功能等价） |
+| 5 | StreamReader 类型 | 5 种 | 4 种 | 无 WithConvert |
+| 6 | concat 合并 | 类型注册表 | 单一 merge 函数 | 只支持 Message |
+| 7 | Copy 清理 | close 计数回收 | 无 | 短运行无影响 |
+
+**核心机制全部保留**：StreamReader/Writer、wrap/concat、lazy Copy、Merge、流 handle 跨 superstep、四范式。简化的是工程优化（select 手写、类型注册表）、高级特性（StreamGraphBranch、WithConvert）、生产能力（checkpoint 物化、资源回收）。
+
+## 八、与 eino 的对应
 
 | demo | eino | 说明 |
 |---|---|---|
@@ -238,7 +319,7 @@ else:
 | 不集成 checkpoint | `streamConvertPair`（concatStream/restoreStream） | 超出 demo 范围 |
 | `mergeMessages`（拼接/useLast） | `ConcatItems`（string 拼接/数值 useLast/map 递归） | demo 用 Message 合并 |
 
-## 八、后续规划
+## 九、后续规划
 
 | 增量 | 内容 | 状态 |
 |------|------|------|
@@ -249,6 +330,6 @@ else:
 | 5 | DAG Channel（skip 传播 + AllPredecessor 触发） | 📋 |
 | 6 | StreamGraphBranch（流式分支条件，避免分支点 concat） | 📋 |
 
-## 九、总结
+## 十、总结
 
 **Streaming 的核心机制可概括为：StreamReader/Writer 是流的载体，wrap/concat 是单值与流的桥，Copy 是扇出，Merge 是扇入，StreamRun 让流 handle 跨 superstep 传递。** 四范式不是四种实现，而是 wrap+concat 组合出的四种调用方式。分支点因 `Cond` 需要完整 Message 而触发 concat，是 demo 简化的代价；eino 用 StreamGraphBranch 避免之。流式 + checkpoint 的物化（concatStream/restoreStream）留作后续。

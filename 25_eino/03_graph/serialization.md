@@ -475,7 +475,7 @@ func (i *InternalSerializer) Unmarshal(data []byte, v any) error {
 
 ### 6.1 教学 Demo 的深拷贝方案
 
-在 `pregel_checkpoint_demo` 中，使用内存存储 + 深拷贝：
+在 `02_pregel_checkpoint_demo` 中，使用内存存储 + 深拷贝：
 
 ```go
 // checkpoint.go
