@@ -121,10 +121,9 @@ func cloneCheckpoint(src *Checkpoint) *Checkpoint {
 		Step:    src.Step,
 		Current: cloneCurrent(src.Current),
 	}
-	// 增量 3:深拷贝 State
+	// 增量 3:深拷贝 State(只拷数据字段,新 struct 自带零值 mutex,避免拷贝锁值)
 	if src.State != nil {
-		s := *src.State // 值拷贝 GraphState(int 字段自动深拷贝)
-		cp.State = &s
+		cp.State = &GraphState{TokenCount: src.State.TokenCount}
 	}
 	if src.InterruptInfo != nil {
 		info := *src.InterruptInfo

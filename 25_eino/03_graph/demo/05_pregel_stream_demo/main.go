@@ -458,9 +458,7 @@ func cloneState(s *GraphState) *GraphState {
 	}
 	s.mu.Lock()
 	defer s.mu.Unlock()
-	cp := *s // 值拷贝:TokenCount 是 int,自动深拷贝
-	cp.mu = sync.Mutex{}
-	return &cp
+	return &GraphState{TokenCount: s.TokenCount} // 只拷数据字段;新 struct 自带零值 mutex(合法、未锁定),避免拷贝锁值
 }
 
 func sortedKeys(m map[string][]Message) []string {
