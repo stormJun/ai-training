@@ -27,6 +27,9 @@ venv/
 ENV/
 env/
 
+# Orphaned venvs / runtime artifacts (not referenced by any code)
+runtime_artifacts/
+
 # IDEs
 .vscode/
 .idea/

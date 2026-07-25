@@ -106,25 +106,26 @@ func Pipe[T any]() (*StreamReader[T], *StreamWriter[T]) {
 type readerType int
 
 const (
-	readerTypeStream readerType = iota // channel-based(Pipe 创建)
+	readerTypeStream readerType = iota // channel-based(Pipe / Merge 输出)
 	readerTypeArray                    // 数组-based(wrap 创建,长度1)
 	readerTypeChild                    // Copy 出来的子流(lazy)
-	readerTypeMerged                   // Merge 出来的合并流
 )
 
 // StreamReader 流的接收端。对应 eino schema.StreamReader[T]。
 // typ 决定 Recv 走哪个内部实现。
+// 注:demo 的 Merge 输出复用 readerTypeStream(goroutine 转发到 Pipe),
+//    不像 eino 有专用 MultiStream 类型。
 type StreamReader[T any] struct {
 	typ readerType
-	st  *stream[T]               // readerTypeStream / readerTypeMerged 都用 stream
-	ar  *arrayReader[T]          // readerTypeArray
-	csr *childStreamReader[T]    // readerTypeChild
+	st  *stream[T]            // readerTypeStream
+	ar  *arrayReader[T]       // readerTypeArray
+	csr *childStreamReader[T] // readerTypeChild
 }
 
 // Recv 读一个 chunk。返回 (chunk, io.EOF) 表示流结束。
 func (r *StreamReader[T]) Recv() (T, error) {
 	switch r.typ {
-	case readerTypeStream, readerTypeMerged:
+	case readerTypeStream:
 		return r.st.recv()
 	case readerTypeArray:
 		return r.ar.recv()
@@ -138,7 +139,7 @@ func (r *StreamReader[T]) Recv() (T, error) {
 // Close 主动关闭(reader 不再读)。通知 writer 停止。
 func (r *StreamReader[T]) Close() {
 	switch r.typ {
-	case readerTypeStream, readerTypeMerged:
+	case readerTypeStream:
 		r.st.close()
 	case readerTypeChild:
 		r.csr.close()
