@@ -111,7 +111,8 @@ func (e *Engine) Run(ctx context.Context, initial Message) error {
 		fmt.Printf("\n── superstep %d ── 活跃顶点: %v\n", step, sortedKeys(current))
 
 		next := map[string][]Message{} // ③ 在途消息池:S 发的,S+1 才送达
-		for id, msgs := range current { // ④ 触发:有消息的顶点才跑(本阶段串行)
+		for _, id := range sortedKeys(current) { // ④ 触发:有消息的顶点才跑(串行,按 ID 排序保证输出确定)
+			msgs := current[id]
 			v := e.vertices[id]
 			out := v.Compute(ctx, msgs) // ① 顶点为中心:只调 Compute,顶点不路由
 			for _, to := range e.route(v.ID(), out) {
