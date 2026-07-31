@@ -27,7 +27,7 @@ async def listen_to_ws():
                 data = json.loads(message)
                 print(f"   [WS 接收] 类型: {data.get('type'):<10} | 内容: {data.get('content')}")
                 
-                if data.get("content") == "Workflow completed.":
+                if data.get("content") == "工作流已完成。":
                     print(" 工作流完成。正在退出。")
                     break
             except websockets.exceptions.ConnectionClosed:

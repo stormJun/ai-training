@@ -1,0 +1,18 @@
+实践九（基础版）：基于 WebSocket + LangGraph 的流式 Agent 服务
+
+输入输出定义：
+- 输入：用户自然语言消息 + client_id
+  （客户端先建立 WebSocket 长连接 /ws/{client_id}，再通过 HTTP POST /chat 提交消息）
+- 输出：通过 WebSocket 实时推送的多类事件（status / token / message / error），
+  最终给出"工作流已完成"状态
+- 扩展项：后台任务异步执行不阻塞 HTTP、节点级状态推送、token 级流式输出、错误回传
+
+关键挑战：
+- 长耗时 Agent 如何不阻塞 HTTP 请求？（触发与回传解耦）
+- 如何把 LangGraph astream_events 的多阶段事件统一推送给指定客户端？
+- 为什么用 WebSocket 而不是 SSE？（后台任务脱离请求 scope、按 client_id 寻址、预留双向控制面）
+- 如何管理多个并发客户端的连接生命周期？
+
+说明：
+- 本项目用 FakeListChatModel 模拟 LLM，无需真实 API Key，开箱即跑。
+- 生产化版本见 project9-2（增加限流 / 缓存 / 重试 / 结构化日志 / 分层架构）。
