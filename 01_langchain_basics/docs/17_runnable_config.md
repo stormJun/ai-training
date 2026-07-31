@@ -2,7 +2,7 @@
 
 这一节专门讲 `RunnableConfig`。
 
-如果说 [18_chain_and_runnable_guide.md](/Users/songxijun/workspace/otherProject/ai-training/01_langchain_basics/18_chain_and_runnable_guide.md) 重点是在解释：
+如果说 [16_chain_and_runnable.md](/Users/songxijun/workspace/otherProject/ai-training/01_langchain_basics/16_chain_and_runnable.md) 重点是在解释：
 
 - `Runnable` 是什么
 - `prompt | model | parser` 为什么能成立
@@ -537,5 +537,5 @@ callbacks=run_manager.get_child(f"map:key:{key}")
 
 如果你想继续看“这些设计在真实 agent 系统里是怎么被使用的”，建议接着读：
 
-- [18b_deerflow_runnable_design.md](/Users/songxijun/workspace/otherProject/ai-training/01_langchain_basics/18b_deerflow_runnable_design.md)
+- [18_deerflow_runnable_design.md](/Users/songxijun/workspace/otherProject/ai-training/01_langchain_basics/18_deerflow_runnable_design.md)
   - 结合 DeerFlow 工程代码，说明 `RunnableConfig`、`astream()`、`get_config()`、`with_config()`、`RunnableBinding` 在真实运行链中的落点

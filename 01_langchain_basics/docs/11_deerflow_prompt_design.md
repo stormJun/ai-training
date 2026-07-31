@@ -2,7 +2,7 @@
 
 这篇文档不是再讲一遍“Prompt 模板是什么”，而是把 DeerFlow 里已经落地的一套 prompt template 设计方法，整理成适合在训练营仓库里学习和复用的工程案例。
 
-如果说 [07_prompt_template_overview.md](/Users/songxijun/workspace/otherProject/ai-training/01_langchain_basics/07_prompt_template_overview.md) 重点在 LangChain 里的模板选型，那么这篇更关注另一个问题：
+如果说 [06_prompt_template_overview.md](/Users/songxijun/workspace/otherProject/ai-training/01_langchain_basics/06_prompt_template_overview.md) 重点在 LangChain 里的模板选型，那么这篇更关注另一个问题：
 
 - 当项目已经从“几个 Prompt 示例”发展成一个完整 agent 系统时，Prompt 应该如何分层？
 - 哪些内容应该放进静态 system prompt？
@@ -372,10 +372,10 @@ DeerFlow 的经验可以总结成一套很实用的判断顺序。
 建议把这一组材料连起来看：
 
 1. [06_prompt_templates.md](/Users/songxijun/workspace/otherProject/ai-training/01_langchain_basics/06_prompt_templates.md)
-2. [07_prompt_template_overview.md](/Users/songxijun/workspace/otherProject/ai-training/01_langchain_basics/07_prompt_template_overview.md)
-3. `09_prompt_template_simple_demo.py`
-4. `10_prompt_template_engineering.py`
-5. 这篇 `13a_deerflow_prompt_template_design.md`
+2. [06_prompt_template_overview.md](/Users/songxijun/workspace/otherProject/ai-training/01_langchain_basics/06_prompt_template_overview.md)
+3. `07_prompt_template_simple.py`
+4. `08_prompt_template_engineering.py`
+5. 这篇 `11_deerflow_prompt_design.md`
 
 这样会形成一个更完整的层次：
 

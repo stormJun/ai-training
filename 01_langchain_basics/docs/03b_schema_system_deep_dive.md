@@ -1,6 +1,6 @@
 # 工具三 Schema 体系：Input / Output / Error 的契约设计
 
-> 上游：[03_function_calling_guide.md](./03_function_calling_guide.md)（Function Calling API 协议）
+> 上游：[03_function_calling.md](./03_function_calling.md)（Function Calling API 协议）
 >
 > 现有相关：[tool_schemas.py](../reference_projects/project1_1/tools/tool_schemas.py)（Pydantic 定义示例）、[P19-纵深防御体系.py](../09_dsl/03_dsl_agent_and_db_gateway/P19-纵深防御体系.py)（输入校验示例）
 >

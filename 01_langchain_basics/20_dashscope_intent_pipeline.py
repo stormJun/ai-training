@@ -13,7 +13,7 @@ from langchain_core.runnables import RunnableParallel
 from langchain_community.llms import Tongyi
 
 
-CONFIG_PATH = Path(__file__).with_name("21_dashscope_intent_config.json")
+CONFIG_PATH = Path(__file__).with_name("20_dashscope_intent_config.json")
 
 
 class RuleEngine:

@@ -1,7 +1,7 @@
 """
 Pure-Python DeerFlow prompt layering demo.
 
-This script demonstrates three ideas from 13a_deerflow_prompt_template_design.md:
+This script demonstrates three ideas from 11_deerflow_prompt_design.md:
 1. Stable rules stay in a static system prompt
 2. Dynamic context is injected as hidden reminder messages
 3. Title extraction must skip reminder messages and use real user/assistant turns

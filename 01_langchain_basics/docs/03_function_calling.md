@@ -1,6 +1,6 @@
 # Function Calling 与 Tool Use：从 API 协议到工程实践
 
-> 配套代码：[03_qwen_function_tool_calling_demo.py](./03_qwen_function_tool_calling_demo.py)（OpenAI 兼容 API 最小 demo）
+> 配套代码：[03_function_calling.py](./03_function_calling.py)（OpenAI 兼容 API 最小 demo）
 >
 > 上游知识：Chat Completion API 基本用法（01/02）
 >

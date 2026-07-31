@@ -356,7 +356,7 @@ Parser
 
 如果你已经理解了 Runnable 的基本执行模型，下一步建议继续看：
 
-- [18a_runnable_config_guide.md](/Users/songxijun/workspace/otherProject/ai-training/01_langchain_basics/18a_runnable_config_guide.md)
+- [17_runnable_config.md](./17_runnable_config.md)
   - 专门讲 `RunnableConfig` 的使用方式、常见字段，以及它在 LangChain 源码中的传播设计
-- [18b_deerflow_runnable_design.md](/Users/songxijun/workspace/otherProject/ai-training/01_langchain_basics/18b_deerflow_runnable_design.md)
+- [18_deerflow_runnable_design.md](./18_deerflow_runnable_design.md)
   - 结合 DeerFlow 真实工程，解释 Runnable 在 agent runtime、middleware、tool 和 graph 执行链中的落点

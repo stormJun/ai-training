@@ -6,7 +6,7 @@ from langchain_community.llms import Tongyi
 from langchain_core.output_parsers import StrOutputParser
 
 
-EXT_TEMPLATE_PATH = Path(__file__).with_name("12_prompt_template_advanced.py")
+EXT_TEMPLATE_PATH = Path(__file__).with_name("10_prompt_template_advanced.py")
 
 
 def load_ext_template_module():

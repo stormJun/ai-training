@@ -6,7 +6,7 @@ from pathlib import Path
 
 PROJECT_DIR = Path(__file__).resolve().parent
 CHAT_SCRIPT = PROJECT_DIR / "02_qwen_chat_basic.py"
-TOOL_SCRIPT = PROJECT_DIR / "03_qwen_function_tool_calling_demo.py"
+TOOL_SCRIPT = PROJECT_DIR / "03_function_calling.py"
 
 
 def load_module(module_name: str, file_path: Path):

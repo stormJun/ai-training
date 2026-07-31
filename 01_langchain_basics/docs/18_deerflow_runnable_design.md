@@ -4,9 +4,9 @@
 
 如果说：
 
-- [18_chain_and_runnable_guide.md](/Users/songxijun/workspace/otherProject/ai-training/01_langchain_basics/18_chain_and_runnable_guide.md)
+- [16_chain_and_runnable.md](./16_chain_and_runnable.md)
   - 重点解释 `Runnable` 是什么、为什么 `prompt | model | parser` 能成立
-- [18a_runnable_config_guide.md](/Users/songxijun/workspace/otherProject/ai-training/01_langchain_basics/18a_runnable_config_guide.md)
+- [17_runnable_config.md](./17_runnable_config.md)
   - 重点解释 `RunnableConfig` 怎么用、怎么传播
 
 那么这篇文档回答的是第三个问题：

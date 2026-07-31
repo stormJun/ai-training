@@ -53,7 +53,7 @@ class MyParser(BaseOutputParser[TargetType]):
 
 ## 当前示例里怎么用
 
-当前目录的 [17_custom_output_parser.py](/Users/songxijun/workspace/otherProject/ai-training/01_langchain_basics/17_custom_output_parser.py) 用的是一个“项目周报”场景：
+当前目录的 [15_custom_output_parser.py](../15_custom_output_parser.py) 用的是一个“项目周报”场景：
 
 - `ProjectReport`
   - 定义结构化结果的数据模型

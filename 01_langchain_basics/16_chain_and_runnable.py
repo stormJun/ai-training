@@ -2,7 +2,7 @@
 
 This file is intentionally small and example-driven. Each demo focuses on one
 Runnable capability so it is easier to map the output back to the concept in
-18_chain_and_runnable_guide.md.
+16_chain_and_runnable.md.
 """
 
 import asyncio

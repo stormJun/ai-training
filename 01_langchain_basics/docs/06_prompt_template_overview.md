@@ -196,13 +196,13 @@ Few-shot 的关键不是“多写几个例子”，而是让示例成为可维�
 
 当前目录里：
 
-- `09_prompt_template_simple_demo.py`
+- `07_prompt_template_simple.py`
   - 展示最小自定义模板
-- `10_prompt_template_engineering.py`
+- `08_prompt_template_engineering.py`
   - 展示带 Pydantic 校验和条件逻辑的工程化版本
-- `11_prompt_template_usage_demo.py`
+- `09_prompt_template_usage.py`
   - 展示使用方式
-- `12_prompt_template_advanced.py`
+- `10_prompt_template_advanced.py`
   - 展示更进一步的扩展能力
 
 这种方式的价值不是“更面向对象”，而是当 Prompt 已经和业务字段、校验规则、配置文件耦合时，它比随处写 `format()` 更可维护。
@@ -322,13 +322,13 @@ RAG 里最常见的问题不是“没上下文”，而是“上下文太多、�
 
 - `08_prompt_template_text.txt`
   - 最基础的模板文本材料
-- `09_prompt_template_simple_demo.py`
+- `07_prompt_template_simple.py`
   - 自定义 `StringPromptTemplate` 的最小示例
-- `10_prompt_template_engineering.py`
+- `08_prompt_template_engineering.py`
   - Prompt 组件化、参数化、校验化
-- `11_prompt_template_usage_demo.py`
+- `09_prompt_template_usage.py`
   - 模板实例化和调用方式
-- `12_prompt_template_advanced.py`
+- `10_prompt_template_advanced.py`
   - 更复杂的工程能力扩展
 
 建议学习顺序：
