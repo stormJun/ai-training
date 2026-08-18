@@ -30,7 +30,6 @@
     - `04_local_finetuning_platform/` — 本地微调平台。
 - `07_tooling_and_automation_workflows/` — 工具化与自动化工作流合集。
   - `01_code_assistant_workflow/` — 代码助手工作流。
-  - `02_vllm_wrapper_demo/` — vLLM 包装示例。
   - `03_rpa_and_ai_workflow/` — RPA + AI 工作流。
 - `09_dsl/` — DSL 主题的合并父目录。
   - `01_dsl_design_basics/` — DSL 设计基础。
@@ -53,6 +52,7 @@
 - `12_dockerized_service_apps/` — Docker 化服务应用。
 - `13_kubernetes_deployment/` — Kubernetes 部署示例。
 - `14_observability_and_serving_runtime/` — 可观测性与 serving runtime 的合并父目录。
+- `26_vllm/` — vLLM 包装示例。
   - `01_elk_observability/` — ELK 日志栈。
   - `02_prometheus_ollama_exporter/` — Prometheus + Ollama 指标。
   - `03_ray_serve_streaming/` — Ray Serve 流式推理。

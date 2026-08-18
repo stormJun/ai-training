@@ -88,7 +88,7 @@ TTFT（Time To First Token）通常指一次请求从进入服务到产出第一
 
 ## 关联主题
 
-- `../../../07_tooling_and_automation_workflows/02_vllm_wrapper_demo/`：从工程封装角度理解 vLLM 的实际使用方式
+- `../../../26_vllm/`：从工程封装角度理解 vLLM 的实际使用方式
 - `../../../11_fastapi_serving/`：对照 API 服务链路，理解 TTFT 不只发生在模型内部
 - `../../03_ray_serve_streaming/`：从流式输出视角观察“用户何时看到第一个 token”
 - `../../../15_python_concurrency_and_performance/03_performance_benchmarking/`：把 TTFT、吞吐、压测方法放进统一性能分析框架

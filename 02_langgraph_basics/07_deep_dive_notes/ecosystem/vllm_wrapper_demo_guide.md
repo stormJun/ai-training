@@ -1,7 +1,7 @@
 # vLLM 封装与演示模块说明
 
 ## 目录定位
-`02_vllm_wrapper_demo/vllm_wrapper_demo` 是 02_workflows 中用于演示 vLLM 接入与参数工程化管理的模块。
+`26_vllm/vllm_wrapper_demo` 是 02_workflows 中用于演示 vLLM 接入与参数工程化管理的模块。
 
 该目录的目标是：
 - 提供一个可复用的 vLLM LangChain 封装器
@@ -53,6 +53,6 @@ python vllm_wrapper_demo/vllm_demo.py
 
 ## 重命名说明
 原目录名：`02_workflows/p12`
-新目录名：`02_vllm_wrapper_demo/vllm_wrapper_demo`
+新目录名：`26_vllm/vllm_wrapper_demo`
 
 重命名原因：目录语义更清晰，能直接体现“vLLM 封装 + 演示”的用途。
