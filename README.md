@@ -8,6 +8,7 @@
 
 - `01_langchain_basics/` — LangChain 入门脚本，覆盖 Qwen API、Chat、Function Calling、Prompt Template 等基础用法。
 - `02_langgraph_basics/` — LangGraph 学习主线，包含 `01_intro/`、`02_workflows/`、`03_service_apps/`、`04_demo_project/`、`05_multi_agent/`、`06_protocols_and_integrations/`、`07_deep_dive_notes/`。
+- `25_eino/` — CloudWeGo Eino（Go LLM 应用框架）学习笔记，含 `02_components/` 组件与 `03_graph/` 图编排（Chain、Workflow、Pregel、ReACT 等）。
 
 ### 检索增强与知识建模
 
@@ -31,6 +32,9 @@
 - `07_tooling_and_automation_workflows/` — 工具化与自动化工作流合集。
   - `01_code_assistant_workflow/` — 代码助手工作流。
   - `03_rpa_and_ai_workflow/` — RPA + AI 工作流。
+- `08_multi_agent_frameworks/` — 多 Agent 框架示例合集。
+  - `01_autogen_two_agent_chat/` — AutoGen 双 Agent 对话。
+  - `02_crewai_basics/` — CrewAI 基础。
 - `09_dsl/` — DSL 主题的合并父目录。
   - `01_dsl_design_basics/` — DSL 设计基础。
   - `02_lark_dsl_examples/` — Lark DSL 示例。
@@ -43,7 +47,7 @@
 
 ### 训练与对齐
 
-- `22_reinforcement_learning_notes/` — 强化学习系统学习笔记，含 Q-Learning 补充资料与演示项目。
+- `22_reinforcement_learning/` — 强化学习系统学习笔记，含 Q-Learning 补充资料与演示项目。
 
 ### 服务化与部署
 
@@ -52,6 +56,10 @@
 - `12_dockerized_service_apps/` — Docker 化服务应用。
 - `13_kubernetes_deployment/` — Kubernetes 部署示例。
 - `14_observability_and_serving_runtime/` — 可观测性与 serving runtime 的合并父目录。
+  - `01_elk_observability/` — ELK 日志栈。
+  - `02_prometheus_ollama_exporter/` — Prometheus + Ollama 指标。
+  - `03_ray_serve_streaming/` — Ray Serve 流式推理。
+  - `04_ttft_and_llm_serving_latency/` — TTFT 与推理延迟。
 - `26_vllm/` — vLLM 包装示例。
   - `01_elk_observability/` — ELK 日志栈。
   - `02_prometheus_ollama_exporter/` — Prometheus + Ollama 指标。
@@ -78,7 +86,7 @@
 - `18_skill_engineering/` — Skill / Prompt 工程扩展资料。
 - `19_harness_engineering/` — Harness Engineering 与上下文工程。
 - `20_learning_methodology/` — 学习方法论整理。
-- `21_claudecode_source_analysis/` — Claude Code 源码与实现理解（agent runtime、上下文系统、工具解析等）。
+- `21_claude_code_source_analysis/` — Claude Code 源码与实现理解（agent runtime、上下文系统、工具解析等）。
 
 ### Agent 工程案例与 CLI
 

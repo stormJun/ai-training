@@ -2,9 +2,9 @@
 
 > 上游：[03_function_calling.md](./03_function_calling.md)（Function Calling API 协议）
 >
-> 现有相关：[tool_schemas.py](../reference_projects/project1_1/tools/tool_schemas.py)（Pydantic 定义示例）、[P19-纵深防御体系.py](../09_dsl/03_dsl_agent_and_db_gateway/P19-纵深防御体系.py)（输入校验示例）
+> 现有相关：[tool_schemas.py](../../reference_projects/project1_1/tools/tool_schemas.py)（Pydantic 定义示例）、[P19-纵深防御体系.py](../../09_dsl/03_dsl_agent_and_db_gateway/P19-纵深防御体系.py)（输入校验示例）
 >
-> 下游：[p36-tool.md](../06_finetuning_and_data_processing_and_routing_react_and_tools/p36-tool.md)（LangChain `@tool` 自动生成 Schema）、[tool-use-and-tool-result.md](../21_claudecode_source_analysis/tool-use-and-tool-result.md)（Claude Code 工具结果序列化）
+> 下游：[p36-tool.md](../../06_finetuning_and_data_processing_and_routing_react_and_tools/p36-tool.md)（LangChain `@tool` 自动生成 Schema）、[tool-use-and-tool-result.md](../../21_claude_code_source_analysis/tool-use-and-tool-result.md)（Claude Code 工具结果序列化）
 
 ---
 

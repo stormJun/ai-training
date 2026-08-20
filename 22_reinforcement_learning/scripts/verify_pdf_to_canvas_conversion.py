@@ -13,7 +13,7 @@ from convert_pdf_mindmap_to_canvas import (
 
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
-NOTES_DIR = REPO_ROOT / "22_reinforcement_learning_notes"
+NOTES_DIR = REPO_ROOT / "22_reinforcement_learning"
 PDF_PATH = NOTES_DIR / "强化学习算法图谱 (rl-algo-map).pdf"
 
 

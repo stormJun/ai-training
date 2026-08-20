@@ -4,7 +4,7 @@
 >
 > 上游知识：Chat Completion API 基本用法（01/02）
 >
-> 下游应用：ReAct Agent（[p35-ReACT.md](../06_finetuning_and_data_processing_and_routing_react_and_tools/p35-ReACT.md)）、LangChain `@tool`（[p36-tool.md](../06_finetuning_and_data_processing_and_routing_react_and_tools/p36-tool.md)）、eino ToolsNode（[07_pregel_toolnode_demo](../25_eino/03_graph/demo/07_pregel_toolnode_demo/pregel_toolnode_demo.md)）
+> 下游应用：ReAct Agent（[p35-ReACT.md](../../06_finetuning_and_data_processing_and_routing_react_and_tools/p35-ReACT.md)）、LangChain `@tool`（[p36-tool.md](../../06_finetuning_and_data_processing_and_routing_react_and_tools/p36-tool.md)）、eino ToolsNode（[07_pregel_toolnode_demo](../../25_eino/03_graph/demo/07_pregel_toolnode_demo/pregel_toolnode_demo.md)）
 
 ---
 
@@ -503,7 +503,7 @@ def get_tool_choice(intent: str) -> str | dict:
     return "auto"
 ```
 
-这种 **intent → tool_choice** 的模式在很多生产系统中使用（参见 [23apply/金融可信智能体](../23apply/金融可信智能体：Agentic%20Engineering%20的工程实践与演进.md) 的四工坊架构）。
+这种 **intent → tool_choice** 的模式在很多生产系统中使用（参见 [23apply/金融可信智能体](../../23_agent_case_studies/金融可信智能体：Agentic%20Engineering%20的工程实践与演进.md) 的四工坊架构）。
 
 ---
 
@@ -794,7 +794,7 @@ client.messages.create(
 )
 ```
 
-更多 Anthropic tool_use 的实现细节，参见 [tool-use-and-tool-result.md](../21_claudecode_source_analysis/tool-use-and-tool-result.md)（Claude Code 源码分析）。
+更多 Anthropic tool_use 的实现细节，参见 [tool-use-and-tool-result.md](../../21_claude_code_source_analysis/tool-use-and-tool-result.md)（Claude Code 源码分析）。
 
 ---
 
