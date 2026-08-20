@@ -165,7 +165,7 @@ class Generator(nn.Module):
 
 The Transformer follows this overall architecture using stacked self-attention and point-wise, fully connected layers for both the encoder and decoder, shown in the left and right halves of Figure 1, respectively.
 
-![](images/7fcf4418fff083f35b86d20259facf61a669f15461873ec81d0b1bf9db0290cb.jpg)
+![](the_annotated_transformer_assets/model_architecture.jpg)
 
 # Encoder and Decoder Stacks
 
@@ -335,7 +335,7 @@ An attention function can be described as mapping a query and a set of key-value
 
 We call our particular attention “Scaled Dot-Product Attention”. The input consists of queries and keys of dimension dkdk, and values of dimension dvdv. We compute the dot products of the query with all keys, divide each by dkdk, and apply a softmax function to obtain the weights on the values.
 
-![](images/77021544b5ed3d5e0a476f39cd00e10f28734b49e12e552c45cd1114992056b3.jpg)
+![](the_annotated_transformer_assets/scaled_dot_product_attention.jpg)
 
 In practice, we compute the attention function on a set of queries simultaneously, packed together into a matrix $\mathsf { Q } Q$ The keys and values are also packed together into matrices KK and VV. We compute the matrix of outputs as:
 
@@ -360,7 +360,7 @@ The two most commonly used attention functions are additive attention (cite), an
 
 While for small values of dkdk the two mechanisms perform similarly, additive attention outperforms dot product attention without scaling for larger values of dkdk (cite). We suspect that for large values of dkdk, the dot products grow large in magnitude, pushing the softmax function into regions where it has extremely small gradients (To illustrate why the dot products get large, assume that the components of qq and kk are independent random variables with mean 00 and variance 11. Then their dot product, q⋅k=∑i=1dkqikiq⋅k=∑i=1dkqiki, has mean 00 and variance dkdk.). To counteract this effect, we scale the dot products by 1dkdk1.
 
-![](images/d560d4cae870c3bb99a93949b9534997533db1734246ffb041b7ef6e11f6cbd8.jpg)
+![](the_annotated_transformer_assets/multi_head_attention.jpg)
 
 Multi-head attention allows the model to jointly attend to information from different representation subspaces at different positions. With a single attention head, averaging inhibits this.
 

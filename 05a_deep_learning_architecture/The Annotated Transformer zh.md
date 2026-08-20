@@ -201,7 +201,7 @@ Transformer 整体遵循这一架构：编码器和解码器都使用堆叠的�
 
 分别如图 1 左半部分和右半部分所示。
 
-<img src="images/7fcf4418fff083f35b86d20259facf61a669f15461873ec81d0b1bf9db0290cb.jpg" alt="" width="420" />
+<img src="the_annotated_transformer_assets/model_architecture.jpg" alt="" width="420" />
 
 ### 编码器与解码器堆叠 Encoder and Decoder Stacks
 
@@ -462,7 +462,7 @@ def example_mask():
 show_example(example_mask)
 ```
 
-<img src="assets/image-20260321113336617.png" alt="Subsequent Mask" width="560" />
+<img src="the_annotated_transformer_assets/subsequent_mask.png" alt="Subsequent Mask" width="560" />
 
 
 
@@ -474,7 +474,7 @@ show_example(example_mask)
 
 输入由维度分别为 \(d_k\) 的查询和键，以及维度为 \(d_v\) 的值组成。我们计算查询与所有键的点积，再除以 \(\sqrt{d_k}\)，并应用 softmax 函数，得到分配给各个值的权重。
 
-![](images/77021544b5ed3d5e0a476f39cd00e10f28734b49e12e552c45cd1114992056b3.jpg)
+![](the_annotated_transformer_assets/scaled_dot_product_attention.jpg)
 
 在实际实现中，我们会同时对一组查询计算注意力，并将它们打包成矩阵 \(Q\)。键和值也分别打包成矩阵 \(K\) 和 \(V\)。
 
@@ -546,7 +546,7 @@ def attention(query, key, value, mask=None, dropout=None):
 
 为了抵消这一效应，我们把点积乘上 \( \frac{1}{\sqrt{d_k}} \) 这一缩放因子。
 
-<img src="images/d560d4cae870c3bb99a93949b9534997533db1734246ffb041b7ef6e11f6cbd8.jpg" alt="" width="520" />
+<img src="the_annotated_transformer_assets/multi_head_attention.jpg" alt="" width="520" />
 
 多头注意力使模型能够在不同位置上联合关注来自不同表示子空间的信息。如果只有一个注意力头，平均化操作会抑制这种能力。
 
