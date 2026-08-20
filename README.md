@@ -80,6 +80,11 @@
 - `20_learning_methodology/` — 学习方法论整理。
 - `21_claudecode_source_analysis/` — Claude Code 源码与实现理解（agent runtime、上下文系统、工具解析等）。
 
+### Agent 工程案例与 CLI
+
+- `23_agent_case_studies/` — Agent 工程实践案例文章（金融可信智能体：Agentic Engineering 的工程实践与演进）。
+- `24_agent_cli/` — Agent CLI 主题：面向 Agent Skill 的 CLI/SSO 鉴权体系笔记与 agent-cli-demo 项目（`cli/`、`server/`、`scripts/`）。
+
 ## 其他目录
 
 - `assignments/` — 主题练习与配套示例答案。
