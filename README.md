@@ -10,6 +10,12 @@
 - `02_langgraph_basics/` — LangGraph 学习主线，包含 `01_intro/`、`02_workflows/`、`03_service_apps/`、`04_demo_project/`、`05_multi_agent/`、`06_protocols_and_integrations/`、`07_deep_dive_notes/`。
 - `25_eino/` — CloudWeGo Eino（Go LLM 应用框架）学习笔记，含 `02_components/` 组件与 `03_graph/` 图编排（Chain、Workflow、Pregel、ReACT 等）。
 
+### 机器学习与深度学习理论
+
+- `05_machine_learning/` - 机器学习基础笔记（PRML 风格推导、经典模型与评估方法）。
+- `05a_deep_learning_architecture/` - 深度学习架构笔记：反向传播、CNN、残差网络、正则化、Transformer（含 The Annotated Transformer 译注与 mindmap）。
+- `05b_finetuning_basics/` - 大模型训练与对齐机制笔记（微调、RLHF 等对齐方法）。
+
 ### 检索增强与知识建模
 
 - `04_rag_and_retrieval/` — RAG 与检索主题的合并父目录，已纳入 LlamaIndex 基础与检索。

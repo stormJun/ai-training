@@ -81,3 +81,6 @@ checkpoints/
 # Neo4j data (generated locally)
 homework_examples/week03-homework-2/neo4j_data/
 assignments/examples/advanced_rag_homework_example/neo4j_data/
+
+# Obsidian workspace state (chatty, local-only)
+.obsidian/workspace.json
