@@ -84,3 +84,15 @@ assignments/examples/advanced_rag_homework_example/neo4j_data/
 
 # Obsidian workspace state (chatty, local-only)
 .obsidian/workspace.json
+
+# 大体积文件只保留本地（已从 git 历史剥离，2026-08 瘦身）
+06_finetuning_and_data_processing_and_routing_react_and_tools/01_finetuning_and_data_processing/02_massive_dataset_processing/massive_main/1.1/data/
+06_finetuning_and_data_processing_and_routing_react_and_tools/01_finetuning_and_data_processing/01_finetuning_overview/docs/强化学习和多模态教程.pdf
+17_model_extensions/02_multimodal_clip_search/multimodal_clip_search/p25-CLIP/reverse_image_search/
+25_eino/03_graph/demo/05_pregel_stream_demo/pregel_stream_demo
+25_eino/03_graph/demo/06_pregel_channel_demo/pregel_channel_demo
+25_eino/03_graph/demo/07_pregel_toolnode_demo/pregel_toolnode_demo
+06_finetuning_and_data_processing_and_routing_react_and_tools/01_finetuning_and_data_processing/02_massive_dataset_processing/chinese_data/zh-CN.jsonl
+06_finetuning_and_data_processing_and_routing_react_and_tools/01_finetuning_and_data_processing/01_finetuning_overview/docs/Transformer.pdf-7c2b5cd0-5b4a-451a-941e-dc92e108d8cb/layout.json
+22_reinforcement_learning/slidesForMyLectureVideos_2024.12.pdf
+22_reinforcement_learning/强化学习算法图谱 (rl-algo-map).pdf
