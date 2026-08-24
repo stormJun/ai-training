@@ -44,7 +44,7 @@ Claude Code 的记忆相关能力可以划分为三层：
 如果只保留最重要的运行主线，Claude Code 的记忆架构可以概括为：
 
 - 用户问题先进入当前会话的**短期记忆**
-- 会话变长时先做 `snip`、`microcompact`、`context collapse` 等**轻量收缩**
+- 会话变长时先做 `tool result budget`、`snip`、`microcompact`、`context collapse` 等**轻量收缩**
 - 必要时再通过 `compact` 生成摘要，保留最近消息继续滚动
 - 回合结束后，把值得跨会话复用的信息写入 `memory files`
 - 下次遇到相关问题时，再把少量长期记忆按相关性召回到当前上下文
@@ -179,7 +179,7 @@ flowchart TD
 
 - `microcompact`
   - 定义：针对历史工具结果的轻量压缩机制。
-  - 具体实现：系统在请求前扫描可压缩工具的历史结果，优先处理较旧的 `tool_result`。缓存可用时，系统通过 cache editing 删除旧工具结果而不直接改写本地消息内容；缓存不可用或触发时间阈值时，系统会将较旧工具结果的内容清空，只保留最近若干条结果。
+  - 具体实现：系统在请求前扫描可压缩工具的历史结果，优先处理较旧的 `tool_result`。缓存可用时，系统通过 cache editing 删除旧工具结果而不直接改写本地消息内容；当距离上次压缩的时间超过阈值时，系统会将较旧工具结果的内容清空，只保留最近若干条结果。缓存不可用时**不做压缩**，由 autocompact 处理上下文压力（legacy 清空路径已移除）。
 
 - `context collapse`
   - 定义：针对当前会话上下文视图的折叠重建机制。
@@ -236,6 +236,7 @@ compact 的输出结构包括：
 - 一条或多条 `summaryMessages`
 - 少量保留消息
 - 若干必要的 attachments
+- hook results（部分路径）
 
 compact 触发后的结果如下：
 
@@ -324,7 +325,8 @@ Claude Code 的压缩机制可以分为两层：
 ```mermaid
 flowchart TD
     A["当前会话上下文增长"] --> B["进入 query 前预处理"]
-    B --> C["snip"]
+    B --> TR["tool result budget"]
+    TR --> C["snip"]
     C --> D["microcompact"]
     D --> E["context collapse"]
     E --> F{"是否仍然超过压缩阈值"}
@@ -707,6 +709,8 @@ How to apply: when adding or revising tests in this project, prefer DB-backed in
 
 该路径不承担默认自动保存职责，承担人工审查职责。
 
+实现说明：`/remember` 是 bundled skill 而非普通 slash command，且当前仅对内部用户开放。
+
 ---
 
 ## 6.5 KAIROS 模式下写 daily log
@@ -768,6 +772,8 @@ AutoDream 定义为长期记忆的二阶段整合机制。
 
 - 索引注入
 - 不注入全部 topic memory 文件正文
+
+例外：当 `tengu_moth_copse` feature 开启时，`MEMORY.md` 索引不再静态注入 claudeMd，长期记忆完全改由动态召回（attachment）供给。
 
 ---
 
@@ -1075,6 +1081,12 @@ Claude Code 采用分层记忆架构：
    - query 主流程、prefetch consume、compact 后续滚动
 10. `src/query/stopHooks.ts`
     - 回合结束时的 extract / autodream 触发入口
+11. `src/utils/toolResultStorage.ts`
+    - tool result budget 预算控制与大结果落盘
+12. `src/services/compact/`
+    - snip / microcompact / session memory compact / reactive compact 等压缩路径
+13. `src/services/SessionMemory/`
+    - session memory 初始化、更新阈值与 summary 模板
 
 ---
 
