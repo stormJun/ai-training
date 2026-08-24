@@ -794,6 +794,15 @@ AutoDream 定义为长期记忆的二阶段整合机制。
 
 长期记忆采用分层读取策略，不执行全量全文加载。
 
+各条读取/检索路径的总览如下（短期记忆本身不参与搜索，列出作对照）：
+
+| 路径 | 触发时机 | 搜索范围 | 方式 | 数量 / 预算 | 详见 |
+|------|----------|----------|------|-------------|------|
+| 短期记忆（对照） | 每轮请求 | 当前会话 messages | 不搜索，压缩后直接可见 | 受上下文窗口约束 | 第 4 节 |
+| 静态索引注入 | 会话启动时 | `MEMORY.md`（含 team） | 全量注入索引文本，不注入正文 | 索引级，量小 | 7.1 |
+| 动态相关性召回 | 每个用户 turn（条件触发） | memory 目录 `.md`（排除 MEMORY.md） | 扫 frontmatter 元数据 -> sideQuery 选相关 -> 只读入选正文 | 最多 5 条；单条约 4KB；会话累计 60KB 封顶 | 7.2、8.2 |
+| Searching past context | memory 不足用且 feature 开启 | ① topic files（`*.md`）② transcript（`*.jsonl`，最后手段） | grep / glob 窄关键词定位 | 无固定上限，靠窄关键词控制 | 7.3.2 |
+
 ## 7.1 会话启动时的静态读取
 
 在会话上下文构建阶段，系统通常会先读取：
@@ -855,6 +864,15 @@ AutoDream 定义为长期记忆的二阶段整合机制。
 - 最多选择 5 个
 - 若相关性不足，可以不选择任何文件
 
+sideQuery 的具体判据（`findRelevantMemories.ts` 的选择 prompt）：
+
+- 选择器使用默认 Sonnet 模型，**只依据 filename 和 description 判断**相关性，此时不读任何正文
+- 要求「确定有用才选」：对某条 memory 是否有用不确定时，明确不选（宁缺毋滥）
+- 输出走 `json_schema` 强约束：`{ selected_memories: string[] }`，且返回的文件名必须在候选 manifest 里，无效名直接过滤
+- prompt 附带「最近成功使用的工具」列表：模型正在使用的工具的**用法/API 文档类 memory 不选**（对话里已有活的使用样例，再注入是噪声）；但该工具的**警告、坑、已知问题类 memory 仍然要选**--正在用时恰恰最需要
+- sideQuery 失败或被 abort 时静默返回空列表，本轮放弃召回
+- 本 session 已注入过的路径（`alreadySurfaced`）在选择**之前**先从候选中剔除，让 5 个名额花在没见过的新候选上
+
 ### 第三步：只读取入选文件的正文
 
 只有入选的少数 topic memory files 才会读取正文，并包装成 `relevant_memories` attachment。
@@ -865,6 +883,18 @@ AutoDream 定义为长期记忆的二阶段整合机制。
   - 过滤本 session 已展示过的 memory 文件
 - `readFileState`
   - 过滤模型已经主动读过的 memory 文件
+
+三步中只有第二步调用模型：扫描和读正文都是纯文件系统操作，相关性判断交给一次独立的 sideQuery。
+
+### 为什么用 sideQuery 而不是向量检索
+
+这套「文件系统扫描 + LLM 选择 + 文件系统读取」的设计动机如下：
+
+- **没有向量库**：整个流程不含 embedding 和相似度计算，不引入索引构建、增量更新、存储等额外基础设施；memory 是普通 Markdown 文件，用户可以直接看、直接改，选择器坏了也只是召回退化，不影响数据
+- **成本可控**：manifest 每条只有一行元数据（文件名 + description），输入很小；`max_tokens: 256` 封顶输出；每个用户回合最多发一次，且失败即放弃、不重试不阻塞主流程
+- **语义判断强于关键词匹配**：grep 式关键词重叠会造成误报（源码注释举的例子：query 里的 "spawn" 恰好出现在某条 description 里）；LLM 还能区分「工具的用法文档」和「工具的已知坑」这类关键词几乎相同、价值完全相反的语义差别，这是规则与向量都难做到的
+- **宁缺毋滥的召回哲学**：prompt 要求「不确定就不选」、可以返回空列表，配合最多 5 条的上限和 60KB 会话预算，把长期记忆对上下文的侵占压到很小；相比「多召回一些总没错」的向量检索，这里更怕噪声而非漏掉
+- **模型可替换性**：sideQuery 是一次普通的 LLM 调用（querySource 标记为 `memdir_relevance`），换模型只改一处配置；而向量方案一旦换 embedding 模型就要全量重建索引
 
 长期记忆的查询模式如下：
 
@@ -952,6 +982,64 @@ AutoDream 定义为长期记忆的二阶段整合机制。
 该路径的上下文角色如下：
 
 **具体 memory 文件正文作为本轮临时提醒进入请求**
+
+按源码展开，这条链路可以分为六步（文件均位于 cc-haha 源码树）。
+
+### 8.2.1 prefetch 启动：门控与输入提取
+
+入口是 `startRelevantMemoryPrefetch()`（`src/utils/attachments.ts:2357`）。它在 query loop 开始处以 `using pendingMemoryPrefetch = ...` 形式启动（`src/query.ts:301`），**每个用户回合只发一次**--同一回合内 loop 会迭代多次（每轮工具调用一次），而用户输入不变，逐轮重复发 sideQuery 只会问同样的问题。
+
+启动前的短路检查依次为：
+
+- auto memory 未启用，或 `tengu_moth_copse` feature 未开 -> 直接返回
+- 取不到最后一条非 `isMeta` 的真实用户消息 -> 返回
+- 输入是单词级 prompt（不含空白）-> 返回（没有足够上下文做关键词提取）
+- 本会话已注入的 memory 总字节数已达 60KB 上限 -> 返回（见 8.2.5）
+
+通过检查后，prefetch promise 挂在回合级 abort controller 的子控制器上：用户按 Escape 中止回合时，sideQuery 立即取消，不用等 query loop 退出。
+
+### 8.2.2 候选生成：扫描 + sideQuery 选择
+
+`getRelevantMemoryAttachments()`（`attachments.ts:2192`）先决定扫描目录：
+
+- 用户输入中显式 `@agent-xxx` -> 只扫该 agent 类型的 memory 目录（隔离）
+- 没有 @ 提及 -> 扫默认 auto memory 目录
+
+每个目录走 `findRelevantMemories()`（`src/memdir/findRelevantMemories.ts`）：
+
+1. `memoryScan` 递归扫描 `.md` 文件、排除 `MEMORY.md`、只读 frontmatter，产出 manifest（filename / description / type / mtime）；
+2. `alreadySurfaced`（本 session 已注入过的路径）在**交给选择器之前**先过滤，让 sideQuery 的 5 个名额花在没见过的新候选上；
+3. manifest 格式化后作为 user message 发给 **sideQuery**：模型用默认 Sonnet，system prompt 明确「最多选 5 个、可以一个都不选」，输出走 `json_schema` 强约束（`selected_memories` 字符串数组），`max_tokens: 256`；
+4. prompt 里附带「最近成功使用的工具」列表（`recentTools`）：如果模型正在用某个工具（如某个 MCP 工具），与该工具相关的 reference memory 就是噪声，不计入候选。
+
+### 8.2.3 去重与正文读取
+
+sideQuery 返回后：
+
+- 多目录结果合并，再做一次 `readFileState` + `alreadySurfaced` 双过滤（belt-and-suspenders：多目录合并可能重新引入某个目录里已过滤的路径），并硬性 `slice(0, 5)` 截断；
+- `readMemoriesForSurfacing()`（`attachments.ts:2240`）只读入选文件的正文，且有截断保护：超过最大行数或字节数时截断，并在尾部附一行提示「文件已截断，可用 Read 工具查看完整内容」。
+
+### 8.2.4 collect 点注入：零等待消费
+
+prefetch 是异步的，query loop 不等它。主模型的工具调用每一轮结束后都会经过 collect 点（`src/query.ts:1599`）：
+
+- 若 prefetch **尚未 settle**：本轮直接跳过（零等待），下轮工具调用结束后再试--prefetch 在回合结束前有多少轮迭代就有多少次机会；
+- 若已 settle 且未消费过：`filterDuplicateMemoryAttachments()` 按 `readFileState` 再去重一次（模型在等待期间可能已经自己 Read 过该 memory），然后 `createAttachmentMessage()` 把 `{ type: 'relevant_memories', memories }` 包成 attachment 消息 yield 给模型，并 push 进 toolResults 随后的请求一起发出；
+- 每回合只消费一次（`consumedOnIteration` 标记）。
+
+若到回合结束都没 settle，`using` 的 dispose 语义保证 abort 清理，并记录遥测（prefetch 延迟、是否被首轮隐藏等）。
+
+### 8.2.5 API 展开与缓存稳定
+
+发请求时 `normalizeMessagesForAPI()`（`src/utils/messages.ts:3708`）把 `relevant_memories` attachment 展开为**每条 memory 一条** `isMeta` user message，内容为「header + 正文」，整体再包一层 system-reminder。
+
+一个细节：展开用的 header 是 **attachment 创建时保存的快照**（`m.header ?? memoryHeader(...)`），而不是发送时重算。这样即使文件后来被修改，每轮渲染出的字节也保持稳定，prompt cache 前缀得以命中--与 tool result budget 冻结替换决策是同一个设计思想。
+
+### 8.2.6 会话级预算：60KB 上限与 compact 自然重置
+
+`RELEVANT_MEMORIES_CONFIG.MAX_SESSION_BYTES = 60KB`（`attachments.ts:279`）：单次注入上限是 5 条 × 每条约 4KB = 20KB，但长会话里选择器会不断注入不同的文件，生产环境观测到约 26K token/会话的膨胀。因此累计注入字节达到 60KB（约 3 次满额注入）后，prefetch 整体停发。
+
+预算的统计方式是**扫描当前 messages 里的相关 attachment** 求和（`collectSurfacedMemories`），而不是在 context 里另记一个计数器。这个选择的副作用很巧：**compact 之后旧 attachment 从消息流里消失，计数自然归零**，重新注入变得合法--「压缩后可以再次召回」不需要任何额外代码。
 
 ---
 
