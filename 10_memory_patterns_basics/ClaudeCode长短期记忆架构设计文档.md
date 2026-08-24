@@ -39,7 +39,26 @@ Claude Code 的记忆相关能力可以划分为三层：
 - **长期记忆**负责跨会话的信息复用
 - **transcript**负责原始过程留痕
 
-### 2.1 一图读懂整套链路
+### 2.1 与 CLAUDE.md 记忆线的关系
+
+除上述三层外，Claude Code 还有一条并行的 CLAUDE.md 记忆线。它不属于本文定义的长期记忆子系统（auto-memory），而是用户手写、每轮全量注入的上下文材料，共三级：
+
+1. **Managed memory**（`/etc/claude-code/CLAUDE.md`）：面向机器上所有用户的全局指令
+2. **User memory**（`~/.claude/CLAUDE.md`）：个人全局记忆，跨所有项目生效
+3. **Project memory**（项目根的 `CLAUDE.md`、`.claude/CLAUDE.md`、`.claude/rules/*.md`）：随代码库提交，对所有使用者生效
+
+CLAUDE.md 与 auto-memory 的分工：
+
+| 维度 | CLAUDE.md（含 User memory 层） | auto-memory（memory/ 目录） |
+|------|------|------|
+| 写入方式 | 用户手写 | 系统提取 / 显式要求 |
+| 注入方式 | 每轮全量静态注入 | 索引静态注入 + 正文按相关性动态召回 |
+| 生效范围 | 按层级（机器 / 个人 / 项目） | 按项目（memory 目录随项目落盘） |
+| 适合内容 | 稳定约定、规范、指令 | 会演进的事实、偏好、反馈 |
+
+二者经同一个 `getClaudeMds()` 拼接注入（见 8.1 节），但来源与管理方式完全不同。本文后续章节中的「长期记忆」均特指 auto-memory 子系统。
+
+### 2.2 一图读懂整套链路
 
 如果只保留最重要的运行主线，Claude Code 的记忆架构可以概括为：
 
@@ -172,18 +191,22 @@ flowchart TD
 - `tool result budget`
   - 定义：针对单个请求中工具结果内容的预算控制机制。
   - 具体实现：系统按 API 级 user message 聚合 `tool_result` 内容大小；当同一消息中的工具结果总体积超过预算时，将较大的结果持久化到当前 session 目录下的 `tool-results/` 子目录中，并按 `tool_use_id` 保存为 `.txt` 或 `.json` 文件。写回上下文时，系统不再保留完整结果，而是替换为包含文件路径、原始大小和预览内容的引用文本。替换决策会按 `tool_use_id` 冻结并跨轮复用，以保持 prompt cache 稳定。
+  - 示例：模型一次 `Read` 读入 2000 行的源文件，返回结果占 60KB；同轮又 `grep` 出 500 行匹配。两条结果合计超预算，系统把源文件全文写入 `tool-results/<tool_use_id>.txt`，上下文里只留一张引用卡（文件路径 + 原始大小 + 前几行预览）。模型后续若真需要完整内容，可以再 `Read` 该路径取回。由于替换决策被冻结，这条引用卡在之后每一轮都保持原样，前缀不变，prompt cache 得以命中。
 
 - `snip`
   - 定义：针对当前会话活动视图的选择性历史裁剪机制。
   - 具体实现：系统在每轮请求前对当前可用消息视图执行 `snipCompactIfNeeded(...)`。被 snip 的消息会从模型可见视图中过滤，但原始消息仍保留在 transcript 或 UI scrollback 中。resume 时，系统会根据 snip boundary 记录的 `removedUuids` 重放移除结果，避免重新加载完整未裁剪历史。
+  - 示例：会话早期有一轮“用 Bash 反复试探环境、跑了十几条命令”的探索，结论早已被后续工作吸收。snip 把这十几个回合从模型可见视图中整段移除；用户在终端里向上翻仍能看到这些命令（scrollback 保留），transcript 里也留有原文，但模型每次请求都不再携带它们。
 
 - `microcompact`
   - 定义：针对历史工具结果的轻量压缩机制。
   - 具体实现：系统在请求前扫描可压缩工具的历史结果，优先处理较旧的 `tool_result`。缓存可用时，系统通过 cache editing 删除旧工具结果而不直接改写本地消息内容；当距离上次压缩的时间超过阈值时，系统会将较旧工具结果的内容清空，只保留最近若干条结果。缓存不可用时**不做压缩**，由 autocompact 处理上下文压力（legacy 清空路径已移除）。
+  - 示例：一小时前某轮里 `Read` 过的 5 个文件结果仍躺在消息流中，其中内容早已被修改不再相关。距上次 microcompact 已超过时间阈值，系统把这 5 条旧结果的内容清空，只保留最近几条完整结果；对应的 assistant 消息和工具调用记录本身仍在，模型依旧知道“当时读过哪些文件”，只是不再背负全文。
 
 - `context collapse`
   - 定义：针对当前会话上下文视图的折叠重建机制。
   - 具体实现：系统在 `autocompact` 之前对 `messagesForQuery` 调用 `applyCollapsesIfNeeded(...)`，将当前会话中的某一段旧消息 span 折叠为局部摘要占位，而不是直接把整段历史压成单一总摘要。折叠后的摘要内容、起止消息边界和 staged 状态会记录在 collapse store 中，后续每轮通过 `projectView()` 重建“局部摘要占位 + 其余未折叠消息”的可见视图；当请求因上下文过载失败时，系统会先提交 staged collapses，再决定是否进入更重的恢复压缩路径。
+  - 示例：会话按时间推进为「环境搭建 A -> 依赖排错 B -> 依赖排错 C -> 依赖排错 D -> 写主逻辑 E -> 写测试 F」。B~D 是一段已完结的排错过程，系统把这一个 span 折叠成一条局部摘要占位（“此段完成了依赖版本冲突的排查，最终锁定 X 版本，详见 tool-results/..."），A、E、F 原样保留。与 compact 的区别在于：不是把整段历史压成一个总摘要，而是**按段落局部折叠**，未折叠的近期工作仍保留原文。
 
   示意如下：
 
@@ -194,6 +217,17 @@ flowchart TD
   折叠后模型看到的视图：
   A -> [B~D 的折叠摘要] -> E -> F
   ```
+
+四个机制的粒度对比：
+
+| 机制 | 处理对象 | 信息是否保留原文 | 典型触发 |
+|------|----------|------------------|----------|
+| tool result budget | 单条工具结果 | 是，原文落盘可取回 | 同一消息内结果总体积超预算 |
+| snip | 一段历史回合 | 是，保留在 transcript / scrollback | 历史回合与当前工作不再相关 |
+| microcompact | 历史工具结果的内容 | 否（缓存路径仅对 API 层删除，本地不动；时间阈值路径清空内容） | 时间超过阈值 / 上下文压力 |
+| context collapse | 一段历史消息 span | 否，折叠为局部摘要 | autocompact 之前，试图把上下文压回阈值以下 |
+
+它们与 compact 的分工：四级轻量收缩先尽量“就地减负”，都失败后才触发真正的 compact 摘要压缩。
 
 ---
 
@@ -636,6 +670,7 @@ How to apply: when adding or revising tests in this project, prefer DB-backed in
 - 这类信息通常可从当前 repo 直接推导
 - 这类信息写入长期记忆后容易过时
 - 过时记忆会影响后续判断
+- 稳定的约定和规范已有并行机制承载（CLAUDE.md 三级层次，见 2.1 节），无需重复存入 auto-memory
 
 长期记忆更适合保存以下信息：
 
@@ -936,6 +971,19 @@ transcript 是原始会话流水记录，覆盖以下内容：
 
 其定位是日志层。
 
+它落盘为 `~/.claude/projects/<sanitized-project-root>/<sessionId>.jsonl`，**每行一个独立 JSON 事件**，按发生顺序追加。以下是一次「让 Claude Code 修一个 typo」的会话在 transcript 中的样子（字段大幅简化）：
+
+```jsonl
+{"type":"user","uuid":"u1","message":{"role":"user","content":"README 里 recieve 拼错了，改成 receive"}}
+{"type":"assistant","uuid":"a1","message":{"content":[{"type":"tool_use","name":"Grep","input":{"pattern":"recieve","path":"."},"id":"t1"}]}}
+{"type":"user","uuid":"u2","message":{"content":[{"type":"tool_result","tool_use_id":"t1","content":"README.md:42: welcome to recieve updates"}]}}
+{"type":"assistant","uuid":"a2","message":{"content":[{"type":"tool_use","name":"Edit","input":{"file_path":"README.md","old_string":"recieve","new_string":"receive"},"id":"t2"}]}}
+{"type":"user","uuid":"u3","message":{"content":[{"type":"tool_result","tool_use_id":"t2","content":"The file README.md has been updated."}]}}
+{"type":"assistant","uuid":"a4","message":{"content":[{"type":"text","text":"已把 README.md:42 的 recieve 改为 receive。"}]}}
+```
+
+可以看到它记的是**过程**而非知识：拼错的发现、每次工具调用的入参出参、最终答复，全部原样留痕。会话变长触发 compact 后，transcript 里同样会追加 `compact_boundary` 一类的边界事件，但**旧行不会被删改**--这正是它与短期记忆视图的本质区别：snip、microcompact、compact 改变的都只是「模型看到什么」，transcript 始终是完整的事后审计与 resume 依据（7.3.2 节「搜索过去上下文」搜的就是这些 `.jsonl`）。
+
 ### 9.2 短期摘要
 
 短期摘要是会话内上下文压缩结果，职责包括：
@@ -976,14 +1024,16 @@ sequenceDiagram
     U->>Q: 提问
     Q->>C: 读取 messages
     C-->>Q: 当前会话上下文
-    Q->>Q: 发模型请求
-    Q->>C: 追加 assistant / tool results
-
-    alt 上下文过长
-        Q->>CP: 触发 compact
-        CP-->>C: compact_boundary + summary + recent messages
+    Q->>Q: 请求前预处理<br/>tool result budget / snip / microcompact / collapse
+    alt 预处理后仍超 autocompact 阈值
+        Q->>CP: 触发 compact（优先会话记忆压缩）
+        CP-->>C: compact_boundary + summary + attachments
     end
+    Q->>Q: 发模型请求
+    Q->>C: 追加 assistant / tool results（进入下一轮预处理）
 ```
+
+注意 compact 发生在**发模型请求之前**的预处理阶段，而不是回合结束之后；四级轻量收缩每轮都跑，compact 只在收缩后仍超阈值时触发（见 4.6 节链路图）。
 
 ### 10.2 跨会话
 
@@ -997,13 +1047,13 @@ sequenceDiagram
     participant R as relevant memory recall
 
     U->>S: 当前回合结束
-    S->>E: 触发后台提取
+    S->>E: 后台 fire-and-forget 提取<br/>（主模型本轮已写过 memory 则跳过）
     E->>FS: 写入 topic files + 更新 MEMORY.md
 
     U->>N: 下次新会话开始
-    N->>FS: 读取 MEMORY.md 索引
+    N->>FS: 读取 MEMORY.md 索引（默认路径）
     U->>R: 发起新问题
-    R->>FS: 扫 frontmatter -> 选相关 memory -> 读正文
+    R->>FS: 扫 frontmatter -> 选相关 memory（最多 5 条）-> 读正文
     R-->>N: 注入 relevant_memories 到上下文
 ```
 
