@@ -1,7 +1,7 @@
 # vLLM 封装与演示模块说明
 
 ## 目录定位
-`26_vllm/vllm_wrapper_demo` 是 02_workflows 中用于演示 vLLM 接入与参数工程化管理的模块。
+`26_vllm/vllm_wrapper_demo` 是用于演示 vLLM 接入与参数工程化管理的模块。
 
 该目录的目标是：
 - 提供一个可复用的 vLLM LangChain 封装器
