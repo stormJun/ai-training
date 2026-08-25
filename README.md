@@ -65,12 +65,9 @@
   - `01_elk_observability/` — ELK 日志栈。
   - `02_prometheus_ollama_exporter/` — Prometheus + Ollama 指标。
   - `03_ray_serve_streaming/` — Ray Serve 流式推理。
-  - `04_ttft_and_llm_serving_latency/` — TTFT 与推理延迟。
 - `26_vllm/` — vLLM 包装示例。
-  - `01_elk_observability/` — ELK 日志栈。
-  - `02_prometheus_ollama_exporter/` — Prometheus + Ollama 指标。
-  - `03_ray_serve_streaming/` — Ray Serve 流式推理。
-  - `04_ttft_and_llm_serving_latency/` — TTFT 与推理延迟。
+  - `vllm_wrapper_demo/` - vLLM 封装与演示模块（含使用指南）。
+  - `vllm_wrapper_demo/04_ttft_and_llm_serving_latency/` - TTFT 与推理延迟：PagedAttention 原理与论文阅读。
 
 ### 并发与性能
 
